@@ -10,6 +10,7 @@ export default function LandingScreen() {
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
   const [loading, setLoading] = useState(false)
+  const [awaitingConfirmation, setAwaitingConfirmation] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -18,8 +19,37 @@ export default function LandingScreen() {
       ? await signIn(email, password)
       : await signUp(email, password, username)
     setLoading(false)
-    if (result.error) showToast(result.error, 'error')
-    else showToast(mode === 'login' ? 'Welcome back.' : 'Account created.', 'success')
+    if (result.error) {
+      showToast(result.error, 'error')
+    } else if (result.confirmEmail) {
+      setAwaitingConfirmation(true)
+    } else {
+      showToast('Welcome back.', 'success')
+    }
+  }
+
+  if (awaitingConfirmation) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.hero}>
+          <div className={styles.flask}>⚗️</div>
+          <h1 className={styles.title}>PotionList</h1>
+        </div>
+        <div className={styles.card}>
+          <div className={styles.confirmBox}>
+            <p className={styles.confirmIcon}>📬</p>
+            <p className={styles.confirmTitle}>Check your email</p>
+            <p className={styles.confirmSub}>
+              We sent a confirmation link to <strong>{email}</strong>.
+              Click it to activate your account, then sign in.
+            </p>
+            <button className={styles.backLink} onClick={() => { setAwaitingConfirmation(false); setMode('login') }}>
+              Back to sign in
+            </button>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
