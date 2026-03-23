@@ -65,7 +65,11 @@ export async function signIn(email, password) {
 }
 
 export async function signUp(email, password, username) {
-  const { data, error } = await supabase.auth.signUp({ email, password })
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { emailRedirectTo: window.location.origin },
+  })
   if (error) return { error: error.message }
   if (data.user) {
     await supabase.from('users').upsert({ id: data.user.id, username })
