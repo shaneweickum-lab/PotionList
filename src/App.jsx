@@ -13,13 +13,26 @@ import CauldronScreen from './screens/CauldronScreen.jsx'
 import VillageScreen from './screens/VillageScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
 import LandingScreen from './screens/LandingScreen.jsx'
+import AuthCallbackScreen from './screens/AuthCallbackScreen.jsx'
 import IAPModal from './components/modals/IAPModal.jsx'
 import StreakModal from './components/modals/StreakModal.jsx'
 import ToastContainer from './components/ui/ToastNotification.jsx'
 
+function isAuthCallback() {
+  const params = new URLSearchParams(window.location.search)
+  const hash = window.location.hash
+  return (
+    params.has('code') ||
+    params.has('error') ||
+    hash.includes('access_token=') ||
+    hash.includes('error=')
+  )
+}
+
 export default function App() {
   const [screen, setScreen] = useState('tasks')
   const [showIAP, setShowIAP] = useState(false)
+  const [callbackDone, setCallbackDone] = useState(false)
 
   // Global hooks
   useAuth()
@@ -32,6 +45,15 @@ export default function App() {
 
   const dismissStreak = () => {
     useStore.setState({ streakGiftToShow: null, streakMilestoneToShow: null })
+  }
+
+  // Handle email link / OAuth callback
+  if (!callbackDone && isAuthCallback()) {
+    return (
+      <div className="app-shell">
+        <AuthCallbackScreen onDone={() => setCallbackDone(true)} />
+      </div>
+    )
   }
 
   if (!authReady) {
