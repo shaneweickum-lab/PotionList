@@ -1,0 +1,19 @@
+.content { display: flex; flex-direction: column; gap: 16px; }
+.potionHeader { display: flex; align-items: flex-start; gap: 12px; }
+.potionDot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.section { display: flex; flex-direction: column; gap: 6px; }
+.sectionLabel { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+.ing { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.ingName { font-family: 'Crimson Text', serif; font-size: 15px; color: var(--text); }
+.ingHave { font-family: 'Cinzel Decorative', serif; font-size: 12px; color: var(--green); }
+.ingMissing { font-family: 'Cinzel Decorative', serif; font-size: 12px; color: var(--red); }
+.qtyRow { display: flex; align-items: center; gap: 16px; }
+.qtyBtn {
+  width: 34px; height: 34px;
+  background: var(--bg-4); border: 1px solid var(--border-bright);
+  border-radius: var(--radius); color: var(--text); font-size: 18px; cursor: pointer;
+}
+.qtyBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+.qtyNum { font-family: 'Cinzel Decorative', serif; font-size: 20px; color: var(--gold); min-width: 30px; text-align: center; }
+.alembicNote { font-size: 12px; color: var(--purple); font-style: italic; }
+.meta { display: flex; gap: 16px; font-size: 14px; color: var(--text-dim); }

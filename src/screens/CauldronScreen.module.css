@@ -1,0 +1,7 @@
+.screen {}
+.bar {
+  display: flex; justify-content: center; gap: 24px;
+  padding: 10px 16px; background: var(--bg-2); border-bottom: 1px solid var(--border);
+}
+.stat { font-family: 'Cinzel Decorative', serif; font-size: 11px; color: var(--text-dim); }
+.statNum { color: var(--purple); font-weight: 700; }

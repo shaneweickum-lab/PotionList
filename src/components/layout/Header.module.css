@@ -1,0 +1,139 @@
+.header {
+  height: var(--header-h);
+  padding: 0 16px;
+  padding-top: var(--safe-top);
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.levelBadge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-4);
+  border: 2px solid var(--gold-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.levelNum {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--gold);
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.titleText {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.founderBadge {
+  background: rgba(224,123,57,0.2);
+  color: var(--ember);
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.streak {
+  font-size: 11px;
+  color: var(--ember);
+  flex-shrink: 0;
+}
+
+.xpBar {
+  height: 4px;
+  background: var(--bg-4);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.xpFill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.xpText {
+  font-size: 9px;
+  color: var(--text-muted);
+  font-family: 'Cinzel Decorative', serif;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.gold {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-4);
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--gold-dim);
+}
+
+.goldIcon {
+  color: var(--gold);
+  font-size: 12px;
+}
+
+.goldAmount {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.gemBtn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 2px;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s;
+}
+.gemBtn:active { transform: scale(0.9); }

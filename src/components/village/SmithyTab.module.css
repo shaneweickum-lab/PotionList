@@ -1,0 +1,20 @@
+.smithy { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.section { background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.sectionTitle { font-family: 'Cinzel Decorative', serif; font-size: 11px; color: var(--text-muted); }
+.activeItem { display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-4); border-radius: var(--radius); }
+.itemName { font-family: 'Cinzel Decorative', serif; font-size: 11px; color: var(--text); width: 100px; flex-shrink: 0; }
+.smeltRow { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.smeltRow:last-child { border-bottom: none; }
+.smeltInfo { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.ingotName { font-family: 'Cinzel Decorative', serif; font-size: 12px; }
+.smeltRecipe { font-size: 12px; color: var(--text-muted); }
+.smeltHave { font-size: 11px; color: var(--text-muted); }
+.forgeRow { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.forgeRow:last-child { border-bottom: none; }
+.forged { opacity: 0.5; }
+.forgeInfo { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.forgeName { font-family: 'Cinzel Decorative', serif; font-size: 12px; color: var(--text); }
+.forgeDesc { font-size: 12px; color: var(--text-dim); }
+.forgeReq { font-size: 11px; color: var(--text-muted); }
+.forgedLabel { font-size: 11px; color: var(--green); font-style: italic; }
+.forgingLabel { font-size: 11px; color: var(--ember); font-style: italic; }

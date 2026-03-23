@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#080705"/>
+  <circle cx="256" cy="220" r="100" fill="none" stroke="#c9a227" stroke-width="8"/>
+  <ellipse cx="256" cy="320" rx="120" ry="60" fill="#9b6bb5" opacity="0.8"/>
+  <ellipse cx="256" cy="300" rx="100" ry="50" fill="#5a9e6f" opacity="0.5"/>
+  <rect x="236" y="100" width="40" height="60" rx="8" fill="#c9a227"/>
+  <ellipse cx="256" cy="100" rx="30" ry="10" fill="#e07b39"/>
+  <text x="256" y="440" font-family="serif" font-size="48" fill="#c9a227" text-anchor="middle" font-weight="bold">PL</text>
+</svg>
