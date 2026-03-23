@@ -14,6 +14,7 @@ export function createPlayerSlice(set, get) {
     pendingSync: false,
     username: null,
     userId: null,
+    authReady: false,
     titles: [],
     founderUnlocked: false,
 
@@ -42,6 +43,7 @@ export function createPlayerSlice(set, get) {
 
     setUsername: (username) => set({ username }),
     setUserId: (userId) => set({ userId }),
+    setAuthReady: () => set({ authReady: true }),
     setFounderUnlocked: () => set({ founderUnlocked: true }),
     addTitle: (title) => set(state => ({
       titles: state.titles.includes(title) ? state.titles : [...state.titles, title],
