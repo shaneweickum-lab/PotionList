@@ -29,23 +29,53 @@ function isAuthCallback() {
   )
 }
 
-export default function App() {
+// Rendered only when the user is authenticated — keeps game hooks isolated
+function AuthenticatedApp() {
   const [screen, setScreen] = useState('tasks')
   const [showIAP, setShowIAP] = useState(false)
-  const [callbackDone, setCallbackDone] = useState(false)
 
-  // Global hooks
-  useAuth()
   useTimers()
   useStreak()
   useDailyOrders()
   usePush()
 
-  const { userId, authReady, streakGiftToShow, streakMilestoneToShow } = useStore()
+  const { streakGiftToShow, streakMilestoneToShow } = useStore()
 
   const dismissStreak = () => {
     useStore.setState({ streakGiftToShow: null, streakMilestoneToShow: null })
   }
+
+  return (
+    <div className="app-shell">
+      <Header onOpenIAP={() => setShowIAP(true)} />
+      <div className="screen-area">
+        {screen === 'tasks' && <TasksScreen />}
+        {screen === 'garden' && <GardenScreen />}
+        {screen === 'cauldron' && <CauldronScreen />}
+        {screen === 'village' && <VillageScreen />}
+        {screen === 'profile' && <ProfileScreen />}
+      </div>
+      <BottomNav active={screen} onChange={setScreen} />
+      <ToastContainer />
+
+      {showIAP && <IAPModal onClose={() => setShowIAP(false)} />}
+      {(streakGiftToShow || streakMilestoneToShow) && (
+        <StreakModal
+          gift={streakGiftToShow}
+          milestone={streakMilestoneToShow}
+          onClose={dismissStreak}
+        />
+      )}
+    </div>
+  )
+}
+
+export default function App() {
+  const [callbackDone, setCallbackDone] = useState(false)
+
+  useAuth()
+
+  const { userId, authReady } = useStore()
 
   // Handle email link / OAuth callback
   if (!callbackDone && isAuthCallback()) {
@@ -73,27 +103,5 @@ export default function App() {
     )
   }
 
-  return (
-    <div className="app-shell">
-      <Header onOpenIAP={() => setShowIAP(true)} />
-      <div className="screen-area">
-        {screen === 'tasks' && <TasksScreen />}
-        {screen === 'garden' && <GardenScreen />}
-        {screen === 'cauldron' && <CauldronScreen />}
-        {screen === 'village' && <VillageScreen />}
-        {screen === 'profile' && <ProfileScreen />}
-      </div>
-      <BottomNav active={screen} onChange={setScreen} />
-      <ToastContainer />
-
-      {showIAP && <IAPModal onClose={() => setShowIAP(false)} />}
-      {(streakGiftToShow || streakMilestoneToShow) && (
-        <StreakModal
-          gift={streakGiftToShow}
-          milestone={streakMilestoneToShow}
-          onClose={dismissStreak}
-        />
-      )}
-    </div>
-  )
+  return <AuthenticatedApp />
 }

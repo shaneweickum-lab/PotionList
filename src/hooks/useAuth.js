@@ -14,15 +14,21 @@ export function useAuth() {
     }
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) handleLogin(session.user)
+      if (session?.user) {
+        handleLogin(session.user)
+      } else {
+        // No active session — clear any stale game data left from a previous session
+        localStorage.removeItem('potionlist-v1')
+      }
       setAuthReady()
     })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session?.user) handleLogin(session.user)
       if (event === 'SIGNED_OUT') {
-        setUserId(null)
-        setUsername(null)
+        // Wipe local game data so it never persists without an account
+        localStorage.removeItem('potionlist-v1')
+        window.location.reload()
       }
     })
 
