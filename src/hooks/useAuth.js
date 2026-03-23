@@ -71,7 +71,8 @@ export async function signUp(email, password, username) {
     await supabase.from('users').upsert({ id: data.user.id, username })
     useStore.getState().setUsername(username)
   }
-  return { success: true }
+  // session is null when Supabase requires email confirmation
+  return { success: true, confirmEmail: !data.session }
 }
 
 export async function signOut() {
