@@ -1,0 +1,72 @@
+.slot {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-height: 100px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.empty { border-style: dashed; }
+.empty:hover { border-color: var(--gold-dim); background: var(--bg-4); }
+
+.emptyIcon {
+  font-size: 28px;
+  color: var(--text-muted);
+  line-height: 1;
+}
+.emptyLabel {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.growing { border-color: var(--green-dim); }
+.ready {
+  border-color: var(--green);
+  background: rgba(90,158,111,0.08);
+  animation: pulse 2s infinite;
+}
+
+.plantEmoji { font-size: 30px; line-height: 1; }
+.plantName {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.readyLabel {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 11px;
+  color: var(--green);
+  font-weight: 700;
+}
+
+.seedList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.seedOption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--bg-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--text);
+  transition: border-color 0.15s;
+  text-align: left;
+}
+.seedOption:hover { border-color: var(--green); }
+.seedInfo { display: flex; flex-direction: column; gap: 2px; }
+.seedName { font-family: 'Cinzel Decorative', serif; font-size: 12px; }
+.seedQty { font-size: 12px; color: var(--text-muted); font-family: 'Crimson Text', serif; }

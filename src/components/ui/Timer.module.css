@@ -1,0 +1,13 @@
+.timer {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+}
+.compact { font-size: 12px; }
+.done {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 14px;
+  color: var(--green);
+  font-weight: 700;
+}

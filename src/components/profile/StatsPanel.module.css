@@ -1,0 +1,11 @@
+.stats { padding: 16px; display: flex; flex-direction: column; gap: 2px; }
+.titleRow { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.currentTitle { font-family: 'Cinzel Decorative', serif; font-size: 15px; color: var(--gold); }
+.founder { background: rgba(224,123,57,0.15); color: var(--ember); font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+.stat { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.statLabel { font-family: 'Crimson Text', serif; font-size: 16px; color: var(--text-dim); }
+.statValue { font-family: 'Cinzel Decorative', serif; font-size: 13px; color: var(--gold); }
+.titlesSection { margin-top: 16px; }
+.titlesLabel { font-family: 'Cinzel Decorative', serif; font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+.titlesList { display: flex; flex-wrap: wrap; gap: 8px; }
+.titleChip { background: rgba(201,162,39,0.1); color: var(--gold); border: 1px solid var(--gold-dim); font-size: 12px; padding: 4px 10px; border-radius: 20px; }

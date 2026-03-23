@@ -1,0 +1,70 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.sm { padding: 6px 12px; font-size: 11px; }
+.md { padding: 10px 18px; }
+.lg { padding: 13px 24px; font-size: 15px; }
+
+.fullWidth { width: 100%; }
+
+/* Variants */
+.gold {
+  background: var(--gold);
+  color: var(--bg);
+}
+.gold:hover:not(:disabled) { background: var(--gold-bright); }
+
+.green {
+  background: var(--green);
+  color: #fff;
+}
+.green:hover:not(:disabled) { background: #6ab87f; }
+
+.purple {
+  background: var(--purple);
+  color: #fff;
+}
+
+.ember {
+  background: var(--ember);
+  color: #fff;
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--border-bright);
+}
+.ghost:hover:not(:disabled) {
+  border-color: var(--gold-dim);
+  color: var(--gold);
+}
+
+.danger {
+  background: var(--red);
+  color: #fff;
+}

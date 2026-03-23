@@ -1,0 +1,23 @@
+.screen {}
+
+.streakBar {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 10px 16px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.streakItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.streakIcon {
+  font-size: 15px;
+}

@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --bg: #080705;
+  --bg-2: #0f0d0b;
+  --bg-3: #181410;
+  --bg-4: #221d17;
+  --gold: #c9a227;
+  --gold-dim: #8a6d18;
+  --gold-bright: #f0c842;
+  --green: #5a9e6f;
+  --green-dim: #3d6b4c;
+  --purple: #9b6bb5;
+  --purple-dim: #6a4880;
+  --ember: #e07b39;
+  --ember-dim: #9a5220;
+  --red: #b84040;
+  --text: #e8dcc8;
+  --text-dim: #9a8d7c;
+  --text-muted: #5c5248;
+  --border: #2a2318;
+  --border-bright: #3d3328;
+  --max-w: 430px;
+  --header-h: 64px;
+  --nav-h: 68px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --radius: 8px;
+  --radius-lg: 14px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+  min-height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg);
+}
+
+.app-shell {
+  width: 100%;
+  max-width: var(--max-w);
+  height: 100dvh;
+  min-height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.screen-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(var(--nav-h) + var(--safe-bottom));
+}
+
+/* Typography */
+.font-display {
+  font-family: 'Cinzel Decorative', serif;
+}
+h1, h2, h3, .heading {
+  font-family: 'Cinzel Decorative', serif;
+  color: var(--text);
+}
+.lore, .flavour {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  color: var(--text-dim);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-bright);
+  border-radius: 2px;
+}
+
+/* Utility classes */
+.gold { color: var(--gold); }
+.green { color: var(--green); }
+.purple { color: var(--purple); }
+.ember { color: var(--ember); }
+.red { color: var(--red); }
+.muted { color: var(--text-muted); }
+.dim { color: var(--text-dim); }
+
+.card {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0;
+}
+
+/* Rarity colors */
+.rarity-common { color: var(--text-dim); }
+.rarity-uncommon { color: var(--green); }
+.rarity-rare { color: #5ba3d6; }
+.rarity-epic { color: var(--purple); }
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.fade-in { animation: fadeIn 0.25s ease; }
+.slide-up { animation: slideUp 0.3s ease; }

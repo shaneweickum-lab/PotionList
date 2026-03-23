@@ -1,0 +1,58 @@
+import { getLevelInfo, getTitleForLevel } from '../../constants/xp.js'
+
+export function createPlayerSlice(set, get) {
+  return {
+    xp: 0,
+    growthXP: 0,
+    gold: 50,
+    level: 1,
+    streak: 0,
+    lastTaskDay: null,
+    longestStreak: 0,
+    milestonesClaimed: [],
+    lastSaved: null,
+    pendingSync: false,
+    username: null,
+    userId: null,
+    titles: [],
+    founderUnlocked: false,
+
+    awardXP: (amount) => {
+      set(state => {
+        const newXP = state.xp + amount
+        const { level } = getLevelInfo(newXP)
+        return { xp: newXP, level }
+      })
+    },
+
+    awardGrowthXP: (amount) => {
+      set(state => ({ growthXP: state.growthXP + amount }))
+    },
+
+    addGold: (amount) => {
+      set(state => ({ gold: Math.max(0, state.gold + amount) }))
+    },
+
+    spendGold: (amount) => {
+      const current = get().gold
+      if (current < amount) return false
+      set({ gold: current - amount })
+      return true
+    },
+
+    setUsername: (username) => set({ username }),
+    setUserId: (userId) => set({ userId }),
+    setFounderUnlocked: () => set({ founderUnlocked: true }),
+    addTitle: (title) => set(state => ({
+      titles: state.titles.includes(title) ? state.titles : [...state.titles, title],
+    })),
+    claimMilestone: (day) => set(state => ({
+      milestonesClaimed: [...new Set([...state.milestonesClaimed, day])],
+    })),
+    setLastTaskDay: (day) => set({ lastTaskDay: day }),
+    setStreak: (streak) => set(state => ({
+      streak,
+      longestStreak: Math.max(state.longestStreak, streak),
+    })),
+  }
+}

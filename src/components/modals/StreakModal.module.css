@@ -1,0 +1,6 @@
+.content { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.icon { font-size: 56px; }
+.day { font-family: 'Cinzel Decorative', serif; font-size: 13px; color: var(--text-muted); }
+.title { font-family: 'Cinzel Decorative', serif; font-size: 18px; color: var(--gold); }
+.rewards { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.reward { padding: 8px 12px; background: rgba(201,162,39,0.1); border: 1px solid var(--gold-dim); border-radius: var(--radius); font-family: 'Cinzel Decorative', serif; font-size: 13px; color: var(--gold); }

@@ -1,0 +1,16 @@
+.auth { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+.loggedIn { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 24px 0; }
+.avatar { font-size: 48px; }
+.username { font-family: 'Cinzel Decorative', serif; font-size: 18px; color: var(--gold); }
+.userId { font-size: 11px; color: var(--text-muted); }
+.tabs { display: flex; border-bottom: 1px solid var(--border); }
+.tab { flex: 1; padding: 10px; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-muted); font-family: 'Cinzel Decorative', serif; font-size: 11px; cursor: pointer; }
+.active { color: var(--gold); border-bottom-color: var(--gold); }
+.form { display: flex; flex-direction: column; gap: 10px; }
+.input { width: 100%; padding: 12px 14px; background: var(--bg-4); border: 1px solid var(--border-bright); border-radius: var(--radius); color: var(--text); font-family: 'Crimson Text', serif; font-size: 16px; outline: none; }
+.input:focus { border-color: var(--gold-dim); }
+.divider { text-align: center; position: relative; color: var(--text-muted); font-size: 12px; }
+.divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: calc(50% - 24px); height: 1px; background: var(--border); }
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+.social { display: flex; flex-direction: column; gap: 8px; }

@@ -1,0 +1,21 @@
+.wrap { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+.current {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius-lg);
+}
+.cauldronEmoji { font-size: 36px; }
+.tierName { font-family: 'Cinzel Decorative', serif; font-size: 14px; color: var(--gold); }
+.tierLabel { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.upgrade {
+  padding: 14px; background: var(--bg-3); border: 1px solid var(--border-bright); border-radius: var(--radius-lg);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.upgradeTitle { font-family: 'Cinzel Decorative', serif; font-size: 13px; color: var(--ember); }
+.upgradeReqs { display: flex; flex-wrap: wrap; gap: 6px; }
+.req {
+  padding: 3px 8px; background: var(--bg-4); border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; color: var(--text-dim);
+}
+.upgradeActions { display: flex; gap: 10px; flex-wrap: wrap; }
+.forgingLabel { font-style: italic; color: var(--text-muted); font-size: 13px; }
+.maxed { font-style: italic; color: var(--text-muted); font-size: 14px; text-align: center; padding: 16px 0; }
