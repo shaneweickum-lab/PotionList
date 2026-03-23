@@ -5,13 +5,17 @@ import { loadFromCloud } from '../store/middleware/syncMiddleware.js'
 import { initRevenueCat } from '../lib/revenuecat.js'
 
 export function useAuth() {
-  const { setUserId, setUsername } = useStore()
+  const { setUserId, setUsername, setAuthReady } = useStore()
 
   useEffect(() => {
-    if (!isSupabaseConfigured) return
+    if (!isSupabaseConfigured) {
+      setAuthReady()
+      return
+    }
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) handleLogin(session.user)
+      setAuthReady()
     })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {

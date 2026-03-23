@@ -12,6 +12,7 @@ import GardenScreen from './screens/GardenScreen.jsx'
 import CauldronScreen from './screens/CauldronScreen.jsx'
 import VillageScreen from './screens/VillageScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
+import LandingScreen from './screens/LandingScreen.jsx'
 import IAPModal from './components/modals/IAPModal.jsx'
 import StreakModal from './components/modals/StreakModal.jsx'
 import ToastContainer from './components/ui/ToastNotification.jsx'
@@ -27,10 +28,27 @@ export default function App() {
   useDailyOrders()
   usePush()
 
-  const { streakGiftToShow, streakMilestoneToShow } = useStore()
+  const { userId, authReady, streakGiftToShow, streakMilestoneToShow } = useStore()
 
   const dismissStreak = () => {
     useStore.setState({ streakGiftToShow: null, streakMilestoneToShow: null })
+  }
+
+  if (!authReady) {
+    return (
+      <div className="app-shell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <span style={{ fontSize: 32 }}>⚗️</span>
+      </div>
+    )
+  }
+
+  if (!userId) {
+    return (
+      <div className="app-shell">
+        <LandingScreen />
+        <ToastContainer />
+      </div>
+    )
   }
 
   return (
