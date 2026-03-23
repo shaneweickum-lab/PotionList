@@ -9,8 +9,3 @@
 .form { display: flex; flex-direction: column; gap: 10px; }
 .input { width: 100%; padding: 12px 14px; background: var(--bg-4); border: 1px solid var(--border-bright); border-radius: var(--radius); color: var(--text); font-family: 'Crimson Text', serif; font-size: 16px; outline: none; }
 .input:focus { border-color: var(--gold-dim); }
-.divider { text-align: center; position: relative; color: var(--text-muted); font-size: 12px; }
-.divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: calc(50% - 24px); height: 1px; background: var(--border); }
-.divider::before { left: 0; }
-.divider::after { right: 0; }
-.social { display: flex; flex-direction: column; gap: 8px; }

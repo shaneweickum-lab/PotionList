@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { signIn, signUp, signOut, signInWithGoogle, signInWithApple } from '../../hooks/useAuth.js'
+import { signIn, signUp, signOut } from '../../hooks/useAuth.js'
 import { useStore } from '../../store/index.js'
 import Button from '../ui/Button.jsx'
 import { showToast } from '../ui/ToastNotification.jsx'
@@ -58,16 +58,6 @@ export default function AuthPanel() {
         </Button>
       </form>
 
-      <div className={styles.divider}><span>or</span></div>
-
-      <div className={styles.social}>
-        <Button variant="ghost" fullWidth onClick={async () => { const r = await signInWithGoogle(); if (r.error) showToast(r.error, 'error') }}>
-          Sign in with Google
-        </Button>
-        <Button variant="ghost" fullWidth onClick={async () => { const r = await signInWithApple(); if (r.error) showToast(r.error, 'error') }}>
-          Sign in with Apple
-        </Button>
-      </div>
     </div>
   )
 }
