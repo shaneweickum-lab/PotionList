@@ -1,0 +1,131 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input {
+  width: 100%;
+  background: var(--bg-4);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  color: var(--text);
+  font-family: 'Crimson Text', serif;
+  font-size: 17px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input::placeholder { color: var(--text-muted); }
+.input:focus { border-color: var(--gold-dim); }
+
+/* Option rows */
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rowLabel {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.rowOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Pills */
+.pill {
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 1px solid var(--border-bright);
+  background: var(--bg-4);
+  color: var(--text-dim);
+  font-family: 'Crimson Text', serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.pill:hover { border-color: var(--gold-dim); color: var(--text); }
+
+.pillActive {
+  border-color: var(--gold-dim);
+  background: rgba(201, 162, 39, 0.12);
+  color: var(--gold);
+}
+
+/* Priority colour overrides when active */
+.priority_high.pillActive   { border-color: var(--ember); background: rgba(224,123,57,0.12); color: var(--ember); }
+.priority_urgent.pillActive { border-color: var(--red);   background: rgba(184,64,64,0.12);  color: var(--red);   }
+
+/* Category colour overrides when active */
+.cat_work.pillActive     { border-color: #5ba3d6; background: rgba(91,163,214,0.12); color: #5ba3d6; }
+.cat_health.pillActive   { border-color: var(--green); background: rgba(90,158,111,0.12); color: var(--green); }
+.cat_personal.pillActive { border-color: var(--purple); background: rgba(155,107,181,0.12); color: var(--purple); }
+.cat_study.pillActive    { border-color: var(--gold); background: rgba(201,162,39,0.12); color: var(--gold); }
+
+/* Animation grid */
+.animGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 100%;
+}
+
+.animOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-bright);
+  background: var(--bg-4);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  text-align: center;
+}
+.animOption:hover { border-color: var(--gold-dim); }
+
+.animActive {
+  border-color: var(--gold-dim);
+  background: rgba(201, 162, 39, 0.1);
+}
+
+.animLabel {
+  font-family: 'Crimson Text', serif;
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 600;
+}
+.animActive .animLabel { color: var(--gold); }
+
+.animDesc {
+  font-family: 'Crimson Text', serif;
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+/* Submit */
+.submit {
+  width: 100%;
+  padding: 12px;
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+  letter-spacing: 0.03em;
+}
+.submit:hover:not(:disabled) { background: var(--gold-bright); }
+.submit:disabled { opacity: 0.4; cursor: not-allowed; }
