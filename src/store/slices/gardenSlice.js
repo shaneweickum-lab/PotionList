@@ -46,12 +46,8 @@ export function createGardenSlice(set, get) {
       const seedDef = SEED_MAP[slot.seedId]
       if (!seedDef) return null
 
-      // Check growth
-      const currentGrowthXP = state.growthXP
-      const growthAccumulated = currentGrowthXP - slot.growthXPAtPlant
-      const growthMod = get().getGrowthMod()
-      const threshold = seedDef.growthThreshold * growthMod
-      if (growthAccumulated < threshold) return null
+      // Check growth using the same combined time+XP progress as isSlotReady
+      if (get().getGrowthProgress(slot.slotId) < 1) return null
 
       const yieldId = seedDef.yields
       const bugFound = rollBugFind()

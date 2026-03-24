@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useStore } from '../../store/index.js'
 import { SEED_MAP, ALL_SEEDS } from '../../constants/seeds.js'
 import { HERB_MAP } from '../../constants/herbs.js'
@@ -45,6 +45,16 @@ export default function PlotSlot({ slot }) {
     const id = setInterval(() => setTick(t => t + 1), 5000)
     return () => clearInterval(id)
   }, [slot.seedId, isReady])
+
+  // Toast when a plant transitions from growing → ready
+  const prevReadyRef = useRef(isReady)
+  useEffect(() => {
+    if (isReady && !prevReadyRef.current && slot.seedId) {
+      const item = HERB_MAP[seedDef?.yields] ?? MUSHROOM_MAP[seedDef?.yields]
+      showToast(`${item?.name ?? slot.seedId} is ready to harvest!`, 'success')
+    }
+    prevReadyRef.current = isReady
+  }, [isReady])
 
   const availableSeeds = Object.entries(seeds ?? {}).filter(([_, qty]) => qty > 0)
 
