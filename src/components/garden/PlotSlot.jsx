@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useStore } from '../../store/index.js'
 import { SEED_MAP, ALL_SEEDS } from '../../constants/seeds.js'
 import { HERB_MAP } from '../../constants/herbs.js'
@@ -9,14 +9,42 @@ import Button from '../ui/Button.jsx'
 import { showToast } from '../ui/ToastNotification.jsx'
 import styles from './PlotSlot.module.css'
 
+const BAR_COLOR = { common: 'green', uncommon: 'green', rare: 'blue', epic: 'purple' }
+
+// Growth stage icon scales visually as the plant matures
+function GrowthEmoji({ progress, type, color }) {
+  const scale = 0.55 + progress * 0.6 // 0.55 → 1.15
+  return (
+    <div style={{
+      fontSize: 30,
+      lineHeight: 1,
+      color,
+      transform: `scale(${scale.toFixed(2)})`,
+      transition: 'transform 0.6s ease',
+      transformOrigin: 'center bottom',
+    }}>
+      {type === 'mushroom' ? '🍄' : '🌿'}
+    </div>
+  )
+}
+
 export default function PlotSlot({ slot }) {
   const [showPlantModal, setShowPlantModal] = useState(false)
-  const { seeds, garden, plantSeed, harvestPlot, isSlotReady, getGrowthProgress } = useStore()
+  const [, setTick] = useState(0)
+  const { seeds, plantSeed, harvestPlot, isSlotReady, getGrowthProgress } = useStore()
 
   const isReady = isSlotReady(slot.slotId)
   const progress = getGrowthProgress(slot.slotId)
   const seedDef = slot.seedId ? SEED_MAP[slot.seedId] : null
   const itemDef = seedDef ? (HERB_MAP[seedDef.yields] ?? MUSHROOM_MAP[seedDef.yields]) : null
+  const rarity = seedDef?.rarity ?? 'common'
+
+  // Re-render every 5s so the time-based progress bar animates live
+  useEffect(() => {
+    if (!slot.seedId || isReady) return
+    const id = setInterval(() => setTick(t => t + 1), 5000)
+    return () => clearInterval(id)
+  }, [slot.seedId, isReady])
 
   const availableSeeds = Object.entries(seeds ?? {}).filter(([_, qty]) => qty > 0)
 
@@ -76,14 +104,16 @@ export default function PlotSlot({ slot }) {
       className={`${styles.slot} ${isReady ? styles.ready : styles.growing}`}
       onClick={isReady ? handleHarvest : undefined}
     >
-      <div className={styles.plantEmoji} style={{ color: itemDef?.color ?? '#5a9e6f' }}>
-        {seedDef?.type === 'mushroom' ? '🍄' : '🌿'}
-      </div>
-      <span className={styles.plantName}>{itemDef?.name ?? slot.seedId}</span>
+      <GrowthEmoji
+        progress={isReady ? 1 : progress}
+        type={seedDef?.type}
+        color={itemDef?.color ?? '#5a9e6f'}
+      />
+      <span className={`${styles.plantName} rarity-${rarity}`}>{itemDef?.name ?? slot.seedId}</span>
       {isReady ? (
         <span className={styles.readyLabel}>Harvest</span>
       ) : (
-        <ProgressBar value={progress} color="green" height={4} />
+        <ProgressBar value={progress} color={BAR_COLOR[rarity] ?? 'green'} height={4} showPercent />
       )}
     </div>
   )

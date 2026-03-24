@@ -14,13 +14,20 @@ const TABS = [
 
 export default function GardenScreen() {
   const [tab, setTab] = useState('plots')
-  const { growthXP } = useStore()
+  const { garden, isSlotReady } = useStore()
+
+  const growing = garden.filter(s => s.seedId && !isSlotReady(s.slotId)).length
+  const ready   = garden.filter(s => s.seedId && isSlotReady(s.slotId)).length
 
   return (
     <div className={styles.screen}>
       <div className={styles.growthBar}>
-        <span className={styles.growthLabel}>Growth XP:</span>
-        <span className={styles.growthValue}>{growthXP}</span>
+        {ready > 0
+          ? <><span className={styles.growthLabel}>Ready to harvest</span><span className={styles.growthReady}>{ready} plot{ready !== 1 ? 's' : ''}</span></>
+          : growing > 0
+            ? <><span className={styles.growthLabel}>Growing</span><span className={styles.growthValue}>{growing} plot{growing !== 1 ? 's' : ''} · complete tasks to speed up</span></>
+            : <span className={styles.growthLabel}>No plants growing — visit the Plots tab</span>
+        }
       </div>
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
       {tab === 'plots' && <GardenScene />}

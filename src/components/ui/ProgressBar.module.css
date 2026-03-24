@@ -16,6 +16,7 @@
 }
 .gold { background: var(--gold); }
 .green { background: var(--green); }
+.blue { background: #3a7aaa; }
 .purple { background: var(--purple); }
 .ember { background: var(--ember); }
 .label { font-size: 11px; color: var(--text-muted); white-space: nowrap; }

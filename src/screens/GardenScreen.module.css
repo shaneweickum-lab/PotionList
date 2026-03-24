@@ -13,6 +13,11 @@
   color: var(--text-muted);
 }
 .growthValue {
+  font-family: 'Crimson Text', serif;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.growthReady {
   font-family: 'Cinzel Decorative', serif;
   font-size: 12px;
   color: var(--green);
