@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useStore } from '../../store/index.js'
 import Modal from '../ui/Modal.jsx'
 import styles from './AddTaskModal.module.css'
@@ -25,12 +25,23 @@ const RECURRENCES = [
 ]
 
 const ANIMATIONS = [
-  { value: 'fade',     label: 'Fade',    desc: 'Gently fades away'        },
-  { value: 'dissolve', label: 'Dissolve', desc: 'Blurs into nothing'       },
-  { value: 'shatter',  label: 'Shatter',  desc: 'Breaks apart'             },
-  { value: 'burn',     label: 'Ember',    desc: 'Burns away in flames'     },
+  { value: 'fade',     label: 'Fade',    desc: 'Gently fades away'          },
+  { value: 'dissolve', label: 'Dissolve', desc: 'Blurs into mist'           },
+  { value: 'shatter',  label: 'Shatter',  desc: 'Breaks apart'              },
+  { value: 'burn',     label: 'Ember',    desc: 'Burns away in fire'        },
   { value: 'float',    label: 'Ascend',   desc: 'Drifts upward and vanishes' },
 ]
+
+// Must match durations in index.css keyframes
+const ANIM_DURATION = { fade: 420, dissolve: 520, shatter: 550, burn: 580, float: 520 }
+
+const ANIM_STYLE = {
+  fade:     'taskExitFade     0.42s ease        forwards',
+  dissolve: 'taskExitDissolve 0.52s ease        forwards',
+  shatter:  'taskExitShatter  0.55s ease        forwards',
+  burn:     'taskExitBurn     0.58s ease-in     forwards',
+  float:    'taskExitFloat    0.52s ease-in-out forwards',
+}
 
 export default function AddTaskModal({ onClose }) {
   const [text, setText] = useState('')
@@ -38,7 +49,27 @@ export default function AddTaskModal({ onClose }) {
   const [category, setCategory] = useState('general')
   const [recurrence, setRecurrence] = useState('none')
   const [animation, setAnimation] = useState('fade')
+
+  const [previewKey, setPreviewKey] = useState(0)
+  const [previewAnim, setPreviewAnim] = useState(null)
+  const previewTimer = useRef(null)
+
   const addTask = useStore(s => s.addTask)
+
+  const selectAnim = (val) => {
+    setAnimation(val)
+    clearTimeout(previewTimer.current)
+    // Reset the preview element (new key = remount = fresh animation state)
+    setPreviewAnim(null)
+    setPreviewKey(k => k + 1)
+    requestAnimationFrame(() => {
+      setPreviewAnim(val)
+      previewTimer.current = setTimeout(
+        () => setPreviewAnim(null),
+        ANIM_DURATION[val] + 120,
+      )
+    })
+  }
 
   const submit = (e) => {
     e.preventDefault()
@@ -99,21 +130,42 @@ export default function AddTaskModal({ onClose }) {
           ))}
         </OptionRow>
 
-        <OptionRow label="On complete">
+        <div className={styles.row}>
+          <span className={styles.rowLabel}>On complete</span>
+
+          {/* Live preview */}
+          <div className={styles.preview}>
+            <div
+              key={previewKey}
+              className={styles.previewTask}
+              style={previewAnim ? { animation: ANIM_STYLE[previewAnim], pointerEvents: 'none' } : {}}
+            >
+              <span className={styles.previewCheck}>✓</span>
+              <span className={styles.previewText}>Brew a healing potion</span>
+            </div>
+            <button
+              type="button"
+              className={styles.previewBtn}
+              onClick={() => selectAnim(animation)}
+            >
+              ▶ Preview
+            </button>
+          </div>
+
           <div className={styles.animGrid}>
             {ANIMATIONS.map(a => (
               <button
                 key={a.value}
                 type="button"
                 className={`${styles.animOption} ${animation === a.value ? styles.animActive : ''}`}
-                onClick={() => setAnimation(a.value)}
+                onClick={() => selectAnim(a.value)}
               >
                 <span className={styles.animLabel}>{a.label}</span>
                 <span className={styles.animDesc}>{a.desc}</span>
               </button>
             ))}
           </div>
-        </OptionRow>
+        </div>
 
         <button
           type="submit"
