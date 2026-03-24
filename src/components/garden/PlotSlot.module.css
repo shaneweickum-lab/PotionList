@@ -1,53 +1,151 @@
+/* ── Slot base ── */
 .slot {
-  background: var(--bg-3);
-  border: 1px solid var(--border);
+  position: relative;
   border-radius: var(--radius-lg);
-  padding: 14px 12px;
+  padding: 14px 12px 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  min-height: 100px;
+  min-height: 108px;
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
-.empty { border-style: dashed; }
-.empty:hover { border-color: var(--gold-dim); background: var(--bg-4); }
+/* ── Empty: tilled soil ── */
+.empty {
+  background: linear-gradient(180deg, #1e1408 0%, #26180a 100%);
+  border: 1.5px dashed #5a3e1e;
+}
+.empty:hover {
+  border-color: #8a6030;
+  background: linear-gradient(180deg, #26180a 0%, #2e1e0c 100%);
+  box-shadow: inset 0 0 12px rgba(90,60,20,0.2);
+}
 
 .emptyIcon {
-  font-size: 28px;
-  color: var(--text-muted);
+  font-size: 26px;
+  color: #6a4820;
   line-height: 1;
 }
 .emptyLabel {
   font-family: 'Cinzel Decorative', serif;
   font-size: 10px;
-  color: var(--text-muted);
+  color: #7a5830;
 }
 
-.growing { border-color: var(--green-dim); }
+/* ── Growing: moist soil ── */
+.growing {
+  background: linear-gradient(180deg, #161e0a 0%, #1c2610 100%);
+  border: 1.5px solid #3a5a28;
+  box-shadow: inset 0 0 16px rgba(60,100,40,0.12);
+}
+
+/* ── Ready: lush & glowing ── */
 .ready {
-  border-color: var(--green);
-  background: rgba(90,158,111,0.08);
-  animation: pulse 2s infinite;
+  background: linear-gradient(160deg, #121d09 0%, #192810 100%);
+  border: 1.5px solid #5a9e6f;
+  box-shadow: 0 0 10px rgba(90,158,111,0.25), inset 0 0 12px rgba(90,158,111,0.08);
+  animation: readyPulse 2.4s ease-in-out infinite;
 }
 
-.plantEmoji { font-size: 30px; line-height: 1; }
+@keyframes readyPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(90,158,111,0.2), inset 0 0 10px rgba(90,158,111,0.06); }
+  50%       { box-shadow: 0 0 18px rgba(90,158,111,0.45), inset 0 0 14px rgba(90,158,111,0.12); }
+}
+
+/* ── Plant visual wrapper ── */
+.plantWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 44px;
+}
+
+/* Soil base ring */
+.soilBase {
+  position: absolute;
+  bottom: -2px;
+  width: 36px;
+  height: 8px;
+  background: radial-gradient(ellipse, #3a2410 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* Plant emoji */
+.plantIcon {
+  position: relative;
+  line-height: 1;
+  transform-origin: center bottom;
+  transition: font-size 0.8s ease;
+  z-index: 1;
+}
+
+/* Sway: gentle rock for growing plants */
+@keyframes sway {
+  0%, 100% { transform: rotate(-4deg); }
+  50%       { transform: rotate(4deg); }
+}
+.sway {
+  animation: sway 3.5s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+/* Float: bobbing for ready plants */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1.08); }
+  50%       { transform: translateY(-4px) scale(1.08); }
+}
+.plantFloat {
+  animation: float 2s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+/* ── Sparkles ── */
+.sparkles {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+}
+
+@keyframes sparkle {
+  0%   { opacity: 0; transform: scale(0) rotate(0deg); }
+  40%  { opacity: 1; transform: scale(1) rotate(90deg); }
+  100% { opacity: 0; transform: scale(0) rotate(180deg); }
+}
+
+.sp {
+  position: absolute;
+  font-size: 11px;
+  color: #c9a227;
+  animation: sparkle 2s ease-in-out infinite;
+}
+.sp1 { top: 4px;  left: 18%;  animation-delay: 0s;    }
+.sp2 { top: 8px;  right: 14%; animation-delay: 0.65s; }
+.sp3 { top: 18px; left: 10%;  animation-delay: 1.3s;  }
+.sp4 { top: 2px;  right: 28%; animation-delay: 1.9s;  }
+
+/* ── Labels ── */
 .plantName {
   font-family: 'Cinzel Decorative', serif;
   font-size: 10px;
   color: var(--text-dim);
   text-align: center;
+  line-height: 1.2;
 }
-
 .readyLabel {
   font-family: 'Cinzel Decorative', serif;
   font-size: 11px;
-  color: var(--green);
+  color: #5a9e6f;
   font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
+/* ── Seed picker modal list ── */
 .seedList {
   display: flex;
   flex-direction: column;
@@ -66,7 +164,7 @@
   transition: border-color 0.15s;
   text-align: left;
 }
-.seedOption:hover { border-color: var(--green); }
+.seedOption:hover { border-color: #5a9e6f; }
 .seedInfo { display: flex; flex-direction: column; gap: 2px; }
 .seedName { font-family: 'Cinzel Decorative', serif; font-size: 12px; }
 .seedQty { font-size: 12px; color: var(--text-muted); font-family: 'Crimson Text', serif; }
