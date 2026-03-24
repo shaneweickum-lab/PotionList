@@ -12,24 +12,11 @@ import GardenScreen from './screens/GardenScreen.jsx'
 import CauldronScreen from './screens/CauldronScreen.jsx'
 import VillageScreen from './screens/VillageScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
-import LandingScreen from './screens/LandingScreen.jsx'
-import AuthCallbackScreen from './screens/AuthCallbackScreen.jsx'
 import IAPModal from './components/modals/IAPModal.jsx'
 import StreakModal from './components/modals/StreakModal.jsx'
 import ToastContainer from './components/ui/ToastNotification.jsx'
 
-function isAuthCallback() {
-  const params = new URLSearchParams(window.location.search)
-  const hash = window.location.hash
-  return (
-    params.has('code') ||
-    params.has('error') ||
-    hash.includes('access_token=') ||
-    hash.includes('error=')
-  )
-}
-
-// Rendered only when the user is authenticated — keeps game hooks isolated
+// Full game shell — state persisted to localStorage via Zustand persist
 function AuthenticatedApp() {
   const [screen, setScreen] = useState('tasks')
   const [showIAP, setShowIAP] = useState(false)
@@ -71,34 +58,14 @@ function AuthenticatedApp() {
 }
 
 export default function App() {
-  const [callbackDone, setCallbackDone] = useState(false)
-
   useAuth()
 
-  const { userId, authReady } = useStore()
-
-  // Handle email link / OAuth callback
-  if (!callbackDone && isAuthCallback()) {
-    return (
-      <div className="app-shell">
-        <AuthCallbackScreen onDone={() => setCallbackDone(true)} />
-      </div>
-    )
-  }
+  const { authReady } = useStore()
 
   if (!authReady) {
     return (
       <div className="app-shell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <span style={{ fontSize: 32 }}>⚗️</span>
-      </div>
-    )
-  }
-
-  if (!userId) {
-    return (
-      <div className="app-shell">
-        <LandingScreen />
-        <ToastContainer />
       </div>
     )
   }
