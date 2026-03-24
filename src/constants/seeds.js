@@ -41,7 +41,14 @@ export const RARE_SEEDS = [
 ]
 
 export const ALL_SEEDS = [...SEEDS, ...RARE_SEEDS]
-export const SEED_MAP = Object.fromEntries(ALL_SEEDS.map(s => [s.id, s]))
+
+// Build rarity lookup from herb/mushroom yields so callers don't need extra imports
+const _YIELD_RARITY = Object.fromEntries(
+  [...HERBS, ...MUSHROOMS].map(h => [h.id, h.rarity])
+)
+export const SEED_MAP = Object.fromEntries(
+  ALL_SEEDS.map(s => [s.id, { ...s, rarity: _YIELD_RARITY[s.yields] ?? 'common' }])
+)
 
 // Weighted pool for seed find rolls (35% chance on task complete)
 // Common seeds get weight 60, uncommon 30, rare 8, epic 2

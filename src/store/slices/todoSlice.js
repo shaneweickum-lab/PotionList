@@ -62,9 +62,11 @@ export function createTodoSlice(set, get) {
 
       const xp = randomTaskXP()
       get().awardXP(xp)
-      get().awardGrowthXP(TASK_GROWTH_XP)
 
-      return { xp, progress: newCount, total: todo.targetCount }
+      const hasPlants = get().garden.some(s => s.seedId !== null)
+      if (hasPlants) get().awardGrowthXP(TASK_GROWTH_XP)
+
+      return { xp, growthXP: hasPlants ? TASK_GROWTH_XP : 0, progress: newCount, total: todo.targetCount }
     },
 
     // Called only when the final tap completes the task
@@ -75,10 +77,12 @@ export function createTodoSlice(set, get) {
       // Award XP for the final tap
       const xp = randomTaskXP()
       get().awardXP(xp)
-      get().awardGrowthXP(TASK_GROWTH_XP)
+
+      const hasPlants = get().garden.some(s => s.seedId !== null)
+      if (hasPlants) get().awardGrowthXP(TASK_GROWTH_XP)
 
       // Seed find (35%)
-      const foundSeed = rollSeedFind()
+      const foundSeed = rollSeedFind(get().level ?? 1)
       if (foundSeed) get().addSeed(foundSeed, 1)
 
       // Time reduction on active brews/mine/smithy
@@ -99,7 +103,7 @@ export function createTodoSlice(set, get) {
         }))
       }
 
-      const reward = { xp, foundSeed, timeReduction: reduction }
+      const reward = { xp, growthXP: hasPlants ? TASK_GROWTH_XP : 0, foundSeed, timeReduction: reduction }
       set({ lastCompletionReward: reward })
       return reward
     },
