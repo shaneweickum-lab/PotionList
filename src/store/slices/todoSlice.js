@@ -82,7 +82,7 @@ export function createTodoSlice(set, get) {
       if (hasPlants) get().awardGrowthXP(TASK_GROWTH_XP)
 
       // Seed find (35%)
-      const foundSeed = rollSeedFind()
+      const foundSeed = rollSeedFind(get().level ?? 1)
       if (foundSeed) get().addSeed(foundSeed, 1)
 
       // Time reduction on active brews/mine/smithy

@@ -23,7 +23,9 @@
   letter-spacing: 0.01em;
 }
 
-.info    { background: var(--bg-4);        color: var(--text);  border: 1px solid var(--border-bright); }
-.success { background: var(--green-dim);   color: #d4f0df;      border: 1px solid var(--green); }
-.gold    { background: #4a3a08;            color: var(--gold-bright); border: 1px solid var(--gold-dim); }
-.error   { background: #5c1c1c;            color: #f0a0a0;      border: 1px solid var(--red); }
+.info     { background: var(--bg-4);   color: var(--text);        border: 1px solid var(--border-bright); }
+.success  { background: var(--green-dim); color: #d4f0df;       border: 1px solid var(--green); }
+.gold     { background: #4a3a08;       color: var(--gold-bright); border: 1px solid var(--gold-dim); }
+.error    { background: #5c1c1c;       color: #f0a0a0;            border: 1px solid var(--red); }
+.rare     { background: #0e2a40;       color: #7ec8f0;            border: 1px solid #3a7aaa; }
+.epic     { background: #25103a;       color: #d4a0f8;            border: 1px solid var(--purple); }

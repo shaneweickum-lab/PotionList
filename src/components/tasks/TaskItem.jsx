@@ -47,8 +47,11 @@ export default function TaskItem({ todo }) {
         if (reward.growthXP) msg += `  ·  🌱 +${reward.growthXP}`
         if (reward.foundSeed) {
           const seed = SEED_MAP[reward.foundSeed]
-          msg += `  ·  Found ${seed?.name ?? reward.foundSeed}!`
-          showToast(msg, 'success')
+          const rarity = seed?.rarity ?? 'common'
+          const rarityLabel = rarity === 'epic' ? ' ✦ Epic' : rarity === 'rare' ? ' · Rare' : ''
+          msg += `  ·  Found ${seed?.name ?? reward.foundSeed}${rarityLabel}!`
+          const type = rarity === 'epic' ? 'epic' : rarity === 'rare' ? 'rare' : 'success'
+          showToast(msg, type)
         } else {
           showToast(msg, 'gold')
         }
