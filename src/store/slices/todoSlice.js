@@ -32,6 +32,7 @@ export function createTodoSlice(set, get) {
       const category = isString ? 'general' : (options.category ?? 'general')
       const recurrence = isString ? 'none' : (options.recurrence ?? 'none')
       const completionAnimation = isString ? 'fade' : (options.completionAnimation ?? 'fade')
+      const targetCount = isString ? 1 : Math.max(1, options.targetCount ?? 1)
 
       set(state => ({
         todos: [...state.todos, {
@@ -43,15 +44,35 @@ export function createTodoSlice(set, get) {
           category,
           recurrence,
           completionAnimation,
+          targetCount,
+          currentCount: 0,
         }],
       }))
     },
 
+    // Called for every tap that isn't the final one — awards XP but no full completion
+    incrementTask: (id) => {
+      const todo = get().todos.find(t => t.id === id)
+      if (!todo) return null
+
+      const newCount = (todo.currentCount ?? 0) + 1
+      set(state => ({
+        todos: state.todos.map(t => t.id === id ? { ...t, currentCount: newCount } : t),
+      }))
+
+      const xp = randomTaskXP()
+      get().awardXP(xp)
+      get().awardGrowthXP(TASK_GROWTH_XP)
+
+      return { xp, progress: newCount, total: todo.targetCount }
+    },
+
+    // Called only when the final tap completes the task
     completeTask: (id) => {
       const todo = get().todos.find(t => t.id === id)
-      if (!todo || todo.completed) return null
+      if (!todo) return null
 
-      // Award XP
+      // Award XP for the final tap
       const xp = randomTaskXP()
       get().awardXP(xp)
       get().awardGrowthXP(TASK_GROWTH_XP)
@@ -68,14 +89,12 @@ export function createTodoSlice(set, get) {
       get().checkStreak()
 
       if (todo.recurrence === 'none') {
-        // Non-recurring: remove entirely so it disappears for good
         set(state => ({ todos: state.todos.filter(t => t.id !== id) }))
       } else {
-        // Recurring: set nextDueAt — task hides itself until the window reopens
         const nextDueAt = calcNextDue(todo.recurrence)
         set(state => ({
           todos: state.todos.map(t =>
-            t.id === id ? { ...t, completedAt: Date.now(), nextDueAt } : t
+            t.id === id ? { ...t, completedAt: Date.now(), nextDueAt, currentCount: 0 } : t
           ),
         }))
       }

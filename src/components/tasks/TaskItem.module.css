@@ -22,14 +22,9 @@
   margin-top: 1px;
   transition: background 0.15s, border-color 0.15s;
 }
-.check:hover:not(.checked) {
+.check:hover {
   border-color: var(--gold);
   background: rgba(201,162,39,0.1);
-}
-.checked {
-  background: var(--green);
-  border-color: var(--green);
-  color: #fff;
 }
 
 .body {
@@ -46,6 +41,46 @@
   color: var(--text);
   line-height: 1.35;
   word-break: break-word;
+}
+
+/* Count progress */
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-bright);
+  background: transparent;
+  transition: background 0.2s, border-color 0.2s;
+}
+.dotFilled {
+  background: var(--gold-dim);
+  border-color: var(--gold-dim);
+}
+
+@keyframes dotPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.6); }
+  100% { transform: scale(1); }
+}
+.dotFilled:last-of-type { animation: dotPop 0.25s ease; }
+
+.fraction {
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+}
+.fractionTotal {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
 /* Badges */

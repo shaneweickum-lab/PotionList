@@ -169,6 +169,47 @@
   line-height: 1.3;
 }
 
+/* Count stepper */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stepBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border-bright);
+  background: var(--bg-4);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.stepBtn:hover:not(:disabled) { border-color: var(--gold-dim); color: var(--gold); }
+.stepBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.stepCount {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 18px;
+  color: var(--text);
+  min-width: 28px;
+  text-align: center;
+}
+
+.stepHint {
+  font-family: 'Crimson Text', serif;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 /* Submit */
 .submit {
   width: 100%;
