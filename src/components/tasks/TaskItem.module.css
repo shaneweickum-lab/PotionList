@@ -1,12 +1,11 @@
 .item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
-  padding: 14px 16px;
+  padding: 13px 16px;
   border-bottom: 1px solid var(--border);
-  transition: opacity 0.2s;
 }
-.done { opacity: 0.45; }
+.done { opacity: 0.4; }
 .done .text { text-decoration: line-through; }
 
 .check {
@@ -22,6 +21,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  margin-top: 1px;
   transition: background 0.15s, border-color 0.15s;
 }
 .check:hover:not(.checked) {
@@ -34,13 +34,53 @@
   color: #fff;
 }
 
-.text {
+.body {
   flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.text {
   font-family: 'Crimson Text', serif;
   font-size: 17px;
   color: var(--text);
-  line-height: 1.3;
+  line-height: 1.35;
+  word-break: break-word;
 }
+
+/* Badges */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.badge {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 10px;
+  border: 1px solid var(--border-bright);
+  color: var(--text-muted);
+  background: var(--bg-4);
+  font-family: 'Crimson Text', serif;
+}
+
+/* Priority badges */
+.priorityHigh   { border-color: var(--ember-dim); color: var(--ember); }
+.priorityUrgent { border-color: var(--red);       color: var(--red);   }
+
+/* Category badges */
+.cat_work     { border-color: #3d6d94; color: #5ba3d6; }
+.cat_health   { border-color: var(--green-dim); color: var(--green); }
+.cat_personal { border-color: var(--purple-dim); color: var(--purple); }
+.cat_study    { border-color: var(--gold-dim); color: var(--gold); }
+
+/* Recurrence badge */
+.recur { border-color: var(--border-bright); color: var(--text-dim); }
 
 .delete {
   background: none;
@@ -50,7 +90,37 @@
   font-size: 13px;
   padding: 4px 6px;
   opacity: 0;
+  flex-shrink: 0;
   transition: opacity 0.15s, color 0.15s;
 }
 .item:hover .delete { opacity: 1; }
 .delete:hover { color: var(--red); }
+
+/* ── Exit animations ─────────────────────────────────── */
+
+@keyframes exitFade {
+  to { opacity: 0; transform: scale(0.96); }
+}
+@keyframes exitDissolve {
+  to { opacity: 0; filter: blur(8px); transform: scale(1.04); }
+}
+@keyframes exitShatter {
+  0%   { opacity: 1; transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(1.04) rotate(-2deg); }
+  60%  { transform: scale(0.92) rotate(3deg) translateY(-4px); }
+  100% { opacity: 0; transform: scale(0.75) rotate(-4deg) translateY(10px); }
+}
+@keyframes exitBurn {
+  0%   { opacity: 1; filter: brightness(1); }
+  35%  { filter: brightness(1.8) saturate(2); color: var(--ember); }
+  100% { opacity: 0; transform: translateY(-14px); filter: brightness(3) blur(5px); }
+}
+@keyframes exitFloat {
+  to { opacity: 0; transform: translateY(-22px) scale(0.88); }
+}
+
+.exit_fade     { animation: exitFade     0.45s ease forwards; pointer-events: none; }
+.exit_dissolve { animation: exitDissolve 0.50s ease forwards; pointer-events: none; }
+.exit_shatter  { animation: exitShatter  0.52s ease forwards; pointer-events: none; }
+.exit_burn     { animation: exitBurn     0.50s ease forwards; pointer-events: none; }
+.exit_float    { animation: exitFloat    0.50s ease forwards; pointer-events: none; }

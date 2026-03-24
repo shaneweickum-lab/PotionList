@@ -8,13 +8,24 @@ export function createTodoSlice(set, get) {
     todos: [],
     lastCompletionReward: null,
 
-    addTask: (text) => {
+    addTask: (options) => {
+      const isString = typeof options === 'string'
+      const text = isString ? options : options.text
+      const priority = isString ? 'normal' : (options.priority ?? 'normal')
+      const category = isString ? 'general' : (options.category ?? 'general')
+      const recurrence = isString ? 'none' : (options.recurrence ?? 'none')
+      const completionAnimation = isString ? 'fade' : (options.completionAnimation ?? 'fade')
+
       set(state => ({
         todos: [...state.todos, {
           id: String(nextId++),
           text: text.trim(),
           createdAt: Date.now(),
           completed: false,
+          priority,
+          category,
+          recurrence,
+          completionAnimation,
         }],
       }))
     },
@@ -45,6 +56,19 @@ export function createTodoSlice(set, get) {
 
       // Streak handling
       get().checkStreak()
+
+      // Recurring tasks re-queue themselves after animation plays
+      if (todo.recurrence !== 'none') {
+        setTimeout(() => {
+          get().addTask({
+            text: todo.text,
+            priority: todo.priority,
+            category: todo.category,
+            recurrence: todo.recurrence,
+            completionAnimation: todo.completionAnimation,
+          })
+        }, 700)
+      }
 
       const reward = { xp, foundSeed, timeReduction: reduction }
       set({ lastCompletionReward: reward })
