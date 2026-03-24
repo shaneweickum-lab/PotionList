@@ -3,6 +3,23 @@ import { rollSeedFind } from '../../lib/loot.js'
 
 let nextId = Date.now()
 
+function calcNextDue(recurrence) {
+  if (recurrence === 'daily') {
+    const midnight = new Date()
+    midnight.setHours(24, 0, 0, 0)
+    return midnight.getTime()
+  }
+  if (recurrence === 'weekly') {
+    return Date.now() + 7 * 24 * 60 * 60 * 1000
+  }
+  if (recurrence === 'monthly') {
+    const next = new Date()
+    next.setMonth(next.getMonth() + 1)
+    return next.getTime()
+  }
+  return null
+}
+
 export function createTodoSlice(set, get) {
   return {
     todos: [],
@@ -15,6 +32,7 @@ export function createTodoSlice(set, get) {
       const category = isString ? 'general' : (options.category ?? 'general')
       const recurrence = isString ? 'none' : (options.recurrence ?? 'none')
       const completionAnimation = isString ? 'fade' : (options.completionAnimation ?? 'fade')
+      const targetCount = isString ? 1 : Math.max(1, options.targetCount ?? 1)
 
       set(state => ({
         todos: [...state.todos, {
@@ -26,29 +44,42 @@ export function createTodoSlice(set, get) {
           category,
           recurrence,
           completionAnimation,
+          targetCount,
+          currentCount: 0,
         }],
       }))
     },
 
-    completeTask: (id) => {
+    // Called for every tap that isn't the final one — awards XP but no full completion
+    incrementTask: (id) => {
       const todo = get().todos.find(t => t.id === id)
-      if (!todo || todo.completed) return null
+      if (!todo) return null
 
-      // Mark completed
+      const newCount = (todo.currentCount ?? 0) + 1
       set(state => ({
-        todos: state.todos.map(t => t.id === id ? { ...t, completed: true, completedAt: Date.now() } : t),
+        todos: state.todos.map(t => t.id === id ? { ...t, currentCount: newCount } : t),
       }))
 
-      // Award XP
+      const xp = randomTaskXP()
+      get().awardXP(xp)
+      get().awardGrowthXP(TASK_GROWTH_XP)
+
+      return { xp, progress: newCount, total: todo.targetCount }
+    },
+
+    // Called only when the final tap completes the task
+    completeTask: (id) => {
+      const todo = get().todos.find(t => t.id === id)
+      if (!todo) return null
+
+      // Award XP for the final tap
       const xp = randomTaskXP()
       get().awardXP(xp)
       get().awardGrowthXP(TASK_GROWTH_XP)
 
       // Seed find (35%)
       const foundSeed = rollSeedFind()
-      if (foundSeed) {
-        get().addSeed(foundSeed, 1)
-      }
+      if (foundSeed) get().addSeed(foundSeed, 1)
 
       // Time reduction on active brews/mine/smithy
       const reduction = randomTimeReduction()
@@ -57,17 +88,15 @@ export function createTodoSlice(set, get) {
       // Streak handling
       get().checkStreak()
 
-      // Recurring tasks re-queue themselves after animation plays
-      if (todo.recurrence !== 'none') {
-        setTimeout(() => {
-          get().addTask({
-            text: todo.text,
-            priority: todo.priority,
-            category: todo.category,
-            recurrence: todo.recurrence,
-            completionAnimation: todo.completionAnimation,
-          })
-        }, 700)
+      if (todo.recurrence === 'none') {
+        set(state => ({ todos: state.todos.filter(t => t.id !== id) }))
+      } else {
+        const nextDueAt = calcNextDue(todo.recurrence)
+        set(state => ({
+          todos: state.todos.map(t =>
+            t.id === id ? { ...t, completedAt: Date.now(), nextDueAt, currentCount: 0 } : t
+          ),
+        }))
       }
 
       const reward = { xp, foundSeed, timeReduction: reduction }
@@ -77,10 +106,6 @@ export function createTodoSlice(set, get) {
 
     deleteTask: (id) => {
       set(state => ({ todos: state.todos.filter(t => t.id !== id) }))
-    },
-
-    clearCompleted: () => {
-      set(state => ({ todos: state.todos.filter(t => !t.completed) }))
     },
   }
 }

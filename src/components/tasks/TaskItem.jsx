@@ -13,14 +13,29 @@ const PRIORITY_CLASS = {
   urgent: styles.priorityUrgent,
 }
 
-export default function TaskItem({ todo }) {
-  const EXIT_DURATION = { fade: 380, dissolve: 480, shatter: 510, burn: 540, float: 480 }
+const EXIT_DURATION = { fade: 380, dissolve: 480, shatter: 510, burn: 540, float: 480 }
 
-  const { completeTask, deleteTask } = useStore()
+export default function TaskItem({ todo }) {
+  const { completeTask, incrementTask, deleteTask } = useStore()
   const [exiting, setExiting] = useState(false)
 
+  const target = todo.targetCount ?? 1
+  const current = todo.currentCount ?? 0
+  const isLastTap = current + 1 >= target
+
   const handleComplete = () => {
-    if (todo.completed || exiting) return
+    if (exiting) return
+
+    if (!isLastTap) {
+      // Partial completion — just increment and show small toast
+      const reward = incrementTask(todo.id)
+      if (reward) {
+        showToast(`+${reward.xp} XP · ${reward.progress}/${reward.total}`, 'gold')
+      }
+      return
+    }
+
+    // Final tap — play exit animation then fully complete
     setExiting(true)
     const dur = EXIT_DURATION[todo.completionAnimation ?? 'fade'] ?? 400
     setTimeout(() => {
@@ -39,22 +54,34 @@ export default function TaskItem({ todo }) {
   }
 
   const exitClass = exiting ? styles[`exit_${todo.completionAnimation ?? 'fade'}`] : ''
-  const doneClass = todo.completed && !exiting ? styles.done : ''
   const catLabel = CATEGORY_LABELS[todo.category]
   const priorityClass = PRIORITY_CLASS[todo.priority] ?? ''
 
   return (
-    <div className={`${styles.item} ${doneClass} ${exitClass} fade-in`}>
+    <div className={`${styles.item} ${exitClass} fade-in`}>
       <button
-        className={`${styles.check} ${todo.completed ? styles.checked : ''}`}
+        className={styles.check}
         onClick={handleComplete}
         aria-label="Complete task"
-      >
-        {todo.completed ? '✓' : ''}
-      </button>
+      />
 
       <div className={styles.body}>
         <span className={styles.text}>{todo.text}</span>
+
+        {target > 1 && (
+          <div className={styles.progress}>
+            {target <= 8
+              ? Array.from({ length: target }, (_, i) => (
+                  <span
+                    key={i}
+                    className={`${styles.dot} ${i < current ? styles.dotFilled : ''}`}
+                  />
+                ))
+              : <span className={styles.fraction}>{current}<span className={styles.fractionTotal}>/{target}</span></span>
+            }
+          </div>
+        )}
+
         <div className={styles.meta}>
           {todo.priority !== 'normal' && (
             <span className={`${styles.badge} ${priorityClass}`}>

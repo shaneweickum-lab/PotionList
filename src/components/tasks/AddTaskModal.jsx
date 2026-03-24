@@ -49,6 +49,7 @@ export default function AddTaskModal({ onClose }) {
   const [category, setCategory] = useState('general')
   const [recurrence, setRecurrence] = useState('none')
   const [animation, setAnimation] = useState('fade')
+  const [count, setCount] = useState(1)
 
   const [previewKey, setPreviewKey] = useState(0)
   const [previewAnim, setPreviewAnim] = useState(null)
@@ -74,7 +75,7 @@ export default function AddTaskModal({ onClose }) {
   const submit = (e) => {
     e.preventDefault()
     if (!text.trim()) return
-    addTask({ text, priority, category, recurrence, completionAnimation: animation })
+    addTask({ text, priority, category, recurrence, completionAnimation: animation, targetCount: count })
     onClose()
   }
 
@@ -129,6 +130,30 @@ export default function AddTaskModal({ onClose }) {
             </Pill>
           ))}
         </OptionRow>
+
+        <div className={styles.row}>
+          <span className={styles.rowLabel}>Times to complete</span>
+          <div className={styles.stepper}>
+            <button
+              type="button"
+              className={styles.stepBtn}
+              onClick={() => setCount(c => Math.max(1, c - 1))}
+              disabled={count <= 1}
+            >−</button>
+            <span className={styles.stepCount}>{count}</span>
+            <button
+              type="button"
+              className={styles.stepBtn}
+              onClick={() => setCount(c => Math.min(25, c + 1))}
+              disabled={count >= 25}
+            >+</button>
+            {count > 1 && (
+              <span className={styles.stepHint}>
+                tap {count}× to complete
+              </span>
+            )}
+          </div>
+        </div>
 
         <div className={styles.row}>
           <span className={styles.rowLabel}>On complete</span>
