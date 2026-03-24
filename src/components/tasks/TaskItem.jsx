@@ -14,12 +14,15 @@ const PRIORITY_CLASS = {
 }
 
 export default function TaskItem({ todo }) {
+  const EXIT_DURATION = { fade: 380, dissolve: 480, shatter: 510, burn: 540, float: 480 }
+
   const { completeTask, deleteTask } = useStore()
   const [exiting, setExiting] = useState(false)
 
   const handleComplete = () => {
     if (todo.completed || exiting) return
     setExiting(true)
+    const dur = EXIT_DURATION[todo.completionAnimation ?? 'fade'] ?? 400
     setTimeout(() => {
       const reward = completeTask(todo.id)
       if (reward) {
@@ -32,7 +35,7 @@ export default function TaskItem({ todo }) {
           showToast(msg, 'gold')
         }
       }
-    }, 480)
+    }, dur)
   }
 
   const exitClass = exiting ? styles[`exit_${todo.completionAnimation ?? 'fade'}`] : ''

@@ -96,31 +96,10 @@
 .item:hover .delete { opacity: 1; }
 .delete:hover { color: var(--red); }
 
-/* ── Exit animations ─────────────────────────────────── */
+/* ── Exit animations (keyframes defined globally in index.css) ── */
 
-@keyframes exitFade {
-  to { opacity: 0; transform: scale(0.96); }
-}
-@keyframes exitDissolve {
-  to { opacity: 0; filter: blur(8px); transform: scale(1.04); }
-}
-@keyframes exitShatter {
-  0%   { opacity: 1; transform: scale(1) rotate(0deg); }
-  25%  { transform: scale(1.04) rotate(-2deg); }
-  60%  { transform: scale(0.92) rotate(3deg) translateY(-4px); }
-  100% { opacity: 0; transform: scale(0.75) rotate(-4deg) translateY(10px); }
-}
-@keyframes exitBurn {
-  0%   { opacity: 1; filter: brightness(1); }
-  35%  { filter: brightness(1.8) saturate(2); color: var(--ember); }
-  100% { opacity: 0; transform: translateY(-14px); filter: brightness(3) blur(5px); }
-}
-@keyframes exitFloat {
-  to { opacity: 0; transform: translateY(-22px) scale(0.88); }
-}
-
-.exit_fade     { animation: exitFade     0.45s ease forwards; pointer-events: none; }
-.exit_dissolve { animation: exitDissolve 0.50s ease forwards; pointer-events: none; }
-.exit_shatter  { animation: exitShatter  0.52s ease forwards; pointer-events: none; }
-.exit_burn     { animation: exitBurn     0.50s ease forwards; pointer-events: none; }
-.exit_float    { animation: exitFloat    0.50s ease forwards; pointer-events: none; }
+.exit_fade     { animation: taskExitFade     0.42s ease         forwards; pointer-events: none; }
+.exit_dissolve { animation: taskExitDissolve 0.52s ease         forwards; pointer-events: none; }
+.exit_shatter  { animation: taskExitShatter  0.55s ease         forwards; pointer-events: none; }
+.exit_burn     { animation: taskExitBurn     0.58s ease-in      forwards; pointer-events: none; }
+.exit_float    { animation: taskExitFloat    0.52s ease-in-out  forwards; pointer-events: none; }

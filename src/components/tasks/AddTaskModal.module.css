@@ -69,6 +69,63 @@
 .cat_personal.pillActive { border-color: var(--purple); background: rgba(155,107,181,0.12); color: var(--purple); }
 .cat_study.pillActive    { border-color: var(--gold); background: rgba(201,162,39,0.12); color: var(--gold); }
 
+/* Animation preview */
+.preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  min-height: 48px;
+}
+
+.previewTask {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: 1;
+  min-width: 0;
+}
+
+.previewCheck {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.previewText {
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
+  color: var(--text-dim);
+  font-style: italic;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.previewBtn {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border: 1px solid var(--border-bright);
+  border-radius: 20px;
+  background: none;
+  color: var(--text-muted);
+  font-family: 'Crimson Text', serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.previewBtn:hover { color: var(--gold); border-color: var(--gold-dim); }
+
 /* Animation grid */
 .animGrid {
   display: grid;
