@@ -20,7 +20,7 @@ export default function TaskItem({ todo }) {
   const [exiting, setExiting] = useState(false)
 
   const handleComplete = () => {
-    if (todo.completed || exiting) return
+    if (exiting) return
     setExiting(true)
     const dur = EXIT_DURATION[todo.completionAnimation ?? 'fade'] ?? 400
     setTimeout(() => {
@@ -39,18 +39,16 @@ export default function TaskItem({ todo }) {
   }
 
   const exitClass = exiting ? styles[`exit_${todo.completionAnimation ?? 'fade'}`] : ''
-  const doneClass = todo.completed && !exiting ? styles.done : ''
   const catLabel = CATEGORY_LABELS[todo.category]
   const priorityClass = PRIORITY_CLASS[todo.priority] ?? ''
 
   return (
-    <div className={`${styles.item} ${doneClass} ${exitClass} fade-in`}>
+    <div className={`${styles.item} ${exitClass} fade-in`}>
       <button
-        className={`${styles.check} ${todo.completed ? styles.checked : ''}`}
+        className={styles.check}
         onClick={handleComplete}
         aria-label="Complete task"
       >
-        {todo.completed ? '✓' : ''}
       </button>
 
       <div className={styles.body}>

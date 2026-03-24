@@ -3,6 +3,23 @@ import { rollSeedFind } from '../../lib/loot.js'
 
 let nextId = Date.now()
 
+function calcNextDue(recurrence) {
+  if (recurrence === 'daily') {
+    const midnight = new Date()
+    midnight.setHours(24, 0, 0, 0)
+    return midnight.getTime()
+  }
+  if (recurrence === 'weekly') {
+    return Date.now() + 7 * 24 * 60 * 60 * 1000
+  }
+  if (recurrence === 'monthly') {
+    const next = new Date()
+    next.setMonth(next.getMonth() + 1)
+    return next.getTime()
+  }
+  return null
+}
+
 export function createTodoSlice(set, get) {
   return {
     todos: [],
@@ -34,11 +51,6 @@ export function createTodoSlice(set, get) {
       const todo = get().todos.find(t => t.id === id)
       if (!todo || todo.completed) return null
 
-      // Mark completed
-      set(state => ({
-        todos: state.todos.map(t => t.id === id ? { ...t, completed: true, completedAt: Date.now() } : t),
-      }))
-
       // Award XP
       const xp = randomTaskXP()
       get().awardXP(xp)
@@ -46,9 +58,7 @@ export function createTodoSlice(set, get) {
 
       // Seed find (35%)
       const foundSeed = rollSeedFind()
-      if (foundSeed) {
-        get().addSeed(foundSeed, 1)
-      }
+      if (foundSeed) get().addSeed(foundSeed, 1)
 
       // Time reduction on active brews/mine/smithy
       const reduction = randomTimeReduction()
@@ -57,17 +67,17 @@ export function createTodoSlice(set, get) {
       // Streak handling
       get().checkStreak()
 
-      // Recurring tasks re-queue themselves after animation plays
-      if (todo.recurrence !== 'none') {
-        setTimeout(() => {
-          get().addTask({
-            text: todo.text,
-            priority: todo.priority,
-            category: todo.category,
-            recurrence: todo.recurrence,
-            completionAnimation: todo.completionAnimation,
-          })
-        }, 700)
+      if (todo.recurrence === 'none') {
+        // Non-recurring: remove entirely so it disappears for good
+        set(state => ({ todos: state.todos.filter(t => t.id !== id) }))
+      } else {
+        // Recurring: set nextDueAt — task hides itself until the window reopens
+        const nextDueAt = calcNextDue(todo.recurrence)
+        set(state => ({
+          todos: state.todos.map(t =>
+            t.id === id ? { ...t, completedAt: Date.now(), nextDueAt } : t
+          ),
+        }))
       }
 
       const reward = { xp, foundSeed, timeReduction: reduction }
@@ -77,10 +87,6 @@ export function createTodoSlice(set, get) {
 
     deleteTask: (id) => {
       set(state => ({ todos: state.todos.filter(t => t.id !== id) }))
-    },
-
-    clearCompleted: () => {
-      set(state => ({ todos: state.todos.filter(t => !t.completed) }))
     },
   }
 }
