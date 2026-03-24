@@ -1,17 +1,25 @@
+import { useState } from 'react'
 import { useStore } from '../../store/index.js'
 import { HERBS } from '../../constants/herbs.js'
 import { MUSHROOMS } from '../../constants/mushrooms.js'
 import { BUGS } from '../../constants/bugs.js'
+import { LORE } from '../../constants/lore.js'
 import Badge from '../ui/Badge.jsx'
 import styles from './Codex.module.css'
 
-export default function Codex() {
-  const { discovered } = useStore()
-  const disc = discovered ?? { herbs: [], mushrooms: [], bugs: [] }
+const CODEX_TABS = [
+  { id: 'botany', label: 'Botany' },
+  { id: 'mycology', label: 'Mycology' },
+  { id: 'etymology', label: 'Etymology' },
+  { id: 'lore', label: 'Lore' },
+]
 
-  const Section = ({ title, items, discList }) => (
+function ItemSection({ title, items, discList }) {
+  return (
     <div className={styles.section}>
-      <h4 className={styles.sectionTitle}>{title} <span className={styles.count}>{discList.length}/{items.length}</span></h4>
+      <h4 className={styles.sectionTitle}>
+        {title} <span className={styles.count}>{discList.length}/{items.length}</span>
+      </h4>
       <div className={styles.grid}>
         {items.map(item => {
           const found = discList.includes(item.id)
@@ -31,12 +39,46 @@ export default function Codex() {
       </div>
     </div>
   )
+}
+
+function LoreSection() {
+  return (
+    <div className={styles.section}>
+      <div className={styles.grid}>
+        {LORE.map(entry => (
+          <div key={entry.id} className={styles.loreEntry}>
+            <div className={styles.loreEntryTitle}>{entry.title}</div>
+            <p className={styles.lore}>{entry.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default function Codex() {
+  const [tab, setTab] = useState('botany')
+  const { discovered } = useStore()
+  const disc = discovered ?? { herbs: [], mushrooms: [], bugs: [] }
 
   return (
     <div className={styles.codex}>
-      <Section title="Herbs" items={HERBS} discList={disc.herbs ?? []} />
-      <Section title="Mushrooms" items={MUSHROOMS} discList={disc.mushrooms ?? []} />
-      <Section title="Bugs" items={BUGS} discList={disc.bugs ?? []} />
+      <div className={styles.innerTabs}>
+        {CODEX_TABS.map(t => (
+          <button
+            key={t.id}
+            className={`${styles.innerTab} ${tab === t.id ? styles.innerTabActive : ''}`}
+            onClick={() => setTab(t.id)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'botany'    && <ItemSection title="Herbs"     items={HERBS}     discList={disc.herbs     ?? []} />}
+      {tab === 'mycology'  && <ItemSection title="Mushrooms" items={MUSHROOMS} discList={disc.mushrooms ?? []} />}
+      {tab === 'etymology' && <ItemSection title="Bugs"      items={BUGS}      discList={disc.bugs      ?? []} />}
+      {tab === 'lore'      && <LoreSection />}
     </div>
   )
 }

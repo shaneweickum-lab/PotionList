@@ -15,8 +15,8 @@ export default defineConfig({
         type: 'module',
       },
       manifest: {
-        name: 'PotionList',
-        short_name: 'PotionList',
+        name: 'AlchemList',
+        short_name: 'AlchemList',
         description: 'A gamified todo list for alchemists',
         theme_color: '#080705',
         background_color: '#080705',
