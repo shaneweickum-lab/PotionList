@@ -4,6 +4,7 @@ import { POTION_MAP } from '../../constants/potions.js'
 import { HERB_MAP } from '../../constants/herbs.js'
 import { MUSHROOM_MAP } from '../../constants/mushrooms.js'
 import { ORE_MAP, INGOT_MAP } from '../../constants/ores.js'
+import { SEED_MAP } from '../../constants/seeds.js'
 import Button from '../ui/Button.jsx'
 import Modal from '../ui/Modal.jsx'
 import { showToast } from '../ui/ToastNotification.jsx'
@@ -11,11 +12,12 @@ import { isSupabaseConfigured } from '../../lib/supabase.js'
 import styles from './MarketTab.module.css'
 
 function getItemName(type, id) {
-  if (type === 'potion') return POTION_MAP[id]?.name ?? id
-  if (type === 'herb') return HERB_MAP[id]?.name ?? id
+  if (type === 'potion')   return POTION_MAP[id]?.name   ?? id
+  if (type === 'herb')     return HERB_MAP[id]?.name     ?? id
   if (type === 'mushroom') return MUSHROOM_MAP[id]?.name ?? id
-  if (type === 'ore') return ORE_MAP[id]?.name ?? id
-  if (type === 'ingot') return INGOT_MAP[id]?.name ?? id
+  if (type === 'ore')      return ORE_MAP[id]?.name      ?? id
+  if (type === 'ingot')    return INGOT_MAP[id]?.name    ?? id
+  if (type === 'seed')     return SEED_MAP[id]?.name     ?? id
   return id
 }
 
@@ -91,13 +93,15 @@ function ListItemModal({ onClose, listItem }) {
   const [itemId, setItemId] = useState('')
   const [qty, setQty] = useState(1)
   const [price, setPrice] = useState(50)
-  const { potionInventory, inventory, oreInventory, ingotInventory } = useStore()
+  const { potionInventory, inventory, oreInventory, ingotInventory, seeds } = useStore()
 
   const getOptions = () => {
-    if (type === 'potion') return Object.entries(potionInventory ?? {}).filter(([_, q]) => q > 0)
-    if (type === 'herb') return Object.entries(inventory ?? {}).filter(([id, q]) => q > 0 && HERB_MAP[id])
-    if (type === 'ore') return Object.entries(oreInventory ?? {}).filter(([_, q]) => q > 0)
-    if (type === 'ingot') return Object.entries(ingotInventory ?? {}).filter(([_, q]) => q > 0)
+    if (type === 'potion')   return Object.entries(potionInventory ?? {}).filter(([_, q]) => q > 0)
+    if (type === 'herb')     return Object.entries(inventory ?? {}).filter(([id, q]) => q > 0 && HERB_MAP[id])
+    if (type === 'mushroom') return Object.entries(inventory ?? {}).filter(([id, q]) => q > 0 && MUSHROOM_MAP[id])
+    if (type === 'ore')      return Object.entries(oreInventory ?? {}).filter(([_, q]) => q > 0)
+    if (type === 'ingot')    return Object.entries(ingotInventory ?? {}).filter(([_, q]) => q > 0)
+    if (type === 'seed')     return Object.entries(seeds ?? {}).filter(([_, q]) => q > 0)
     return []
   }
 
@@ -116,6 +120,8 @@ function ListItemModal({ onClose, listItem }) {
         <select className={styles.select} value={type} onChange={e => { setType(e.target.value); setItemId('') }}>
           <option value="potion">Potion</option>
           <option value="herb">Herb</option>
+          <option value="mushroom">Mushroom</option>
+          <option value="seed">Seed</option>
           <option value="ore">Ore</option>
           <option value="ingot">Ingot</option>
         </select>

@@ -8,6 +8,7 @@ import { createMineSlice } from './slices/mineSlice.js'
 import { createSmithySlice } from './slices/smithySlice.js'
 import { createMarketSlice } from './slices/marketSlice.js'
 import { createOrdersSlice } from './slices/ordersSlice.js'
+import { createCommunitySlice } from './slices/communitySlice.js'
 import { createInventorySlice } from './slices/inventorySlice.js'
 import { createIAPSlice } from './slices/iapSlice.js'
 
@@ -23,6 +24,7 @@ export const useStore = create(
         ...createSmithySlice(set, get),
         ...createMarketSlice(set, get),
         ...createOrdersSlice(set, get),
+        ...createCommunitySlice(set, get),
         ...createInventorySlice(set, get),
         ...createIAPSlice(set, get),
 
@@ -78,6 +80,8 @@ export const useStore = create(
               'marketListings', 'marketLoading', 'marketError',
               'iapLoading', 'iapError', 'lastCompletionReward',
               'streakGiftToShow', 'streakMilestoneToShow', 'pendingStreakDay',
+              'itemRequests', 'requestsLoading',
+              'communityOrderProgress', 'communityLoading',
             ].includes(key))
           )
         },

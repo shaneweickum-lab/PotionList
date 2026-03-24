@@ -83,10 +83,11 @@ export function createMarketSlice(set, get) {
 }
 
 function invKey(itemType) {
-  if (itemType === 'potion') return 'potionInventory'
-  if (itemType === 'ore') return 'oreInventory'
-  if (itemType === 'ingot') return 'ingotInventory'
-  return 'inventory'
+  if (itemType === 'potion')   return 'potionInventory'
+  if (itemType === 'ore')      return 'oreInventory'
+  if (itemType === 'ingot')    return 'ingotInventory'
+  if (itemType === 'seed')     return 'seeds'
+  return 'inventory' // herb, mushroom
 }
 
 function deductItem(set, get, itemType, itemId, qty) {
