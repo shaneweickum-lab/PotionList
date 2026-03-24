@@ -2,6 +2,8 @@ import { rollBugFind } from '../../lib/loot.js'
 import { SEED_MAP } from '../../constants/seeds.js'
 
 const INITIAL_SLOTS = 4
+// Passive growth: 1 minute of real time per threshold point (e.g. threshold 40 = 40 min)
+const GROWTH_MS_PER_POINT = 60_000
 
 export function createGardenSlice(set, get) {
   return {
@@ -74,16 +76,7 @@ export function createGardenSlice(set, get) {
       return { yieldId, bugFound }
     },
 
-    isSlotReady: (slotId) => {
-      const state = get()
-      const slot = state.garden.find(s => s.slotId === slotId)
-      if (!slot?.seedId) return false
-      const seedDef = SEED_MAP[slot.seedId]
-      if (!seedDef) return false
-      const growthAccumulated = state.growthXP - slot.growthXPAtPlant
-      const growthMod = get().getGrowthMod()
-      return growthAccumulated >= seedDef.growthThreshold * growthMod
-    },
+    isSlotReady: (slotId) => get().getGrowthProgress(slotId) >= 1,
 
     getGrowthProgress: (slotId) => {
       const state = get()
@@ -91,9 +84,14 @@ export function createGardenSlice(set, get) {
       if (!slot?.seedId) return 0
       const seedDef = SEED_MAP[slot.seedId]
       if (!seedDef) return 0
-      const growthAccumulated = state.growthXP - slot.growthXPAtPlant
       const growthMod = get().getGrowthMod()
-      return Math.min(1, growthAccumulated / (seedDef.growthThreshold * growthMod))
+      // Time-based passive growth: completes on its own over real time
+      const timeProgress = slot.plantedAt
+        ? (Date.now() - slot.plantedAt) / (seedDef.growthThreshold * GROWTH_MS_PER_POINT)
+        : 0
+      // XP-based growth: completing tasks speeds things up
+      const xpProgress = (state.growthXP - slot.growthXPAtPlant) / (seedDef.growthThreshold * growthMod)
+      return Math.min(1, timeProgress + xpProgress)
     },
 
     getGrowthMod: () => {
