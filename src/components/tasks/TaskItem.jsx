@@ -27,10 +27,12 @@ export default function TaskItem({ todo }) {
     if (exiting) return
 
     if (!isLastTap) {
-      // Partial completion — just increment and show small toast
       const reward = incrementTask(todo.id)
       if (reward) {
-        showToast(`+${reward.xp} XP · ${reward.progress}/${reward.total}`, 'gold')
+        let msg = `+${reward.xp} XP`
+        if (reward.growthXP) msg += `  ·  🌱 +${reward.growthXP}`
+        msg += `  ·  ${reward.progress}/${reward.total}`
+        showToast(msg, 'gold')
       }
       return
     }
@@ -42,9 +44,10 @@ export default function TaskItem({ todo }) {
       const reward = completeTask(todo.id)
       if (reward) {
         let msg = `+${reward.xp} XP`
+        if (reward.growthXP) msg += `  ·  🌱 +${reward.growthXP}`
         if (reward.foundSeed) {
           const seed = SEED_MAP[reward.foundSeed]
-          msg += ` · Found ${seed?.name ?? reward.foundSeed}!`
+          msg += `  ·  Found ${seed?.name ?? reward.foundSeed}!`
           showToast(msg, 'success')
         } else {
           showToast(msg, 'gold')
