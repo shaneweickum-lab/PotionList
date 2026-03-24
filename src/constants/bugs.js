@@ -1,3 +1,4 @@
+// Original 5 bugs — also used as potion ingredients
 export const BUGS = [
   {
     id: 'glowgrub',
@@ -36,4 +37,149 @@ export const BUGS = [
   },
 ]
 
-export const BUG_MAP = Object.fromEntries(BUGS.map(b => [b.id, b]))
+// 20 collectible-only bugs — found via the 1% collectible roll, not the regular bug drop
+export const COLLECTIBLE_BUGS = [
+  {
+    id: 'crystalwing',
+    name: 'Crystalwing',
+    rarity: 'rare',
+    color: '#c8e8f8',
+    lore: 'Wings composed of chitin so thin they refract light into tiny rainbows. Found only when the sun hits the garden at exactly the right angle.',
+  },
+  {
+    id: 'rootborer',
+    name: 'Rootborer',
+    rarity: 'common',
+    color: '#8a6040',
+    lore: 'A stout beetle that tunnels through root systems without damaging them. It leaves a scent that wards off parasitic fungi.',
+  },
+  {
+    id: 'inkblot_moth',
+    name: 'Inkblot Moth',
+    rarity: 'uncommon',
+    color: '#303048',
+    lore: 'The wing pattern changes subtly between individuals, but each resembles a spilled ink drop. Cartographers once used them for manuscript ink.',
+  },
+  {
+    id: 'frostling',
+    name: 'Frostling',
+    rarity: 'uncommon',
+    color: '#c8e0f0',
+    lore: 'A pale mite found clustered around coldvine roots. Despite its name and habitat, it is not cold to the touch.',
+  },
+  {
+    id: 'miremite',
+    name: 'Miremite',
+    rarity: 'common',
+    color: '#6a7848',
+    lore: 'Breeds in standing water between garden rows. Harmless in small numbers. In large numbers, still harmless, but unsettling to observe.',
+  },
+  {
+    id: 'dewdancer',
+    name: 'Dewdancer',
+    rarity: 'common',
+    color: '#88c8a8',
+    lore: 'Skims the surface of dew on broad leaves. Its legs are coated in a wax-like substance that prevents surface tension from releasing.',
+  },
+  {
+    id: 'speckleshell',
+    name: 'Speckleshell',
+    rarity: 'common',
+    color: '#b8a888',
+    lore: 'The spots on its carapace are unique to each individual, like fingerprints. Whether this has practical significance is unknown.',
+  },
+  {
+    id: 'ghostfly',
+    name: 'Ghostfly',
+    rarity: 'rare',
+    color: '#d8d8e8',
+    lore: 'The wing membrane is nearly invisible in direct light. In shadow it becomes a faint shimmer. Many people have swatted at air for this reason.',
+  },
+  {
+    id: 'bloodthorn_beetle',
+    name: 'Bloodthorn Beetle',
+    rarity: 'uncommon',
+    color: '#a83838',
+    lore: 'The red tips of its mandibles are stained from feeding exclusively on firethorn roots. Removing the stain has proven impossible.',
+  },
+  {
+    id: 'thornscuttler',
+    name: 'Thornscuttler',
+    rarity: 'common',
+    color: '#788048',
+    lore: 'Moves in sharp, angular bursts. Not faster than other beetles — just less predictable. Researchers have described the movement as profoundly useless to model.',
+  },
+  {
+    id: 'ambermite',
+    name: 'Ambermite',
+    rarity: 'uncommon',
+    color: '#d8a840',
+    lore: 'Found exclusively near dried tree sap. It does not consume the amber but appears compelled to remain near it indefinitely.',
+  },
+  {
+    id: 'wraithworm',
+    name: 'Wraithworm',
+    rarity: 'rare',
+    color: '#c8c8d8',
+    lore: 'Translucent to the point that no digestive system is visible. It appears to eat. What happens after is the outstanding question.',
+  },
+  {
+    id: 'emberbeetle',
+    name: 'Emberbeetle',
+    rarity: 'uncommon',
+    color: '#d87040',
+    lore: 'Seeks out heat sources with unexpected precision. Found inside forge bellows once, inexplicably unharmed.',
+  },
+  {
+    id: 'lumimoth',
+    name: 'Lumimoth',
+    rarity: 'rare',
+    color: '#e8e0a0',
+    lore: 'The wing scales produce a soft, steady light when the moth is still. No relation to the cinderfly. One produces light, the other fire.',
+  },
+  {
+    id: 'saltcrawler',
+    name: 'Saltcrawler',
+    rarity: 'common',
+    color: '#c8b8a0',
+    lore: 'Attracted to salt deposits and dried preservation mixtures. Often found near herb-drying operations, where it does nothing harmful and is simply present.',
+  },
+  {
+    id: 'duskling',
+    name: 'Duskling',
+    rarity: 'uncommon',
+    color: '#887898',
+    lore: 'Active for approximately forty minutes at dusk, then dormant until the following evening. During this window it moves with no apparent purpose.',
+  },
+  {
+    id: 'ridgewalker',
+    name: 'Ridgewalker',
+    rarity: 'common',
+    color: '#989870',
+    lore: 'Found on elevated garden borders and stone walls. Prefers the high ground entirely for temperature, not defense.',
+  },
+  {
+    id: 'hollowtick',
+    name: 'Hollowtick',
+    rarity: 'rare',
+    color: '#a09080',
+    lore: 'Named for the hollow clicking sound it produces in clusters. Single specimens make no sound. The mechanism is not understood.',
+  },
+  {
+    id: 'spectermite',
+    name: 'Spectermite',
+    rarity: 'epic',
+    color: '#a8a8c0',
+    lore: 'Appears partially phased. Standard containment does not hold it. Five collection attempts are documented in the codex. All unsuccessful.',
+  },
+  {
+    id: 'veilwing',
+    name: 'Veilwing',
+    rarity: 'epic',
+    color: '#d8c0f0',
+    lore: 'Leaves a shimmering trail in the air for approximately three seconds after passing. Two analyses have been conducted. Both results were inconclusive.',
+  },
+]
+
+export const ALL_BUGS = [...BUGS, ...COLLECTIBLE_BUGS]
+export const BUG_MAP  = Object.fromEntries(ALL_BUGS.map(b => [b.id, b]))
