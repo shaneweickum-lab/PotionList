@@ -31,6 +31,8 @@ export default function BromDialogue({ onConfirm, onClose }) {
             <div key={i} className={`${styles.dot} ${i <= lineIndex ? styles.dotActive : ''}`} />
           ))}
         </div>
+      </div>
+      <div className={styles.stickyFooter}>
         <Button variant="gold" fullWidth onClick={advance}>
           {lineIndex < BROM_HIRE_DIALOGUE.length - 1 ? 'Continue' : 'Hire Brom — 150g'}
         </Button>
