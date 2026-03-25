@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import { useStore } from '../../store/index.js'
 import { showToast } from '../ui/ToastNotification.jsx'
 import LootChestModal from './LootChestModal.jsx'
@@ -9,6 +11,7 @@ import styles from './QuestItem.module.css'
 export default function QuestItem({ quest }) {
   const { toggleQuestStep, toggleShoppingItem, openQuestChest, deleteQuest, level } = useStore()
   const [revealedLoot, setRevealedLoot] = useState(null)
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: quest.id })
 
   const doneCount = quest.steps.filter(s => s.done).length
   const allDone = doneCount === quest.steps.length
@@ -33,11 +36,29 @@ export default function QuestItem({ quest }) {
     }
   }
 
+  const dragStyle = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.45 : 1,
+    zIndex: isDragging ? 50 : undefined,
+  }
+
   return (
-    <div className={`${styles.quest} ${allDone && !quest.chestOpened ? styles.questReady : ''} ${quest.chestOpened ? styles.questDone : ''}`}>
+    <div
+      ref={setNodeRef}
+      style={dragStyle}
+      className={`${styles.quest} ${allDone && !quest.chestOpened ? styles.questReady : ''} ${quest.chestOpened ? styles.questDone : ''}`}
+    >
 
       {/* Header */}
       <div className={styles.header}>
+        <button
+          className={styles.dragHandle}
+          {...attributes}
+          {...listeners}
+          aria-label="Drag to reorder"
+          tabIndex={-1}
+        >⠿</button>
         <span className={styles.title}>{quest.title}</span>
         <div className={styles.headerRight}>
           {quest.recurrence && quest.recurrence !== 'none' && (

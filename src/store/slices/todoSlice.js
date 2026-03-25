@@ -128,5 +128,14 @@ export function createTodoSlice(set, get) {
     deleteTask: (id) => {
       set(state => ({ todos: state.todos.filter(t => t.id !== id) }))
     },
+
+    reorderTodos: (newOrderIds) => {
+      set(state => {
+        const idMap = Object.fromEntries(state.todos.map(t => [t.id, t]))
+        const newSet = new Set(newOrderIds)
+        const others = state.todos.filter(t => !newSet.has(t.id))
+        return { todos: [...newOrderIds.map(id => idMap[id]).filter(Boolean), ...others] }
+      })
+    },
   }
 }
