@@ -1,5 +1,5 @@
 import { randomTaskXP, randomTimeReduction, TASK_GROWTH_XP } from '../../lib/xpCalc.js'
-import { rollSeedFind } from '../../lib/loot.js'
+import { rollSeedFind, rollTaskGold } from '../../lib/loot.js'
 
 let nextId = Date.now()
 
@@ -85,6 +85,10 @@ export function createTodoSlice(set, get) {
       const foundSeed = rollSeedFind(get().level ?? 1)
       if (foundSeed) get().addSeed(foundSeed, 1)
 
+      // Gold find (4%)
+      const foundGold = rollTaskGold()
+      if (foundGold) get().addGold(foundGold)
+
       // Time reduction on active brews/mine/smithy
       const reduction = randomTimeReduction()
       get().applyTimeReduction(reduction)
@@ -109,7 +113,7 @@ export function createTodoSlice(set, get) {
         }))
       }
 
-      const reward = { xp, growthXP: hasPlants ? TASK_GROWTH_XP : 0, foundSeed, timeReduction: reduction }
+      const reward = { xp, growthXP: hasPlants ? TASK_GROWTH_XP : 0, foundSeed, foundGold: foundGold || null, timeReduction: reduction }
       set({ lastCompletionReward: reward })
       return reward
     },
