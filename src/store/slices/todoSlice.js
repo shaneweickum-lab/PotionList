@@ -5,17 +5,21 @@ let nextId = Date.now()
 
 function calcNextDue(recurrence) {
   if (recurrence === 'daily') {
-    const midnight = new Date()
-    midnight.setHours(24, 0, 0, 0)
-    return midnight.getTime()
+    const d = new Date()
+    d.setHours(24, 0, 0, 0)
+    return d.getTime()
   }
   if (recurrence === 'weekly') {
-    return Date.now() + 7 * 24 * 60 * 60 * 1000
+    const d = new Date()
+    d.setDate(d.getDate() + 7)
+    d.setHours(0, 0, 0, 0)
+    return d.getTime()
   }
   if (recurrence === 'monthly') {
-    const next = new Date()
-    next.setMonth(next.getMonth() + 1)
-    return next.getTime()
+    const d = new Date()
+    d.setMonth(d.getMonth() + 1)
+    d.setHours(0, 0, 0, 0)
+    return d.getTime()
   }
   return null
 }

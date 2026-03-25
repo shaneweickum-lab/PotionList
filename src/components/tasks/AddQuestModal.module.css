@@ -135,6 +135,32 @@
 }
 .removeBtn:hover { color: var(--red); }
 
+/* Recurrence pills */
+.recurRow {
+  display: flex;
+  gap: 6px;
+}
+
+.recurPill {
+  flex: 1;
+  padding: 8px 4px;
+  background: var(--bg-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-dim);
+  font-family: 'Crimson Text', serif;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.recurPill:hover { border-color: var(--gold-dim); color: var(--text); }
+.recurPillActive {
+  border-color: var(--gold-dim);
+  background: rgba(201,162,39,0.1);
+  color: var(--gold);
+}
+
 .addItemBtn {
   align-self: flex-start;
   background: none;

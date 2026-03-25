@@ -37,6 +37,34 @@
   color: var(--text-dim);
 }
 
+.restingRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 16px 6px;
+  padding: 9px 12px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  opacity: 0.75;
+}
+.restingIcon { font-size: 13px; color: var(--gold); flex-shrink: 0; }
+.restingTitle {
+  font-family: 'Crimson Text', serif;
+  font-size: 14px;
+  color: var(--text-dim);
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.restingTime {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
 .sectionLabel {
   font-family: 'Cinzel Decorative', serif;
   font-size: 10px;

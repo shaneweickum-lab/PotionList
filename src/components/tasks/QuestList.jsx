@@ -4,12 +4,26 @@ import QuestItem from './QuestItem.jsx'
 import AddQuestModal from './AddQuestModal.jsx'
 import styles from './QuestList.module.css'
 
+function timeUntil(ts) {
+  const diff = ts - Date.now()
+  if (diff <= 0) return 'soon'
+  const days  = Math.floor(diff / 86400000)
+  const hours = Math.floor((diff % 86400000) / 3600000)
+  const mins  = Math.floor((diff % 3600000) / 60000)
+  if (days > 0)  return `${days}d ${hours}h`
+  if (hours > 0) return `${hours}h ${mins}m`
+  return `${mins}m`
+}
+
 export default function QuestList() {
   const quests = useStore(s => s.quests)
   const [showAdd, setShowAdd] = useState(false)
+  const now = Date.now()
 
-  const active = quests.filter(q => !q.chestOpened)
-  const claimed = quests.filter(q => q.chestOpened)
+  const active  = quests.filter(q => !q.nextDueAt || q.nextDueAt <= now)
+  const resting = quests.filter(q => q.nextDueAt && q.nextDueAt > now)
+  const visible = active.filter(q => !q.chestOpened)
+  const claimed = active.filter(q => q.chestOpened)
 
   return (
     <div className={styles.list}>
@@ -24,7 +38,20 @@ export default function QuestList() {
         </div>
       )}
 
-      {active.map(q => <QuestItem key={q.id} quest={q} />)}
+      {visible.map(q => <QuestItem key={q.id} quest={q} />)}
+
+      {resting.length > 0 && (
+        <>
+          <div className={styles.sectionLabel}>Resting</div>
+          {resting.map(q => (
+            <div key={q.id} className={styles.restingRow}>
+              <span className={styles.restingIcon}>↺</span>
+              <span className={styles.restingTitle}>{q.title}</span>
+              <span className={styles.restingTime}>{timeUntil(q.nextDueAt)}</span>
+            </div>
+          ))}
+        </>
+      )}
 
       {claimed.length > 0 && (
         <>
