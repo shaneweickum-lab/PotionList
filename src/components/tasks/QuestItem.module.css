@@ -12,7 +12,6 @@
 
 .questReady {
   border-color: var(--gold-dim);
-  box-shadow: 0 0 14px rgba(201,162,39,0.15);
   animation: questGlow 2.5s ease-in-out infinite;
 }
 
@@ -21,9 +20,7 @@
   50%       { box-shadow: 0 0 22px rgba(201,162,39,0.30); }
 }
 
-.questDone {
-  opacity: 0.6;
-}
+.questDone { opacity: 0.6; }
 
 /* ── Header ── */
 .header {
@@ -41,11 +38,28 @@
   flex: 1;
 }
 
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.catBadge {
+  font-family: 'Crimson Text', serif;
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--bg-4);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
 .count {
   font-family: 'Cinzel Decorative', serif;
   font-size: 11px;
   color: var(--gold);
-  flex-shrink: 0;
 }
 
 /* ── Progress bar ── */
@@ -67,7 +81,7 @@
 .steps {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .step {
@@ -110,13 +124,93 @@
   font-family: 'Crimson Text', serif;
   font-size: 15px;
   color: var(--text);
-  line-height: 1.3;
   flex: 1;
+  line-height: 1.3;
 }
 
 .stepDone .stepText {
   color: var(--text-muted);
   text-decoration: line-through;
+}
+
+/* ── Shopping list ── */
+.shoppingSection {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.shoppingHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.shoppingLabel {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.shoppingCount {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  color: var(--green);
+}
+
+.groceryItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 5px 4px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  border-radius: var(--radius);
+  transition: background 0.12s;
+}
+.groceryItem:hover:not(:disabled) { background: var(--bg-4); }
+.groceryItem:disabled { cursor: default; }
+
+.groceryName {
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
+  color: var(--text);
+  flex: 1;
+}
+
+.groceryDone .groceryName {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.healthyBadge {
+  font-size: 11px;
+  color: var(--green);
+  background: rgba(90,158,111,0.12);
+  border: 1px solid var(--green-dim);
+  border-radius: 10px;
+  padding: 2px 7px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.healthyEarned {
+  font-size: 13px;
+  opacity: 0.5;
+}
+
+.xpHint {
+  font-size: 11px;
+  color: var(--text-muted);
+  flex-shrink: 0;
 }
 
 /* ── Chest button ── */
@@ -133,8 +227,8 @@
   font-family: 'Cinzel Decorative', serif;
   font-size: 12px;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
   letter-spacing: 0.04em;
+  transition: background 0.15s, border-color 0.15s;
 }
 .chestBtn:hover { background: rgba(201,162,39,0.18); border-color: var(--gold); }
 
@@ -150,7 +244,7 @@
   100% { transform: rotate(360deg) scale(1); }
 }
 
-/* ── Claimed row ── */
+/* ── Claimed ── */
 .claimedRow {
   display: flex;
   align-items: center;
