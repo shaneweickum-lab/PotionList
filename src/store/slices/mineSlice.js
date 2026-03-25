@@ -19,9 +19,10 @@ export function createMineSlice(set, get) {
 
     getMaxTripSlots: () => {
       const { level, founderUnlocked, bromTrip2Unlocked } = get()
-      if (level >= 40) return 3
-      if (level >= 20 || bromTrip2Unlocked || founderUnlocked) return 2
-      return 1
+      const voidDiverBonus = get().hasSkill?.('void_diver') ? 1 : 0
+      if (level >= 40) return 3 + voidDiverBonus
+      if (level >= 20 || bromTrip2Unlocked || founderUnlocked) return 2 + voidDiverBonus
+      return 1 + voidDiverBonus
     },
 
     startMineTrip: (mineLevel) => {
