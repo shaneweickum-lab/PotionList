@@ -20,7 +20,7 @@ export function createSmithySlice(set, get) {
         oreInventory: { ...state.oreInventory, [ingotDef.fromOre]: state.oreInventory[ingotDef.fromOre] - oreNeeded },
       }))
 
-      const totalTime = ingotDef.smeltTime * qty * 1000
+      const totalTime = ingotDef.smeltTime * qty * 1000 * (get().hasSkill?.('forge_speed') ? 0.75 : 1)
       const finishAt = Date.now() + totalTime
       const id = `smelt_${Date.now()}_${Math.random().toString(36).slice(2)}`
 
@@ -83,7 +83,7 @@ export function createSmithySlice(set, get) {
       get().spendGold(upgrade.goldCost)
 
       // Forge time: 30 minutes base
-      const totalTime = 30 * 60 * 1000
+      const totalTime = 30 * 60 * 1000 * (get().hasSkill?.('forge_speed') ? 0.75 : 1)
       const finishAt = Date.now() + totalTime
       const id = `forge_${Date.now()}`
 

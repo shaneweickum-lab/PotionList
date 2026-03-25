@@ -3,10 +3,12 @@ import Tabs from '../components/ui/Tabs.jsx'
 import StatsPanel from '../components/profile/StatsPanel.jsx'
 import DailyOrders from '../components/profile/DailyOrders.jsx'
 import SettingsPanel from '../components/profile/SettingsPanel.jsx'
+import SkillTree from '../components/profile/SkillTree.jsx'
 
 const TABS = [
   { id: 'stats',    label: 'Stats'    },
   { id: 'orders',   label: 'Orders'   },
+  { id: 'skills',   label: 'Skills'   },
   { id: 'settings', label: 'Settings' },
 ]
 
@@ -17,6 +19,7 @@ export default function ProfileScreen() {
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
       {tab === 'stats'    && <StatsPanel />}
       {tab === 'orders'   && <DailyOrders />}
+      {tab === 'skills'   && <SkillTree />}
       {tab === 'settings' && <SettingsPanel />}
     </div>
   )

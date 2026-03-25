@@ -53,7 +53,8 @@ export function createInventorySlice(set, get) {
     },
 
     rollLoreFind: () => {
-      if (Math.random() >= 0.01) return null
+      const threshold = get().hasSkill?.('lore_sense') ? 0.02 : 0.01
+      if (Math.random() >= threshold) return null
       const undiscovered = ALL_HIDDEN_LORE_IDS.filter(id => !get().discoveredLore.includes(id))
       if (!undiscovered.length) return null
       const id = undiscovered[Math.floor(Math.random() * undiscovered.length)]

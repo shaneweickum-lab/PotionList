@@ -26,7 +26,7 @@ export function createBrewSlice(set, get) {
         newInv[ingId] -= needed * qty
       }
 
-      const totalTime = potion.brewTime * 1000
+      const totalTime = potion.brewTime * 1000 * (get().hasSkill?.('boil_mastery') ? 0.85 : 1)
       const finishAt = Date.now() + totalTime
       const id = `brew_${Date.now()}_${Math.random().toString(36).slice(2)}`
 
@@ -50,7 +50,9 @@ export function createBrewSlice(set, get) {
       const brew = state.brewing.find(b => b.id === brewId)
       if (!brew) return
       const potion = POTION_MAP[brew.potionId]
-      const yield_ = (get().owned ?? []).includes('silver_alembic') ? brew.qty * 2 : brew.qty
+      const baseYield = (get().owned ?? []).includes('silver_alembic') ? brew.qty * 2 : brew.qty
+      const extraDraft = get().hasSkill?.('double_draft') && Math.random() < 0.15 ? 1 : 0
+      const yield_ = baseYield + extraDraft
 
       set(state => ({
         brewing: state.brewing.filter(b => b.id !== brewId),
