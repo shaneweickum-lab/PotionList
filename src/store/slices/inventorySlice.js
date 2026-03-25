@@ -30,6 +30,12 @@ export function createInventorySlice(set, get) {
       }))
     },
 
+    removeSeed: (seedId, qty = 1) => {
+      set(state => ({
+        seeds: { ...state.seeds, [seedId]: Math.max(0, (state.seeds[seedId] ?? 0) - qty) },
+      }))
+    },
+
     discoverItem: (category, itemId) => {
       const current = get().discovered[category] ?? []
       if (current.includes(itemId)) return

@@ -63,6 +63,15 @@ export function createBrewSlice(set, get) {
       if (potion) get().awardXP(potion.xpReward * brew.qty)
     },
 
+    removePotion: (potionId, qty = 1) => {
+      set(state => ({
+        potionInventory: {
+          ...state.potionInventory,
+          [potionId]: Math.max(0, (state.potionInventory[potionId] ?? 0) - qty),
+        },
+      }))
+    },
+
     upgradeCauldron: (tier) => {
       set({ cauldronTier: tier })
     },

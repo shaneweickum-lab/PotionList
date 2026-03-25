@@ -6,6 +6,7 @@ import { MUSHROOM_MAP } from '../../constants/mushrooms.js'
 import { SEED_MAP } from '../../constants/seeds.js'
 import Button from '../ui/Button.jsx'
 import { showToast } from '../ui/ToastNotification.jsx'
+import SellTab from './SellTab.jsx'
 import styles from './ShopTab.module.css'
 
 export default function ShopTab() {
@@ -54,14 +55,16 @@ export default function ShopTab() {
   return (
     <div className={styles.shop}>
       <div className={styles.categories}>
-        {['seeds', 'tools', 'garden'].map(c => (
+        {['seeds', 'tools', 'garden', 'sell'].map(c => (
           <button key={c} className={`${styles.catBtn} ${category === c ? styles.catActive : ''}`} onClick={() => setCategory(c)}>
             {c.charAt(0).toUpperCase() + c.slice(1)}
           </button>
         ))}
       </div>
 
-      <div className={styles.items}>
+      {category === 'sell' && <SellTab />}
+
+      {category !== 'sell' && <div className={styles.items}>
         {items.map(item => {
           const alreadyOwned = item.oneTime && isOwned(item.id)
           const atMaxPlots = item.id === 'garden_plot' && gardenSlotCount >= MAX_PLOTS
@@ -100,7 +103,7 @@ export default function ShopTab() {
             </div>
           )
         })}
-      </div>
+      </div>}
     </div>
   )
 }
