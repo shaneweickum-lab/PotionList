@@ -12,6 +12,7 @@ import GardenScreen from './screens/GardenScreen.jsx'
 import CauldronScreen from './screens/CauldronScreen.jsx'
 import VillageScreen from './screens/VillageScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
+import SplashScreen from './screens/SplashScreen.jsx'
 import IAPModal from './components/modals/IAPModal.jsx'
 import StreakModal from './components/modals/StreakModal.jsx'
 import ToastContainer from './components/ui/ToastNotification.jsx'
@@ -60,7 +61,12 @@ function AuthenticatedApp() {
 export default function App() {
   useAuth()
 
+  const [splashDone, setSplashDone] = useState(false)
   const { authReady } = useStore()
+
+  if (!splashDone) {
+    return <SplashScreen onEnter={() => setSplashDone(true)} />
+  }
 
   if (!authReady) {
     return (
