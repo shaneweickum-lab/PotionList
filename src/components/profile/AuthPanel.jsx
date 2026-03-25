@@ -13,12 +13,12 @@ export default function AuthPanel() {
   const [user, setUser] = useState('')
   const [loading, setLoading] = useState(false)
 
-  if (userId) {
+  if (username) {
     return (
       <div className={styles.loggedIn}>
         <div className={styles.avatar}>👤</div>
-        <div className={styles.username}>{username ?? 'Alchemist'}</div>
-        <div className={styles.userId}>{userId.slice(0, 8)}...</div>
+        <div className={styles.username}>{username}</div>
+        {userId && <div className={styles.userId}>{userId}</div>}
         <Button variant="ghost" onClick={async () => { await signOut(); showToast('Signed out', 'info') }}>
           Sign Out
         </Button>

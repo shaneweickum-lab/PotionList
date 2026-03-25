@@ -22,3 +22,8 @@ export async function signUp(email, password, username) {
   useStore.getState().setUserId(email)
   return { success: true }
 }
+
+export async function signOut() {
+  useStore.getState().setUsername(null)
+  useStore.getState().setUserId(null)
+}
