@@ -142,6 +142,100 @@
   margin-top: 4px;
 }
 
+/* ── Profile display ── */
+.profileCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+}
+.profileAvatar { flex-shrink: 0; }
+.profileEmoji { font-size: 44px; line-height: 1; }
+.profileImg { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold-dim); }
+.profileInfo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.profileUsername { font-family: 'Cinzel Decorative', serif; font-size: 13px; color: var(--gold); }
+.profileHandle { font-family: 'Crimson Text', serif; font-size: 13px; color: var(--text-muted); }
+.profileNickname { font-family: 'Crimson Text', serif; font-size: 13px; color: var(--text-dim); font-style: italic; }
+.profileBio { font-family: 'Crimson Text', serif; font-size: 14px; color: var(--text-dim); margin: 4px 0 0; line-height: 1.4; }
+.editBtn {
+  flex-shrink: 0;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  color: var(--text-muted);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.editBtn:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+/* ── Profile edit form ── */
+.profileEdit {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.editField { display: flex; flex-direction: column; gap: 5px; }
+.editLabel {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+.optional { font-style: italic; font-size: 8px; color: var(--text-muted); }
+.editInput {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg-4);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+.editInput:focus { border-color: var(--gold-dim); }
+.inputError { border-color: #f08080 !important; }
+.editTextarea { resize: vertical; min-height: 68px; line-height: 1.4; }
+.charCount { font-family: 'Crimson Text', serif; font-size: 12px; color: var(--text-muted); text-align: right; margin: 0; }
+.handleRow { display: flex; align-items: stretch; }
+.atSign {
+  font-family: 'Cinzel Decorative', serif; font-size: 13px; color: var(--gold);
+  background: var(--bg-4); border: 1px solid var(--border-bright); border-right: none;
+  border-radius: var(--radius) 0 0 var(--radius); padding: 10px 10px;
+  display: flex; align-items: center; flex-shrink: 0;
+}
+.handleInput { border-radius: 0 var(--radius) var(--radius) 0; flex: 1; }
+.fieldError { font-family: 'Crimson Text', serif; font-size: 13px; color: #f08080; margin: 0; }
+.fieldOk { font-family: 'Crimson Text', serif; font-size: 13px; color: var(--green); margin: 0; }
+.editActions { display: flex; flex-direction: column; gap: 8px; }
+.cancelEdit {
+  background: none; border: none;
+  font-family: 'Crimson Text', serif; font-size: 14px; color: var(--text-muted);
+  cursor: pointer; text-decoration: underline; padding: 0; text-align: center;
+}
+.cancelEdit:hover { color: var(--text); }
+
+/* ── Avatar picker (inline in settings) ── */
+.avatarPicker { display: flex; flex-direction: column; gap: 8px; }
+.emojiGrid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; }
+.emojiBtn {
+  aspect-ratio: 1; font-size: 18px;
+  background: var(--bg-4); border: 1px solid var(--border); border-radius: var(--radius);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s; padding: 0; overflow: hidden;
+}
+.emojiBtn:hover { border-color: var(--gold-dim); }
+.emojiBtnActive { border-color: var(--gold) !important; background: rgba(201,162,39,0.12) !important; }
+.uploadPreview { width: 100%; height: 100%; object-fit: cover; }
+
 /* ── Sign out ── */
 .signOutBtn {
   width: 100%;

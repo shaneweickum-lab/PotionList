@@ -12,6 +12,7 @@ const FRESH_STATE = {
   streak: 0, lastTaskDay: null, longestStreak: 0,
   tasksCompleted: 0, milestonesClaimed: [], lastSaved: null, pendingSync: false,
   titles: [], founderUnlocked: false,
+  username: null,
   handle: null,
   bio: null,
   nickname: null,
@@ -116,7 +117,8 @@ export async function signUp(email, password) {
   }
   const { userId } = useStore.getState()
   if (userId) saveCurrentAccount()
-  useStore.setState({ ...FRESH_STATE, userId: email, authReady: true })
+  // username must be explicitly null so App.jsx routes to ProfileSetupScreen
+  useStore.setState({ ...FRESH_STATE, username: null, userId: email, authReady: true })
   return { success: true }
 }
 
