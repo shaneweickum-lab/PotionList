@@ -6,6 +6,7 @@ import { HERB_MAP } from '../../constants/herbs.js'
 import { MUSHROOM_MAP } from '../../constants/mushrooms.js'
 import { ORE_MAP, INGOT_MAP } from '../../constants/ores.js'
 import { POTION_MAP } from '../../constants/potions.js'
+import MarketTab from './MarketTab.jsx'
 import Button from '../ui/Button.jsx'
 import Modal from '../ui/Modal.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
@@ -14,8 +15,9 @@ import { isSupabaseConfigured } from '../../lib/supabase.js'
 import styles from './CommunityTab.module.css'
 
 const SUB_TABS = [
+  { id: 'market',   label: 'Market' },
   { id: 'requests', label: 'Requests' },
-  { id: 'orders',  label: 'Community Orders' },
+  { id: 'orders',   label: 'Community Orders' },
 ]
 
 function getItemName(type, id) {
@@ -333,7 +335,7 @@ function PostRequestModal({ onClose }) {
 // ── Main tab ─────────────────────────────────────────────────────────────────
 
 export default function CommunityTab() {
-  const [sub, setSub] = useState('requests')
+  const [sub, setSub] = useState('market')
 
   return (
     <div className={styles.community}>
@@ -349,6 +351,7 @@ export default function CommunityTab() {
         ))}
       </div>
 
+      {sub === 'market'   && <MarketTab />}
       {sub === 'requests' && <RequestsSection />}
       {sub === 'orders'   && <CommunityOrdersSection />}
     </div>
