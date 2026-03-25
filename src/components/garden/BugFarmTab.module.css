@@ -1,0 +1,271 @@
+.farm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px 16px;
+}
+
+/* ── Active breed panel ── */
+.breedPanel {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.breedReady {
+  border-color: var(--gold-dim);
+  animation: breedGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes breedGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(201,162,39,0.10); }
+  50%       { box-shadow: 0 0 20px rgba(201,162,39,0.28); }
+}
+
+.breedHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.breedDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.breedTitle {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.breedTask {
+  font-family: 'Crimson Text', serif;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+/* ── Progress pips ── */
+.progressRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progressTrack {
+  display: flex;
+  gap: 5px;
+  flex: 1;
+}
+
+.progressPip {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border-bright);
+  transition: background 0.2s;
+}
+
+.progressPipFilled {
+  background: var(--green);
+}
+
+.progressLabel {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 11px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.breedActions {
+  display: flex;
+  gap: 8px;
+}
+
+.cancelBtn {
+  flex: 1;
+  padding: 9px;
+  background: none;
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-family: 'Crimson Text', serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.cancelBtn:hover { border-color: var(--red); color: var(--red); }
+
+.hatchBtn {
+  flex: 2;
+  padding: 9px;
+  background: rgba(201,162,39,0.12);
+  border: 1.5px solid var(--gold-dim);
+  border-radius: var(--radius);
+  color: var(--gold);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 12px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  animation: hatchPulse 2s ease-in-out infinite;
+  transition: background 0.15s;
+}
+.hatchBtn:hover { background: rgba(201,162,39,0.22); }
+
+@keyframes hatchPulse {
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: 0 0 12px rgba(201,162,39,0.4); }
+}
+
+.breedHint {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ── Start button ── */
+.startBtn {
+  width: 100%;
+  padding: 12px;
+  background: var(--bg-3);
+  border: 1.5px dashed var(--gold-dim);
+  border-radius: var(--radius);
+  color: var(--gold);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.startBtn:hover:not(:disabled) { background: rgba(201,162,39,0.1); border-color: var(--gold); }
+
+.startBtnDisabled {
+  border-color: var(--border-bright);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.startBtnHint {
+  font-family: 'Crimson Text', serif;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-style: italic;
+}
+
+/* ── Bug roster ── */
+.roster {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rosterLabel {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.bugRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.bugRowLocked { opacity: 0.45; }
+
+.bugInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.bugDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bugDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.bugName {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 11px;
+}
+
+.bugMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.genderCount {
+  font-family: 'Crimson Text', serif;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.ingNote {
+  font-family: 'Crimson Text', serif;
+  font-size: 12px;
+}
+
+.levelGate {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.addBtn {
+  flex-shrink: 0;
+  padding: 5px 10px;
+  background: var(--bg-4);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius);
+  color: var(--text-dim);
+  font-family: 'Crimson Text', serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.addBtn:hover:not(:disabled) { border-color: var(--gold-dim); color: var(--gold); }
+.addBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ── Explainer ── */
+.explainer {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+}

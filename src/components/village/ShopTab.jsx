@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useStore } from '../../store/index.js'
-import { SHOP_ITEMS } from '../../constants/shop.js'
+import { SHOP_ITEMS, CONSUMABLES } from '../../constants/shop.js'
 import { HERB_MAP } from '../../constants/herbs.js'
 import { MUSHROOM_MAP } from '../../constants/mushrooms.js'
 import { SEED_MAP } from '../../constants/seeds.js'
@@ -9,10 +9,12 @@ import { showToast } from '../ui/ToastNotification.jsx'
 import SellTab from './SellTab.jsx'
 import styles from './ShopTab.module.css'
 
+const TABS = ['seeds', 'tools', 'garden', 'farm', 'sell']
+
 export default function ShopTab() {
   const [category, setCategory] = useState('seeds')
-  const { gold, spendGold, addSeed, purchaseShopItem, isOwned, expandGarden,
-          gardenSlotCount, incrementPlotsBought, getNextPlotCost } = useStore()
+  const { gold, spendGold, addSeed, addToInventory, inventory, purchaseShopItem, isOwned,
+          expandGarden, gardenSlotCount, incrementPlotsBought, getNextPlotCost } = useStore()
   const MAX_PLOTS = 20
 
   const purchaseSeed = (item) => {
@@ -50,12 +52,21 @@ export default function ShopTab() {
     showToast(`${item.name} acquired!`, 'success')
   }
 
-  const items = category === 'seeds' ? SHOP_ITEMS.seeds : category === 'tools' ? SHOP_ITEMS.tools : SHOP_ITEMS.garden
+  const purchaseConsumable = (item) => {
+    if (gold < item.goldCost) return showToast('Not enough gold', 'error')
+    spendGold(item.goldCost)
+    addToInventory(item.id, 1)
+    showToast(`Purchased ${item.name}!`, 'success')
+  }
+
+  const items = category === 'seeds' ? SHOP_ITEMS.seeds
+    : category === 'tools'  ? SHOP_ITEMS.tools
+    : SHOP_ITEMS.garden
 
   return (
     <div className={styles.shop}>
       <div className={styles.categories}>
-        {['seeds', 'tools', 'garden', 'sell'].map(c => (
+        {TABS.map(c => (
           <button key={c} className={`${styles.catBtn} ${category === c ? styles.catActive : ''}`} onClick={() => setCategory(c)}>
             {c.charAt(0).toUpperCase() + c.slice(1)}
           </button>
@@ -64,46 +75,71 @@ export default function ShopTab() {
 
       {category === 'sell' && <SellTab />}
 
-      {category !== 'sell' && <div className={styles.items}>
-        {items.map(item => {
-          const alreadyOwned = item.oneTime && isOwned(item.id)
-          const atMaxPlots = item.id === 'garden_plot' && gardenSlotCount >= MAX_PLOTS
-          let cost = item.goldCost
-          if (item.id === 'garden_plot') cost = getNextPlotCost()
-          const seedDef = SEED_MAP[item.id]
-          const yieldItem = seedDef ? (HERB_MAP[seedDef.yields] ?? MUSHROOM_MAP[seedDef.yields]) : null
-
-          return (
-            <div key={item.id} className={`${styles.item} ${alreadyOwned ? styles.owned : ''}`}>
+      {category === 'farm' && (
+        <div className={styles.items}>
+          {CONSUMABLES.map(item => (
+            <div key={item.id} className={styles.item}>
               <div className={styles.itemInfo}>
                 <div className={styles.itemName}>{item.name}</div>
-                {yieldItem && <div className={styles.itemDesc} style={{ color: yieldItem.color }}>Grows {yieldItem.name}</div>}
-                {!yieldItem && <div className={styles.itemDesc}>{item.description}</div>}
+                <div className={styles.itemDesc}>
+                  {item.description}
+                  {(inventory[item.id] ?? 0) > 0 && (
+                    <span className={styles.inStock}> · {inventory[item.id]} in stock</span>
+                  )}
+                </div>
               </div>
               <div className={styles.itemAction}>
-                {atMaxPlots ? (
-                  <span className={styles.ownedLabel}>Max</span>
-                ) : alreadyOwned ? (
-                  <span className={styles.ownedLabel}>Owned</span>
-                ) : (
-                  <Button
-                    variant="gold"
-                    size="sm"
-                    disabled={gold < cost}
-                    onClick={() => {
-                      if (category === 'seeds') purchaseSeed(item)
-                      else if (category === 'tools') purchaseTool(item)
-                      else purchaseGarden(item)
-                    }}
-                  >
-                    {cost}g
-                  </Button>
-                )}
+                <Button variant="gold" size="sm" disabled={gold < item.goldCost} onClick={() => purchaseConsumable(item)}>
+                  {item.goldCost}g
+                </Button>
               </div>
             </div>
-          )
-        })}
-      </div>}
+          ))}
+        </div>
+      )}
+
+      {category !== 'sell' && category !== 'farm' && (
+        <div className={styles.items}>
+          {items.map(item => {
+            const alreadyOwned = item.oneTime && isOwned(item.id)
+            const atMaxPlots = item.id === 'garden_plot' && gardenSlotCount >= MAX_PLOTS
+            let cost = item.goldCost
+            if (item.id === 'garden_plot') cost = getNextPlotCost()
+            const seedDef = SEED_MAP[item.id]
+            const yieldItem = seedDef ? (HERB_MAP[seedDef.yields] ?? MUSHROOM_MAP[seedDef.yields]) : null
+
+            return (
+              <div key={item.id} className={`${styles.item} ${alreadyOwned ? styles.owned : ''}`}>
+                <div className={styles.itemInfo}>
+                  <div className={styles.itemName}>{item.name}</div>
+                  {yieldItem && <div className={styles.itemDesc} style={{ color: yieldItem.color }}>Grows {yieldItem.name}</div>}
+                  {!yieldItem && <div className={styles.itemDesc}>{item.description}</div>}
+                </div>
+                <div className={styles.itemAction}>
+                  {atMaxPlots ? (
+                    <span className={styles.ownedLabel}>Max</span>
+                  ) : alreadyOwned ? (
+                    <span className={styles.ownedLabel}>Owned</span>
+                  ) : (
+                    <Button
+                      variant="gold"
+                      size="sm"
+                      disabled={gold < cost}
+                      onClick={() => {
+                        if (category === 'seeds') purchaseSeed(item)
+                        else if (category === 'tools') purchaseTool(item)
+                        else purchaseGarden(item)
+                      }}
+                    >
+                      {cost}g
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

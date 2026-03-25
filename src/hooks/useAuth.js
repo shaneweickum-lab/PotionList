@@ -37,6 +37,9 @@ const FRESH_STATE = {
   iapPurchases: [],
   // quests
   quests: [],
+  // bug farm
+  bugFarm: {},
+  activeBreed: null,
 }
 
 const GAME_KEYS = Object.keys(FRESH_STATE)
