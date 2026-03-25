@@ -1,0 +1,151 @@
+.panel {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Section ── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sectionTitle {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Theme grid ── */
+.themeGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.themeTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 4px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.themeTile:hover { border-color: var(--gold-dim); }
+.themeTileActive { border-color: var(--gold); }
+.swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.themeLabel {
+  font-size: 9px;
+  font-family: 'Cinzel Decorative', serif;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.2;
+}
+.themeTileActive .themeLabel { color: var(--gold); }
+
+/* ── Notification row ── */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.rowLabel {
+  font-family: 'Crimson Text', serif;
+  font-size: 16px;
+  color: var(--text-dim);
+}
+.badge {
+  font-size: 12px;
+  font-family: 'Cinzel Decorative', serif;
+  color: var(--green);
+  background: rgba(90,158,111,0.12);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--green-dim);
+}
+.badgeMuted {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+.enableBtn {
+  font-size: 12px;
+  font-family: 'Cinzel Decorative', serif;
+  color: var(--bg);
+  background: var(--gold);
+  border: none;
+  padding: 5px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.notifNote {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ── About ── */
+.about {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.aboutTitle {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 15px;
+  color: var(--gold);
+}
+.aboutSub {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--text-dim);
+}
+.aboutBody {
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+.aboutVersion {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ── Sign out ── */
+.signOutBtn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1.5px solid var(--border-bright);
+  border-radius: var(--radius);
+  color: var(--text-dim);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.signOutBtn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
