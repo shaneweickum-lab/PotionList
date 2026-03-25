@@ -3,7 +3,7 @@ import { useStore } from '../store/index.js'
 import { supabase, isSupabaseConfigured } from '../lib/supabase.js'
 
 const ACCOUNTS_KEY = 'alchemlist-accounts'
-const INITIAL_SLOTS = 4
+const INITIAL_SLOTS = 2
 
 // Default game state for a brand-new account
 const FRESH_STATE = {
