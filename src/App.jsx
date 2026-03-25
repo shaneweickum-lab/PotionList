@@ -28,10 +28,10 @@ function AuthenticatedApp() {
   useDailyOrders()
   usePush()
 
-  const { streakGiftToShow, streakMilestoneToShow } = useStore()
+  const { streakGiftToShow, streakMilestoneToShow, streakContinuedToShow } = useStore()
 
   const dismissStreak = () => {
-    useStore.setState({ streakGiftToShow: null, streakMilestoneToShow: null })
+    useStore.setState({ streakGiftToShow: null, streakMilestoneToShow: null, streakContinuedToShow: null })
   }
 
   return (
@@ -48,10 +48,11 @@ function AuthenticatedApp() {
       <ToastContainer />
 
       {showIAP && <IAPModal onClose={() => setShowIAP(false)} />}
-      {(streakGiftToShow || streakMilestoneToShow) && (
+      {(streakGiftToShow || streakMilestoneToShow || streakContinuedToShow) && (
         <StreakModal
           gift={streakGiftToShow}
           milestone={streakMilestoneToShow}
+          continued={streakContinuedToShow}
           onClose={dismissStreak}
         />
       )}

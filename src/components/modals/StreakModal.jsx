@@ -1,11 +1,20 @@
 import Modal from '../ui/Modal.jsx'
 import Button from '../ui/Button.jsx'
-import { useStore } from '../../store/index.js'
 import styles from './StreakModal.module.css'
 
-export default function StreakModal({ gift, milestone, onClose }) {
-  const { streak } = useStore()
+function streakLore(day) {
+  if (day <= 3)  return 'The first steps forge the path.'
+  if (day <= 7)  return 'The rhythm is taking hold.'
+  if (day <= 14) return 'The cauldron grows warmer every day.'
+  if (day <= 21) return 'Three weeks of discipline. The valley watches.'
+  if (day <= 30) return 'Nearly a month. The village has started to talk.'
+  if (day <= 60) return 'The craft is becoming a part of you.'
+  if (day <= 90) return 'Your name echoes in the old codex.'
+  if (day <= 180) return 'The old ways remember those who persist.'
+  return 'Beyond measure. The alchemists of old would be proud.'
+}
 
+export default function StreakModal({ gift, milestone, continued, onClose }) {
   if (milestone) {
     return (
       <Modal onClose={onClose}>
@@ -16,8 +25,8 @@ export default function StreakModal({ gift, milestone, onClose }) {
           <p className="lore">{milestone.reward.lore}</p>
           <div className={styles.rewards}>
             {milestone.reward.gold && <div className={styles.reward}>✦ {milestone.reward.gold}g</div>}
-            {milestone.reward.seeds?.map(s => <div key={s} className={styles.reward}>🌱 {s}</div>)}
-            {milestone.reward.ores?.map(o => <div key={o} className={styles.reward}>⛏️ {o}</div>)}
+            {milestone.reward.seeds?.map(s => <div key={s} className={styles.reward}>🌱 {s.replace(/_/g, ' ')}</div>)}
+            {milestone.reward.ores?.map(o => <div key={o} className={styles.reward}>⛏️ {o.replace(/_/g, ' ')}</div>)}
           </div>
           <Button variant="gold" fullWidth onClick={onClose}>Claim</Button>
         </div>
@@ -38,6 +47,22 @@ export default function StreakModal({ gift, milestone, onClose }) {
             {gift.gold && <div className={styles.reward}>✦ {gift.gold}g</div>}
           </div>
           <Button variant="ember" fullWidth onClick={onClose}>Receive</Button>
+        </div>
+      </Modal>
+    )
+  }
+
+  if (continued) {
+    return (
+      <Modal onClose={onClose}>
+        <div className={styles.content}>
+          <div className={styles.flameWrap}>
+            <span className={styles.flameBig}>🔥</span>
+          </div>
+          <div className={styles.streakNum}>{continued}</div>
+          <div className={styles.streakLabel}>Day Streak</div>
+          <p className="lore">{streakLore(continued)}</p>
+          <Button variant="ember" fullWidth onClick={onClose}>Keep Going!</Button>
         </div>
       </Modal>
     )

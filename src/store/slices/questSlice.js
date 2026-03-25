@@ -86,10 +86,24 @@ export function createQuestSlice(set, get) {
       return null
     },
 
-    openQuestChest: (questId) => {
+    // Step 1: Roll loot and store it on the quest without applying to inventory yet.
+    // Returns the pending loot for the UI to display in a preview modal.
+    previewQuestChest: (questId) => {
       const quest = get().quests.find(q => q.id === questId)
-      if (!quest?.completedAt || quest.chestOpened) return null
+      if (!quest?.completedAt || quest.chestOpened || quest.pendingLoot) return null
       const loot = rollChestLoot(get().level ?? 1)
+      set(state => ({
+        quests: state.quests.map(q => q.id === questId ? { ...q, pendingLoot: loot } : q),
+      }))
+      return loot
+    },
+
+    // Step 2: Apply the pending loot to inventory once the user confirms.
+    claimQuestChest: (questId) => {
+      const quest = get().quests.find(q => q.id === questId)
+      if (!quest?.pendingLoot) return
+      const loot = quest.pendingLoot
+
       if (loot.gold) get().addGold(loot.gold)
       if (loot.seed) get().addSeed(loot.seed, 1)
 
@@ -103,9 +117,10 @@ export function createQuestSlice(set, get) {
             completedAt: null,
             chestOpened: false,
             loot: null,
+            pendingLoot: null,
             nextDueAt: calcNextDueAt(q.recurrence),
           }
-        : { ...q, chestOpened: true, loot }
+        : { ...q, chestOpened: true, loot, pendingLoot: null }
 
       if (loot.ore) {
         set(state => ({
@@ -117,7 +132,6 @@ export function createQuestSlice(set, get) {
           quests: state.quests.map(q => q.id === questId ? resetQuest(q) : q),
         }))
       }
-      return loot
     },
 
     deleteQuest: (questId) => {

@@ -30,7 +30,8 @@ export function useStreak() {
       return
     }
 
-    useStore.setState({ pendingStreakDay: null })
+    // No gift, no milestone — show plain streak congratulations
+    useStore.setState({ streakContinuedToShow: pendingStreakDay, pendingStreakDay: null })
   }, [pendingStreakDay])
 }
 
