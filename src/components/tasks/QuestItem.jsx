@@ -9,7 +9,7 @@ import { CATEGORY_MAP } from '../../constants/questCategories.js'
 import styles from './QuestItem.module.css'
 
 export default function QuestItem({ quest }) {
-  const { toggleQuestStep, toggleShoppingItem, openQuestChest, deleteQuest, level } = useStore()
+  const { toggleQuestStep, toggleShoppingItem, previewQuestChest, claimQuestChest, deleteQuest, level } = useStore()
   const [revealedLoot, setRevealedLoot] = useState(null)
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: quest.id })
 
@@ -23,8 +23,13 @@ export default function QuestItem({ quest }) {
   const groceryDone = groceries.filter(g => g.done).length
 
   const handleChest = () => {
-    const loot = openQuestChest(quest.id)
+    const loot = previewQuestChest(quest.id)
     if (loot) setRevealedLoot(loot)
+  }
+
+  const handleClaim = () => {
+    claimQuestChest(quest.id)
+    setRevealedLoot(null)
   }
 
   const handleShoppingItem = (itemId) => {
@@ -152,7 +157,7 @@ export default function QuestItem({ quest }) {
       )}
 
       {revealedLoot && (
-        <LootChestModal loot={revealedLoot} questTitle={quest.title} onClose={() => setRevealedLoot(null)} />
+        <LootChestModal loot={revealedLoot} questTitle={quest.title} onClaim={handleClaim} />
       )}
     </div>
   )

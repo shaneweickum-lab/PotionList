@@ -35,6 +35,7 @@ export const useStore = create(
         // Pending UI state (not persisted)
         streakGiftToShow: null,
         streakMilestoneToShow: null,
+        streakContinuedToShow: null,
         pendingStreakDay: null,
 
         // Cross-slice: apply time reduction to all timed systems
@@ -83,7 +84,7 @@ export const useStore = create(
             Object.entries(state).filter(([key]) => ![
               'marketListings', 'marketLoading', 'marketError',
               'iapLoading', 'iapError', 'lastCompletionReward',
-              'streakGiftToShow', 'streakMilestoneToShow', 'pendingStreakDay',
+              'streakGiftToShow', 'streakMilestoneToShow', 'streakContinuedToShow', 'pendingStreakDay',
               'itemRequests', 'requestsLoading',
               'communityOrderProgress', 'communityLoading',
             ].includes(key))
