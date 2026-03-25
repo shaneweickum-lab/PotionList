@@ -8,7 +8,6 @@ export default function LandingScreen() {
   const [mode, setMode] = useState('login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [username, setUsername] = useState('')
   const [loading, setLoading] = useState(false)
   const [awaitingConfirmation, setAwaitingConfirmation] = useState(false)
 
@@ -17,15 +16,16 @@ export default function LandingScreen() {
     setLoading(true)
     const result = mode === 'login'
       ? await signIn(email, password)
-      : await signUp(email, password, username)
+      : await signUp(email, password)
     setLoading(false)
     if (result.error) {
       showToast(result.error, 'error')
     } else if (result.confirmEmail) {
       setAwaitingConfirmation(true)
-    } else {
+    } else if (mode === 'login') {
       showToast('Welcome back.', 'success')
     }
+    // signup success: App.jsx will detect userId && !username and show ProfileSetupScreen
   }
 
   if (awaitingConfirmation) {
@@ -79,16 +79,6 @@ export default function LandingScreen() {
         </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          {mode === 'signup' && (
-            <input
-              className={styles.input}
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              required
-            />
-          )}
           <input
             className={styles.input}
             type="email"
@@ -105,6 +95,11 @@ export default function LandingScreen() {
             onChange={e => setPassword(e.target.value)}
             required
           />
+          {mode === 'signup' && (
+            <p className={styles.setupNote}>
+              After creating your account you'll set up your profile — username, handle, avatar, and more.
+            </p>
+          )}
           <Button variant="gold" fullWidth disabled={loading}>
             {loading ? 'Working...' : mode === 'login' ? 'Sign In' : 'Create Account'}
           </Button>
