@@ -13,6 +13,7 @@ export default function AuthPanel() {
   const [user, setUser] = useState('')
   const [handleInput, setHandleInput] = useState('')
   const [handleError, setHandleError] = useState(null)
+  const [handleTouched, setHandleTouched] = useState(false)
   const [loading, setLoading] = useState(false)
 
   if (username) {
@@ -34,13 +35,14 @@ export default function AuthPanel() {
     const clean = val.toLowerCase().replace(/[^a-z0-9_]/g, '')
     setHandleInput(clean)
     setHandleError(validateHandle(clean))
+    setHandleTouched(true)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (mode === 'signup') {
       const err = validateHandle(handleInput)
-      if (err) { setHandleError(err); return }
+      if (err) { setHandleError(err); setHandleTouched(true); return }
     }
     setLoading(true)
     let result
@@ -57,8 +59,8 @@ export default function AuthPanel() {
   return (
     <div className={styles.auth}>
       <div className={styles.tabs}>
-        <button className={`${styles.tab} ${mode === 'login' ? styles.active : ''}`} onClick={() => setMode('login')}>Sign In</button>
-        <button className={`${styles.tab} ${mode === 'signup' ? styles.active : ''}`} onClick={() => setMode('signup')}>Create Account</button>
+        <button className={`${styles.tab} ${mode === 'login' ? styles.active : ''}`} onClick={() => { setMode('login'); setHandleTouched(false) }}>Sign In</button>
+        <button className={`${styles.tab} ${mode === 'signup' ? styles.active : ''}`} onClick={() => { setMode('signup'); setHandleTouched(false) }}>Create Account</button>
       </div>
 
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -83,7 +85,7 @@ export default function AuthPanel() {
                 required
               />
             </div>
-            {handleError && handleInput && (
+            {handleError && handleTouched && (
               <p className={styles.fieldError}>{handleError}</p>
             )}
             {!handleError && handleInput.length >= 3 && (
