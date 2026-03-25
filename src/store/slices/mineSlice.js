@@ -77,6 +77,9 @@ export function createMineSlice(set, get) {
           { ...state.oreInventory }
         ),
       }))
+
+      // 1% chance to discover a hidden lore entry
+      get().rollLoreFind()
     },
 
     collectMineTrip: (tripId) => {

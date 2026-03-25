@@ -89,6 +89,9 @@ export function createTodoSlice(set, get) {
       const reduction = randomTimeReduction()
       get().applyTimeReduction(reduction)
 
+      // 1% chance to discover a hidden lore entry
+      get().rollLoreFind()
+
       // Streak handling
       get().checkStreak()
 
