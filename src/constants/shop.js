@@ -22,6 +22,16 @@ export const SHOP_ITEMS = {
 
   tools: [
     {
+      id: 'garden_trowel',
+      name: 'Garden Trowel',
+      goldCost: 35,
+      tab: 'tools',
+      category: 'tool',
+      description: 'Required to plant seeds and spores in the garden.',
+      effect: 'plantingUnlock',
+      oneTime: true,
+    },
+    {
       id: 'iron_hoe',
       name: 'Iron Hoe',
       goldCost: 180,

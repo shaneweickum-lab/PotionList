@@ -40,7 +40,7 @@ function PlantVisual({ progress, isReady, type, color }) {
 export default function PlotSlot({ slot }) {
   const [showPlantModal, setShowPlantModal] = useState(false)
   const [, setTick] = useState(0)
-  const { seeds, plantSeed, harvestPlot, isSlotReady, getGrowthProgress } = useStore()
+  const { seeds, plantSeed, harvestPlot, isSlotReady, getGrowthProgress, isOwned } = useStore()
 
   const isReady  = isSlotReady(slot.slotId)
   const progress = getGrowthProgress(slot.slotId)
@@ -82,13 +82,18 @@ export default function PlotSlot({ slot }) {
     setShowPlantModal(false)
   }
 
+  const hasTrowel = isOwned('garden_trowel')
+
   // Empty slot
   if (!slot.seedId) {
     return (
       <>
-        <div className={`${styles.slot} ${styles.empty}`} onClick={() => setShowPlantModal(true)}>
-          <span className={styles.emptyIcon}>⊕</span>
-          <span className={styles.emptyLabel}>Plant Seed</span>
+        <div
+          className={`${styles.slot} ${styles.empty}`}
+          onClick={() => hasTrowel ? setShowPlantModal(true) : showToast('You need a Garden Trowel to plant. Buy one in the Shop → Tools.', 'error')}
+        >
+          <span className={styles.emptyIcon}>{hasTrowel ? '⊕' : '🔒'}</span>
+          <span className={styles.emptyLabel}>{hasTrowel ? 'Plant Seed' : 'Need Trowel'}</span>
         </div>
         {showPlantModal && (
           <Modal title="Choose a Seed" onClose={() => setShowPlantModal(false)}>
