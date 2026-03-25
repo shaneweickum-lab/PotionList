@@ -14,6 +14,7 @@ import { createIAPSlice } from './slices/iapSlice.js'
 import { createQuestSlice } from './slices/questSlice.js'
 import { createBugFarmSlice } from './slices/bugFarmSlice.js'
 import { createSkillSlice } from './slices/skillSlice.js'
+import { createGuildSlice } from './slices/guildSlice.js'
 
 export const useStore = create(
   subscribeWithSelector(
@@ -33,6 +34,7 @@ export const useStore = create(
         ...createQuestSlice(set, get),
         ...createBugFarmSlice(set, get),
         ...createSkillSlice(set, get),
+        ...createGuildSlice(set, get),
 
         // Pending UI state (not persisted)
         streakGiftToShow: null,
@@ -89,6 +91,8 @@ export const useStore = create(
               'streakGiftToShow', 'streakMilestoneToShow', 'streakContinuedToShow', 'pendingStreakDay',
               'itemRequests', 'requestsLoading',
               'communityOrderProgress', 'communityLoading',
+              'friends', 'friendRequests', 'guildLoading',
+              'conversations', 'messagesLoading', 'activeConversation', 'unreadCounts',
             ].includes(key))
           )
         },
