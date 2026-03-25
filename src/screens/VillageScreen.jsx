@@ -3,12 +3,16 @@ import Tabs from '../components/ui/Tabs.jsx'
 import ShopTab from '../components/village/ShopTab.jsx'
 import MineTab from '../components/village/MineTab.jsx'
 import SmithyTab from '../components/village/SmithyTab.jsx'
+import SellTab from '../components/village/SellTab.jsx'
+import MarketTab from '../components/village/MarketTab.jsx'
 import CommunityTab from '../components/village/CommunityTab.jsx'
 
 const TABS = [
   { id: 'shop',      label: 'Shop' },
+  { id: 'sell',      label: 'Sell' },
   { id: 'mine',      label: 'Mine' },
   { id: 'smithy',    label: 'Smithy' },
+  { id: 'market',    label: 'Market' },
   { id: 'community', label: 'Community' },
 ]
 
@@ -18,8 +22,10 @@ export default function VillageScreen() {
     <div>
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
       {tab === 'shop'      && <ShopTab />}
+      {tab === 'sell'      && <SellTab />}
       {tab === 'mine'      && <MineTab />}
       {tab === 'smithy'    && <SmithyTab />}
+      {tab === 'market'    && <MarketTab />}
       {tab === 'community' && <CommunityTab />}
     </div>
   )

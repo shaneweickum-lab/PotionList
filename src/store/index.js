@@ -13,6 +13,7 @@ import { createInventorySlice } from './slices/inventorySlice.js'
 import { createIAPSlice } from './slices/iapSlice.js'
 import { createQuestSlice } from './slices/questSlice.js'
 import { createBugFarmSlice } from './slices/bugFarmSlice.js'
+import { createSkillSlice } from './slices/skillSlice.js'
 
 export const useStore = create(
   subscribeWithSelector(
@@ -31,6 +32,7 @@ export const useStore = create(
         ...createIAPSlice(set, get),
         ...createQuestSlice(set, get),
         ...createBugFarmSlice(set, get),
+        ...createSkillSlice(set, get),
 
         // Pending UI state (not persisted)
         streakGiftToShow: null,

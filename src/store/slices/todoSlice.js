@@ -65,12 +65,13 @@ export function createTodoSlice(set, get) {
       }))
 
       const xp = randomTaskXP()
-      get().awardXP(xp)
+      const finalXp = get().hasSkill?.('task_focus') ? Math.round(xp * 1.2) : xp
+      get().awardXP(finalXp)
 
       const hasPlants = get().garden.some(s => s.seedId !== null)
       if (hasPlants) get().awardGrowthXP(TASK_GROWTH_XP)
 
-      return { xp, growthXP: hasPlants ? TASK_GROWTH_XP : 0, progress: newCount, total: todo.targetCount }
+      return { xp: finalXp, growthXP: hasPlants ? TASK_GROWTH_XP : 0, progress: newCount, total: todo.targetCount }
     },
 
     // Called only when the final tap completes the task
@@ -80,7 +81,8 @@ export function createTodoSlice(set, get) {
 
       // Award XP for the final tap
       const xp = randomTaskXP()
-      get().awardXP(xp)
+      const finalXp = get().hasSkill?.('task_focus') ? Math.round(xp * 1.2) : xp
+      get().awardXP(finalXp)
 
       const hasPlants = get().garden.some(s => s.seedId !== null)
       if (hasPlants) get().awardGrowthXP(TASK_GROWTH_XP)
@@ -89,12 +91,12 @@ export function createTodoSlice(set, get) {
       const foundSeed = rollSeedFind(get().level ?? 1)
       if (foundSeed) get().addSeed(foundSeed, 1)
 
-      // Gold find (4%)
-      const foundGold = rollTaskGold()
+      // Gold find (4%, doubled to ~8% with gold_finder)
+      const foundGold = rollTaskGold() || (get().hasSkill?.('gold_finder') ? rollTaskGold() : 0)
       if (foundGold) get().addGold(foundGold)
 
       // Time reduction on active brews/mine/smithy
-      const reduction = randomTimeReduction()
+      const reduction = randomTimeReduction() + (get().hasSkill?.('grand_cauldron') ? 30000 : 0)
       get().applyTimeReduction(reduction)
 
       // 1% chance to discover a hidden lore entry
@@ -120,7 +122,7 @@ export function createTodoSlice(set, get) {
         }))
       }
 
-      const reward = { xp, growthXP: hasPlants ? TASK_GROWTH_XP : 0, foundSeed, foundGold: foundGold || null, timeReduction: reduction }
+      const reward = { xp: finalXp, growthXP: hasPlants ? TASK_GROWTH_XP : 0, foundSeed, foundGold: foundGold || null, timeReduction: reduction }
       set({ lastCompletionReward: reward })
       return reward
     },

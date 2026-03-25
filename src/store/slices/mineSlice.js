@@ -33,7 +33,7 @@ export function createMineSlice(set, get) {
       const activeTrips = get().mineTrips.filter(t => !t.completed)
       if (activeTrips.length >= get().getMaxTripSlots()) return { error: 'No trip slots available' }
 
-      const totalTime = tier.tripTime * 1000
+      const totalTime = tier.tripTime * 1000 * (get().hasSkill?.('broms_pace') ? 0.85 : 1)
       const finishAt = Date.now() + totalTime
       const id = `mine_${Date.now()}_${Math.random().toString(36).slice(2)}`
 
@@ -63,7 +63,14 @@ export function createMineSlice(set, get) {
       const trip = get().mineTrips.find(t => t.id === tripId)
       if (!trip || trip.completed) return
 
-      const loot = rollMineLoot(trip.mineLevel)
+      const effectiveLevel = get().hasSkill?.('deep_vein') ? Math.min(trip.mineLevel + 1, 5) : trip.mineLevel
+      const loot = rollMineLoot(effectiveLevel)
+      // keen_eye: add +1 ore of a random type in the loot
+      if (get().hasSkill?.('keen_eye') && Object.keys(loot).length > 0) {
+        const oreIds = Object.keys(loot)
+        const bonusOre = oreIds[Math.floor(Math.random() * oreIds.length)]
+        loot[bonusOre] = (loot[bonusOre] ?? 0) + 1
+      }
       const tier = MINE_TIERS.find(t => t.level === trip.mineLevel)
       const barkIndex = Math.floor(Math.random() * 5)
 

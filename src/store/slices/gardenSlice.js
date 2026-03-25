@@ -53,14 +53,21 @@ export function createGardenSlice(set, get) {
 
       const yieldId = seedDef.yields
       const bugFound = rollBugFind()
+      const baseQty = 1
+        + (get().hasSkill?.('abundant_harvest') ? 1 : 0)
+        + (get().hasSkill?.('rare_soil') && Math.random() < 0.20 ? 1 : 0)
+      const recoveredSeed = get().hasSkill?.('seed_luck') && Math.random() < 0.30
 
       // Add to inventory, discover, clear slot
       set(state => ({
         inventory: {
           ...state.inventory,
-          [yieldId]: (state.inventory[yieldId] ?? 0) + 1,
+          [yieldId]: (state.inventory[yieldId] ?? 0) + baseQty,
           ...(bugFound ? { [bugFound]: (state.inventory[bugFound] ?? 0) + 1 } : {}),
         },
+        seeds: recoveredSeed
+          ? { ...state.seeds, [slot.seedId]: (state.seeds[slot.seedId] ?? 0) + 1 }
+          : state.seeds,
         garden: state.garden.map(s => s.slotId === slotId
           ? { ...s, seedId: null, plantedAt: null, growthXPAtPlant: 0 }
           : s
@@ -87,8 +94,9 @@ export function createGardenSlice(set, get) {
       if (!seedDef) return 0
       const growthMod = get().getGrowthMod()
       // Time-based passive growth: completes on its own over real time
+      const timeMod = get().hasSkill?.('green_thumb') ? 0.85 : 1
       const timeProgress = slot.plantedAt
-        ? (Date.now() - slot.plantedAt) / (seedDef.growthThreshold * GROWTH_MS_PER_POINT)
+        ? (Date.now() - slot.plantedAt) / (seedDef.growthThreshold * GROWTH_MS_PER_POINT * timeMod)
         : 0
       // XP-based growth: completing tasks speeds things up
       const xpProgress = (state.growthXP - slot.growthXPAtPlant) / (seedDef.growthThreshold * growthMod)

@@ -132,8 +132,7 @@ function buildItemList(seeds, inventory, potionInventory, oreInventory, ingotInv
 }
 
 function sellAction(type, id, qty, store) {
-  const { addGold, removeSeed, removeFromInventory, removePotion, removeOre, removeIngot } = store
-  addGold(qty)
+  const { removeSeed, removeFromInventory, removePotion, removeOre, removeIngot } = store
   switch (type) {
     case 'seed':     removeSeed(id, qty); break
     case 'herb':
@@ -166,8 +165,16 @@ export default function SellTab() {
 
   const visible = filter === 'all' ? all : all.filter(i => i.type === TYPE_MAP[filter])
 
+  const effectivePrice = (item) => {
+    let price = item.price
+    if (item.type === 'potion' && store.hasSkill?.('potent_extract')) price = Math.floor(price * 1.25)
+    if (store.hasSkill?.('indomitable')) price = Math.floor(price * 1.25)
+    return price
+  }
+
   const handleSell = (item, qty) => {
-    const gold = item.price * qty
+    const gold = effectivePrice(item) * qty
+    store.addGold(gold)
     sellAction(item.type, item.id, qty, store)
     showToast(`Sold ${qty}× ${item.name} · +${gold}g`, 'gold')
   }
@@ -208,7 +215,7 @@ export default function SellTab() {
                     {item.rarity}
                   </span>
                 )}
-                <span className={styles.price}>{item.price}g each</span>
+                <span className={styles.price}>{effectivePrice(item)}g each</span>
               </div>
             </div>
             <span className={styles.qty}>×{item.qty}</span>
@@ -225,7 +232,7 @@ export default function SellTab() {
                   className={`${styles.sellBtn} ${styles.sellAll}`}
                   onClick={() => handleSell(item, item.qty)}
                 >
-                  All ({item.price * item.qty}g)
+                  All ({effectivePrice(item) * item.qty}g)
                 </button>
               )}
             </div>
