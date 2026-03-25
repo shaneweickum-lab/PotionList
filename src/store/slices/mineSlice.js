@@ -95,5 +95,11 @@ export function createMineSlice(set, get) {
     unlockMineLevel: (level) => {
       set(state => ({ mineLevel: Math.max(state.mineLevel, level) }))
     },
+
+    removeOre: (oreId, qty = 1) => {
+      set(state => ({
+        oreInventory: { ...state.oreInventory, [oreId]: Math.max(0, (state.oreInventory[oreId] ?? 0) - qty) },
+      }))
+    },
   }
 }

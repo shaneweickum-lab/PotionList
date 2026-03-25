@@ -28,3 +28,4 @@
 .itemDesc { font-family: 'Crimson Text', serif; font-size: 13px; color: var(--text-dim); }
 .itemAction { flex-shrink: 0; }
 .ownedLabel { font-size: 11px; color: var(--text-muted); font-style: italic; }
+.inStock { color: var(--green); }

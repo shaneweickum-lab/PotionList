@@ -110,5 +110,13 @@ export function createSmithySlice(set, get) {
       if (upgrade) get().upgradeCauldron(upgrade.tier)
     },
 
+    removeIngot: (ingotId, qty = 1) => {
+      set(state => ({
+        ingotInventory: {
+          ...state.ingotInventory,
+          [ingotId]: Math.max(0, (state.ingotInventory[ingotId] ?? 0) - qty),
+        },
+      }))
+    },
   }
 }

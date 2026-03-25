@@ -1,5 +1,15 @@
 import { SEEDS } from './seeds.js'
 
+export const CONSUMABLES = [
+  {
+    id: 'bug_feed',
+    name: 'Bug Feed',
+    goldCost: 20,
+    category: 'consumable',
+    description: 'Nutritious compound for the bug farm. Required for breeding.',
+  },
+]
+
 export const SHOP_ITEMS = {
   seeds: SEEDS.map(s => ({
     id: s.id,

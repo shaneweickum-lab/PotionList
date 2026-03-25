@@ -3,13 +3,15 @@ import Tabs from '../components/ui/Tabs.jsx'
 import GardenScene from '../components/garden/GardenScene.jsx'
 import GardenStash from '../components/garden/GardenStash.jsx'
 import Codex from '../components/garden/Codex.jsx'
+import BugFarmTab from '../components/garden/BugFarmTab.jsx'
 import { useStore } from '../store/index.js'
 import styles from './GardenScreen.module.css'
 
 const TABS = [
-  { id: 'plots', label: 'Plots' },
-  { id: 'stash', label: 'Stash' },
-  { id: 'codex', label: 'Codex' },
+  { id: 'plots',   label: 'Plots' },
+  { id: 'stash',   label: 'Stash' },
+  { id: 'codex',   label: 'Codex' },
+  { id: 'bugfarm', label: 'Bug Farm' },
 ]
 
 export default function GardenScreen() {
@@ -30,9 +32,10 @@ export default function GardenScreen() {
         }
       </div>
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
-      {tab === 'plots' && <GardenScene />}
-      {tab === 'stash' && <GardenStash />}
-      {tab === 'codex' && <Codex />}
+      {tab === 'plots'   && <GardenScene />}
+      {tab === 'stash'   && <GardenStash />}
+      {tab === 'codex'   && <Codex />}
+      {tab === 'bugfarm' && <BugFarmTab />}
     </div>
   )
 }

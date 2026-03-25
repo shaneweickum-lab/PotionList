@@ -1,0 +1,162 @@
+.sell {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Filter strip ── */
+.filters {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+  padding: 0 4px;
+  scrollbar-width: none;
+}
+.filters::-webkit-scrollbar { display: none; }
+
+.filterBtn {
+  flex-shrink: 0;
+  padding: 9px 12px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.filterBtn:hover { color: var(--text-dim); }
+.filterActive {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ── List ── */
+.list {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  gap: 6px;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emptyTitle {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* ── Row ── */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.name {
+  font-family: 'Crimson Text', serif;
+  font-size: 15px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rarityBadge {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border-bright);
+  color: var(--text-muted);
+}
+.rarity_uncommon { border-color: #7a8898; color: #b0c0d4; }
+.rarity_rare     { border-color: var(--gold-dim); color: var(--gold); }
+.rarity_epic     { border-color: var(--purple-dim); color: var(--purple); }
+
+.price {
+  font-family: 'Crimson Text', serif;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.qty {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 11px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+/* ── Action buttons ── */
+.actions {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.sellBtn {
+  padding: 5px 10px;
+  background: var(--bg-4);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius);
+  color: var(--text-dim);
+  font-family: 'Crimson Text', serif;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.sellBtn:hover:not(:disabled) {
+  border-color: var(--gold-dim);
+  color: var(--gold);
+  background: rgba(201,162,39,0.08);
+}
+.sellBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.sellAll {
+  border-color: var(--gold-dim);
+  color: var(--gold);
+  background: rgba(201,162,39,0.06);
+}
+.sellAll:hover:not(:disabled) {
+  background: rgba(201,162,39,0.15);
+  border-color: var(--gold);
+}

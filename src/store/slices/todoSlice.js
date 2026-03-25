@@ -96,6 +96,9 @@ export function createTodoSlice(set, get) {
       // 1% chance to discover a hidden lore entry
       get().rollLoreFind()
 
+      // Bug farm breeding progress
+      get().advanceBreedProgress(id)
+
       // Persistent completion counter
       get().incrementTasksCompleted()
 
