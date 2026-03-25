@@ -80,17 +80,21 @@ export default function ProfileSetupScreen() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e?.preventDefault()
     const err = validateHandle(handleInput)
     if (err) { setHandleError(err); setHandleTouched(true); return }
     if (!username.trim()) { showToast('Please enter a username.', 'error'); return }
 
     setLoading(true)
-    const result = await completeProfile({ username, handle: handleInput, nickname, bio, avatarUrl })
-    setLoading(false)
-
-    if (result.error) showToast(result.error, 'error')
-    // On success, App.jsx detects username is now set and transitions to AuthenticatedApp
+    try {
+      const result = await completeProfile({ username, handle: handleInput, nickname, bio, avatarUrl })
+      if (result.error) showToast(result.error, 'error')
+      // On success, App.jsx detects username is now set and transitions to AuthenticatedApp
+    } catch (err) {
+      showToast('Something went wrong. Please try again.', 'error')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -182,7 +186,7 @@ export default function ProfileSetupScreen() {
             <p className={styles.charCount}>{bio.length}/160</p>
           </div>
 
-          <Button variant="gold" fullWidth disabled={loading || !!handleError || !username.trim() || !handleInput}>
+          <Button variant="gold" fullWidth onClick={handleSubmit} disabled={loading || !!handleError || !username.trim() || !handleInput}>
             {loading ? 'Setting up…' : 'Enter the Workshop'}
           </Button>
         </form>
