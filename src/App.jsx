@@ -13,6 +13,7 @@ import CauldronScreen from './screens/CauldronScreen.jsx'
 import VillageScreen from './screens/VillageScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
 import SplashScreen from './screens/SplashScreen.jsx'
+import LandingScreen from './screens/LandingScreen.jsx'
 import IAPModal from './components/modals/IAPModal.jsx'
 import StreakModal from './components/modals/StreakModal.jsx'
 import ToastContainer from './components/ui/ToastNotification.jsx'
@@ -62,7 +63,7 @@ export default function App() {
   useAuth()
 
   const [splashDone, setSplashDone] = useState(false)
-  const { authReady } = useStore()
+  const { authReady, username } = useStore()
 
   if (!splashDone) {
     return <SplashScreen onEnter={() => setSplashDone(true)} />
@@ -72,6 +73,14 @@ export default function App() {
     return (
       <div className="app-shell" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <span style={{ fontSize: 32 }}>⚗️</span>
+      </div>
+    )
+  }
+
+  if (!username) {
+    return (
+      <div className="app-shell" style={{ overflowY: 'auto' }}>
+        <LandingScreen />
       </div>
     )
   }

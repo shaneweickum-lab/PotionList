@@ -10,35 +10,15 @@ export function useAuth() {
 }
 
 export async function signIn(email, password) {
-  const { error } = await supabase.auth.signInWithPassword({ email, password })
-  return error ? { error: error.message } : { success: true }
+  const { userId, username } = useStore.getState()
+  if (userId === email && username) {
+    return { success: true }
+  }
+  return { error: 'No account found for this email on this device.' }
 }
 
 export async function signUp(email, password, username) {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: { emailRedirectTo: window.location.origin },
-  })
-  if (error) return { error: error.message }
-  if (data.user) {
-    await supabase.from('users').upsert({ id: data.user.id, username })
-    useStore.getState().setUsername(username)
-  }
-  // session is null when Supabase requires email confirmation
-  return { success: true, confirmEmail: !data.session }
-}
-
-export async function signOut() {
-  await supabase.auth.signOut()
-}
-
-export async function signInWithGoogle() {
-  const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' })
-  return error ? { error: error.message } : { success: true }
-}
-
-export async function signInWithApple() {
-  const { error } = await supabase.auth.signInWithOAuth({ provider: 'apple' })
-  return error ? { error: error.message } : { success: true }
+  useStore.getState().setUsername(username)
+  useStore.getState().setUserId(email)
+  return { success: true }
 }
