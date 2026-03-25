@@ -37,13 +37,12 @@ export const SHOP_ITEMS = {
     {
       id: 'garden_plot',
       name: 'Garden Plot',
-      goldCost: 200,
+      goldCost: 500,
       tab: 'garden',
       category: 'plot',
-      description: 'Adds 2 garden slots. Cost reduced if you own the Iron Hoe.',
-      effect: 'gardenSlots+2',
+      description: 'Adds 1 garden slot. Price increases with each purchase. Max 20 slots.',
+      effect: 'gardenSlots+1',
       repeatable: true,
-      maxCount: 6,
     },
     {
       id: 'greenhouse',

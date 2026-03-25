@@ -1,7 +1,8 @@
 import { rollBugFind } from '../../lib/loot.js'
 import { SEED_MAP } from '../../constants/seeds.js'
 
-const INITIAL_SLOTS = 4
+const INITIAL_SLOTS = 2
+const MAX_GARDEN_SLOTS = 20
 // Passive growth: 1 minute of real time per threshold point (e.g. threshold 40 = 40 min)
 const GROWTH_MS_PER_POINT = 60_000
 
@@ -15,6 +16,7 @@ export function createGardenSlice(set, get) {
       growthXPAtPlant: 0,
     })),
     gardenSlotCount: INITIAL_SLOTS,
+    gardenPlotsBought: 0,
 
     plantSeed: (slotId, seedId) => {
       const state = get()
@@ -103,12 +105,14 @@ export function createGardenSlice(set, get) {
 
     expandGarden: (slots) => {
       const current = get().gardenSlotCount
-      const newCount = current + slots
+      const actual = Math.min(slots, MAX_GARDEN_SLOTS - current)
+      if (actual <= 0) return
+      const newCount = current + actual
       set(state => ({
         gardenSlotCount: newCount,
         garden: [
           ...state.garden,
-          ...Array.from({ length: slots }, (_, i) => ({
+          ...Array.from({ length: actual }, (_, i) => ({
             slotId: current + i,
             seedId: null,
             plantedAt: null,
@@ -117,5 +121,8 @@ export function createGardenSlice(set, get) {
         ],
       }))
     },
+
+    incrementPlotsBought: () => set(state => ({ gardenPlotsBought: (state.gardenPlotsBought ?? 0) + 1 })),
+    getNextPlotCost: () => Math.round(500 * Math.pow(1.5, get().gardenPlotsBought ?? 0)),
   }
 }
