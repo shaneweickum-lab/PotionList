@@ -82,16 +82,20 @@ export default function App() {
   // Logged in but profile setup not yet complete
   if (userId && !username) {
     return (
-      <div className="app-shell" style={{ overflowY: 'auto' }}>
-        <ProfileSetupScreen />
+      <div className="app-shell">
+        <div className="screen-area" style={{ paddingBottom: 0 }}>
+          <ProfileSetupScreen />
+        </div>
       </div>
     )
   }
 
   if (!userId) {
     return (
-      <div className="app-shell" style={{ overflowY: 'auto' }}>
-        <LandingScreen />
+      <div className="app-shell">
+        <div className="screen-area" style={{ paddingBottom: 0 }}>
+          <LandingScreen />
+        </div>
       </div>
     )
   }
