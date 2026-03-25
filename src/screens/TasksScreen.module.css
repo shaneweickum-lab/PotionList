@@ -1,5 +1,31 @@
 .screen {}
 
+/* ── Tasks / Quests tabs ── */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  flex: 1;
+  padding: 11px 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  color: var(--text-muted);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.tab:hover { color: var(--text-dim); }
+.tabActive {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
 .streakBar {
   display: flex;
   justify-content: center;

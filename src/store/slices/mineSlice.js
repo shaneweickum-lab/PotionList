@@ -1,4 +1,4 @@
-import { rollMineLoot } from '../../lib/loot.js'
+import { rollMineLoot, rollMineGold } from '../../lib/loot.js'
 import { MINE_TIERS } from '../../constants/ores.js'
 import { scheduleLocalNotification } from '../../lib/pushNotifications.js'
 
@@ -77,6 +77,10 @@ export function createMineSlice(set, get) {
           { ...state.oreInventory }
         ),
       }))
+
+      // Gold find (10%)
+      const foundGold = rollMineGold()
+      if (foundGold) get().addGold(foundGold)
 
       // 1% chance to discover a hidden lore entry
       get().rollLoreFind()

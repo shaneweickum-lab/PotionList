@@ -35,6 +35,8 @@ const FRESH_STATE = {
   smithing: [], ingotInventory: {},
   // iap
   iapPurchases: [],
+  // quests
+  quests: [],
 }
 
 const GAME_KEYS = Object.keys(FRESH_STATE)

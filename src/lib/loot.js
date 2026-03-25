@@ -57,6 +57,18 @@ export function rollBugFind() {
   return BUG_POOL[Math.floor(Math.random() * BUG_POOL.length)]
 }
 
+// 4% chance to find gold on task completion (5–20g)
+export function rollTaskGold() {
+  if (Math.random() > 0.04) return 0
+  return 5 + Math.floor(Math.random() * 16)
+}
+
+// 10% chance Brom brings back stray coins (20–80g)
+export function rollMineGold() {
+  if (Math.random() > 0.10) return 0
+  return 20 + Math.floor(Math.random() * 61)
+}
+
 // Roll mine loot for a given tier
 export function rollMineLoot(tierLevel) {
   const tier = MINE_TIERS.find(t => t.level === tierLevel) ?? MINE_TIERS[0]
