@@ -33,7 +33,7 @@ export default function LandingScreen() {
       <div className={styles.container}>
         <div className={styles.hero}>
           <div className={styles.flask}>⚗️</div>
-          <h1 className={styles.title}>PotionList</h1>
+          <h1 className={styles.title}>AlchemList</h1>
         </div>
         <div className={styles.card}>
           <div className={styles.confirmBox}>
@@ -56,7 +56,7 @@ export default function LandingScreen() {
     <div className={styles.container}>
       <div className={styles.hero}>
         <div className={styles.flask}>⚗️</div>
-        <h1 className={styles.title}>PotionList</h1>
+        <h1 className={styles.title}>AlchemList</h1>
         <p className={styles.subtitle}>Brew your day. Complete your quests.</p>
       </div>
 
