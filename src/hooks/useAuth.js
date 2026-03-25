@@ -13,6 +13,9 @@ const FRESH_STATE = {
   tasksCompleted: 0, milestonesClaimed: [], lastSaved: null, pendingSync: false,
   titles: [], founderUnlocked: false,
   handle: null,
+  bio: null,
+  nickname: null,
+  avatarUrl: null,
   // tasks
   todos: [],
   // garden
@@ -54,7 +57,7 @@ function saveCurrentAccount() {
   const state = useStore.getState()
   const { userId } = state
   if (!userId) return
-  const snapshot = { username: state.username, handle: state.handle }
+  const snapshot = { username: state.username }
   for (const key of GAME_KEYS) {
     if (key in state) snapshot[key] = state[key]
   }
@@ -98,26 +101,37 @@ export async function signIn(email, password) {
   if (!saved) {
     return { error: 'No account found for this email on this device.' }
   }
-  // Save whichever account is currently active before switching
   const { userId } = useStore.getState()
   if (userId && userId !== email) saveCurrentAccount()
-  // Restore this account's full game state
   useStore.setState({ ...saved, userId: email, authReady: true })
   return { success: true }
 }
 
-export async function signUp(email, password, username, handle) {
+// Step 1: create account with just email + password
+// username/handle/profile are set up separately via completeProfile
+export async function signUp(email, password) {
   const accounts = getAccounts()
   if (accounts[email]) {
     return { error: 'An account with this email already exists on this device. Try signing in.' }
   }
+  const { userId } = useStore.getState()
+  if (userId) saveCurrentAccount()
+  useStore.setState({ ...FRESH_STATE, userId: email, authReady: true })
+  return { success: true }
+}
 
-  // Validate handle format
-  const handleError = validateHandle(handle)
-  if (handleError) return { error: handleError }
+// Step 2: complete profile after account creation (or first sign-in)
+export async function completeProfile({ username, handle, nickname, bio, avatarUrl }) {
+  const state = useStore.getState()
+  if (!state.userId) return { error: 'Not signed in.' }
 
-  // Check local uniqueness for username + handle
-  const localError = checkLocalUniqueness(username, handle)
+  if (!username?.trim()) return { error: 'Username is required.' }
+
+  const handleErr = validateHandle(handle)
+  if (handleErr) return { error: handleErr }
+
+  // Check local uniqueness (exclude current user's own email in case they're updating)
+  const localError = checkLocalUniqueness(username.trim(), handle.toLowerCase(), state.userId)
   if (localError) return { error: localError }
 
   // Check Supabase uniqueness if configured
@@ -126,29 +140,35 @@ export async function signUp(email, password, username, handle) {
       .from('user_profiles')
       .select('user_id')
       .eq('handle', handle.toLowerCase())
+      .neq('user_id', state.userId)
       .maybeSingle()
     if (existingHandle) return { error: `Handle "@${handle}" is already taken.` }
 
     const { data: existingUsername } = await supabase
       .from('user_profiles')
       .select('user_id')
-      .ilike('username', username)
+      .ilike('username', username.trim())
+      .neq('user_id', state.userId)
       .maybeSingle()
     if (existingUsername) return { error: `Username "${username}" is already taken.` }
 
-    // Register profile in Supabase
-    await supabase.from('user_profiles').insert({
-      user_id: email,
-      username,
+    await supabase.from('user_profiles').upsert({
+      user_id: state.userId,
+      username: username.trim(),
       handle: handle.toLowerCase(),
     })
   }
 
-  // Save whichever account is currently active
-  const { userId } = useStore.getState()
-  if (userId) saveCurrentAccount()
-  // Start fresh for the new account
-  useStore.setState({ ...FRESH_STATE, username, handle: handle.toLowerCase(), userId: email, authReady: true })
+  useStore.setState({
+    username: username.trim(),
+    handle: handle.toLowerCase(),
+    nickname: nickname?.trim() || null,
+    bio: bio?.trim() || null,
+    avatarUrl: avatarUrl || null,
+  })
+
+  // Save to per-account storage so it persists across sign-out/sign-in
+  saveCurrentAccount()
   return { success: true }
 }
 

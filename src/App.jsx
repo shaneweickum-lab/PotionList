@@ -14,6 +14,7 @@ import VillageScreen from './screens/VillageScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
 import SplashScreen from './screens/SplashScreen.jsx'
 import LandingScreen from './screens/LandingScreen.jsx'
+import ProfileSetupScreen from './screens/ProfileSetupScreen.jsx'
 import IAPModal from './components/modals/IAPModal.jsx'
 import StreakModal from './components/modals/StreakModal.jsx'
 import ToastContainer from './components/ui/ToastNotification.jsx'
@@ -64,7 +65,7 @@ export default function App() {
   useAuth()
 
   const [splashDone, setSplashDone] = useState(false)
-  const { authReady, username } = useStore()
+  const { authReady, username, userId } = useStore()
 
   if (!splashDone) {
     return <SplashScreen onEnter={() => setSplashDone(true)} />
@@ -78,7 +79,16 @@ export default function App() {
     )
   }
 
-  if (!username) {
+  // Logged in but profile setup not yet complete
+  if (userId && !username) {
+    return (
+      <div className="app-shell" style={{ overflowY: 'auto' }}>
+        <ProfileSetupScreen />
+      </div>
+    )
+  }
+
+  if (!userId) {
     return (
       <div className="app-shell" style={{ overflowY: 'auto' }}>
         <LandingScreen />
