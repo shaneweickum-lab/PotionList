@@ -57,22 +57,29 @@ export function createGardenSlice(set, get) {
         + (get().hasSkill?.('abundant_harvest') ? 1 : 0)
         + (get().hasSkill?.('rare_soil') && Math.random() < 0.20 ? 1 : 0)
       const recoveredSeed = get().hasSkill?.('seed_luck') && Math.random() < 0.30
+      const doAutoReplant = get().hasSkill?.('eternal_garden') && Math.random() < 0.25
+        && (get().seeds?.[slot.seedId] ?? 0) > 0
 
-      // Add to inventory, discover, clear slot
-      set(state => ({
-        inventory: {
-          ...state.inventory,
-          [yieldId]: (state.inventory[yieldId] ?? 0) + baseQty,
-          ...(bugFound ? { [bugFound]: (state.inventory[bugFound] ?? 0) + 1 } : {}),
-        },
-        seeds: recoveredSeed
-          ? { ...state.seeds, [slot.seedId]: (state.seeds[slot.seedId] ?? 0) + 1 }
-          : state.seeds,
-        garden: state.garden.map(s => s.slotId === slotId
-          ? { ...s, seedId: null, plantedAt: null, growthXPAtPlant: 0 }
-          : s
-        ),
-      }))
+      // Add to inventory, discover, clear (or replant) slot
+      set(state => {
+        const seedDelta = (recoveredSeed ? 1 : 0) - (doAutoReplant ? 1 : 0)
+        return {
+          inventory: {
+            ...state.inventory,
+            [yieldId]: (state.inventory[yieldId] ?? 0) + baseQty,
+            ...(bugFound ? { [bugFound]: (state.inventory[bugFound] ?? 0) + 1 } : {}),
+          },
+          seeds: seedDelta !== 0
+            ? { ...state.seeds, [slot.seedId]: Math.max(0, (state.seeds[slot.seedId] ?? 0) + seedDelta) }
+            : state.seeds,
+          garden: state.garden.map(s => s.slotId === slotId
+            ? doAutoReplant
+              ? { ...s, plantedAt: Date.now(), growthXPAtPlant: state.growthXP }
+              : { ...s, seedId: null, plantedAt: null, growthXPAtPlant: 0 }
+            : s
+          ),
+        }
+      })
 
       // Discover items
       get().discoverItem(seedDef.type === 'herb' ? 'herbs' : 'mushrooms', yieldId)

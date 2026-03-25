@@ -91,9 +91,11 @@ export function createTodoSlice(set, get) {
       const foundSeed = rollSeedFind(get().level ?? 1)
       if (foundSeed) get().addSeed(foundSeed, 1)
 
-      // Gold find (4%, doubled to ~8% with gold_finder)
+      // Gold find (4%, doubled to ~8% with gold_finder) + iron_will flat bonus
       const foundGold = rollTaskGold() || (get().hasSkill?.('gold_finder') ? rollTaskGold() : 0)
-      if (foundGold) get().addGold(foundGold)
+      const ironWillGold = get().hasSkill?.('iron_will') ? 5 : 0
+      const totalGold = foundGold + ironWillGold
+      if (totalGold) get().addGold(totalGold)
 
       // Time reduction on active brews/mine/smithy
       const reduction = randomTimeReduction() + (get().hasSkill?.('grand_cauldron') ? 30000 : 0)
@@ -122,7 +124,7 @@ export function createTodoSlice(set, get) {
         }))
       }
 
-      const reward = { xp: finalXp, growthXP: hasPlants ? TASK_GROWTH_XP : 0, foundSeed, foundGold: foundGold || null, timeReduction: reduction }
+      const reward = { xp: finalXp, growthXP: hasPlants ? TASK_GROWTH_XP : 0, foundSeed, foundGold: totalGold || null, timeReduction: reduction }
       set({ lastCompletionReward: reward })
       return reward
     },

@@ -63,6 +63,21 @@ export function createBrewSlice(set, get) {
       }))
 
       if (potion) get().awardXP(potion.xpReward * brew.qty)
+
+      // philosophers_reserve: 5% chance for a bonus random potion of any brewable type
+      if (get().hasSkill?.('philosophers_reserve') && Math.random() < 0.05) {
+        const tier = get().cauldronTier
+        const eligible = Object.values(POTION_MAP).filter(p => p.cauldronTier <= tier)
+        if (eligible.length > 0) {
+          const bonus = eligible[Math.floor(Math.random() * eligible.length)]
+          set(state => ({
+            potionInventory: {
+              ...state.potionInventory,
+              [bonus.id]: (state.potionInventory[bonus.id] ?? 0) + 1,
+            },
+          }))
+        }
+      }
     },
 
     removePotion: (potionId, qty = 1) => {

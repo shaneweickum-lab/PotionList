@@ -15,9 +15,9 @@ import { isSupabaseConfigured } from '../../lib/supabase.js'
 import styles from './CommunityTab.module.css'
 
 const SUB_TABS = [
-  { id: 'market',  label: 'Market' },
+  { id: 'market',   label: 'Market' },
   { id: 'requests', label: 'Requests' },
-  { id: 'orders',  label: 'Community Orders' },
+  { id: 'orders',   label: 'Community Orders' },
 ]
 
 function getItemName(type, id) {
