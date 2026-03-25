@@ -93,6 +93,7 @@ export default function SettingsPanel() {
       <Section title="About">
         <div className={styles.about}>
           <div className={styles.aboutTitle}>AlchemList</div>
+          <div className={styles.aboutByline}>by Wizards Playground</div>
           <div className={styles.aboutSub}>Brew your day. Complete your quests.</div>
           <div className={styles.aboutBody}>
             A gamified task manager for alchemists. Complete quests, grow your garden,

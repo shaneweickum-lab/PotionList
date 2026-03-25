@@ -19,15 +19,28 @@
 .flask {
   font-size: 64px;
   line-height: 1;
-  filter: drop-shadow(0 0 24px rgba(201, 162, 39, 0.4));
+  filter: drop-shadow(0 0 28px rgba(196, 122, 255, 0.45));
 }
 
 .title {
   font-family: 'Cinzel Decorative', serif;
   font-size: 28px;
   font-weight: 700;
-  color: var(--gold-bright);
+  background: linear-gradient(135deg, #FFD060 0%, #C47AFF 55%, #FF3D88 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: 0.05em;
+  filter: drop-shadow(0 0 24px rgba(196, 122, 255, 0.35));
+}
+
+.byline {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-top: -4px;
 }
 
 .subtitle {
@@ -65,8 +78,8 @@
 }
 
 .tab.active {
-  color: var(--gold);
-  border-bottom-color: var(--gold);
+  color: var(--purple);
+  border-bottom-color: var(--purple);
 }
 
 .form {

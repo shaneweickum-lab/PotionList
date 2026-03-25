@@ -104,6 +104,7 @@ export default function SplashScreen({ onEnter }) {
 
       <div className={styles.textBlock}>
         <h1 className={styles.title}>AlchemList</h1>
+        <p className={styles.byline}>by Wizards Playground</p>
         <p className={styles.subtitle}>Brew your day. Complete your quests.</p>
       </div>
 

@@ -55,10 +55,22 @@
   font-family: 'Cinzel Decorative', serif;
   font-size: 34px;
   font-weight: 900;
-  color: var(--gold-bright);
+  background: linear-gradient(135deg, #FFD060 0%, #C47AFF 55%, #FF3D88 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: 0.06em;
   line-height: 1.1;
-  text-shadow: 0 0 40px rgba(240, 200, 66, 0.35);
+  filter: drop-shadow(0 0 28px rgba(196, 122, 255, 0.4));
+}
+
+.byline {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-top: -2px;
 }
 
 .subtitle {
@@ -67,6 +79,7 @@
   font-size: 17px;
   color: var(--text-dim);
   letter-spacing: 0.02em;
+  margin-top: 6px;
 }
 
 /* ── Footer / CTA ── */
@@ -77,8 +90,8 @@
 .enterBtn {
   width: 100%;
   padding: 16px;
-  background: var(--gold);
-  color: var(--bg);
+  background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+  color: #fff;
   border: none;
   border-radius: var(--radius-lg);
   font-family: 'Cinzel Decorative', serif;
@@ -86,14 +99,14 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 0 24px rgba(201, 162, 39, 0.3);
+  transition: opacity 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 32px rgba(155, 64, 212, 0.4);
   animation: fadeIn 0.8s 0.3s ease both;
 }
 
 .enterBtn:hover {
-  background: var(--gold-bright);
-  box-shadow: 0 0 36px rgba(240, 200, 66, 0.45);
+  opacity: 0.88;
+  box-shadow: 0 0 48px rgba(255, 61, 136, 0.4);
 }
 
 .enterBtn:active {

@@ -110,7 +110,18 @@
 .aboutTitle {
   font-family: 'Cinzel Decorative', serif;
   font-size: 15px;
-  color: var(--gold);
+  background: linear-gradient(135deg, #FFD060 0%, #C47AFF 55%, #FF3D88 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.aboutByline {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-top: -2px;
 }
 .aboutSub {
   font-family: 'Crimson Text', serif;

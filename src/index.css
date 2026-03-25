@@ -1,25 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
 
 :root {
-  --bg: #080705;
-  --bg-2: #0f0d0b;
-  --bg-3: #181410;
-  --bg-4: #221d17;
-  --gold: #c9a227;
-  --gold-dim: #8a6d18;
-  --gold-bright: #f0c842;
-  --green: #5a9e6f;
-  --green-dim: #3d6b4c;
-  --purple: #9b6bb5;
-  --purple-dim: #6a4880;
-  --ember: #e07b39;
-  --ember-dim: #9a5220;
-  --red: #b84040;
-  --text: #e8dcc8;
-  --text-dim: #9a8d7c;
-  --text-muted: #5c5248;
-  --border: #2a2318;
-  --border-bright: #3d3328;
+  /* ── Backgrounds — cool deep dark ── */
+  --bg: #080810;
+  --bg-2: #0D0C1A;
+  --bg-3: #141322;
+  --bg-4: #1C1A2E;
+
+  /* ── Gold / currency ── */
+  --gold: #D4AA35;
+  --gold-dim: #8A6E20;
+  --gold-bright: #FFD060;
+
+  /* ── Vivid accent palette ── */
+  --green: #2EE890;
+  --green-dim: #18904C;
+  --purple: #9B40D4;
+  --purple-dim: #6828A0;
+  --ember: #FF7730;
+  --ember-dim: #A04820;
+  --red: #FF4465;
+  --pink: #FF3D88;
+  --pink-dim: #A82060;
+  --teal: #00C8DC;
+  --teal-dim: #007A90;
+  --amber: #FFB840;
+  --amber-dim: #8A6818;
+
+  /* ── Text ── */
+  --text: #EDE8FC;
+  --text-dim: #9088B4;
+  --text-muted: #504870;
+
+  /* ── Borders ── */
+  --border: #201D38;
+  --border-bright: #302A4E;
+
+  /* ── Layout ── */
   --max-w: 430px;
   --header-h: 64px;
   --nav-h: 68px;
@@ -31,63 +48,66 @@
 
 /* ── Colour Themes ── */
 [data-theme="midnight"] {
-  --bg: #050810;
-  --bg-2: #080d18;
-  --bg-3: #0d1422;
-  --bg-4: #141c2e;
-  --gold: #8bacd4;
-  --gold-dim: #5a7898;
-  --gold-bright: #b0ccee;
-  --text: #d8e4f4;
-  --text-dim: #8898b8;
-  --text-muted: #4a5870;
-  --border: #1a2438;
-  --border-bright: #2a3858;
+  --bg: #05081A;
+  --bg-2: #080D24;
+  --bg-3: #0D1430;
+  --bg-4: #141C3E;
+  --gold: #7AACEE;
+  --gold-dim: #4A78B8;
+  --gold-bright: #A0CCFF;
+  --text: #D4E4FF;
+  --text-dim: #7898D0;
+  --text-muted: #3A5880;
+  --border: #141E40;
+  --border-bright: #202E58;
 }
 
 [data-theme="forest"] {
-  --bg: #050a06;
-  --bg-2: #080e09;
-  --bg-3: #0e160f;
-  --bg-4: #151e16;
-  --gold: #c8922a;
-  --gold-dim: #8a601a;
-  --gold-bright: #e8b040;
-  --text: #d4e8c8;
-  --text-dim: #8aaa7a;
-  --text-muted: #4a6040;
-  --border: #1a2a1c;
-  --border-bright: #2a3e2c;
+  --bg: #050E06;
+  --bg-2: #081408;
+  --bg-3: #0E1E10;
+  --bg-4: #152818;
+  --gold: #38D870;
+  --gold-dim: #208A48;
+  --gold-bright: #58FF90;
+  --green: #60FFB0;
+  --text: #C8EED8;
+  --text-dim: #78B888;
+  --text-muted: #406050;
+  --border: #142018;
+  --border-bright: #1E3022;
 }
 
 [data-theme="ember"] {
-  --bg: #0a0603;
-  --bg-2: #110804;
-  --bg-3: #1a0e07;
-  --bg-4: #22130b;
-  --gold: #e07030;
-  --gold-dim: #a04820;
-  --gold-bright: #ff9050;
-  --text: #f0d8c0;
-  --text-dim: #b08060;
-  --text-muted: #704030;
-  --border: #2a1508;
-  --border-bright: #3e2010;
+  --bg: #100805;
+  --bg-2: #180C06;
+  --bg-3: #22100A;
+  --bg-4: #2C160E;
+  --gold: #FF8040;
+  --gold-dim: #B04820;
+  --gold-bright: #FFA060;
+  --ember: #FF5020;
+  --text: #FFE0C0;
+  --text-dim: #C08060;
+  --text-muted: #703020;
+  --border: #2A1008;
+  --border-bright: #3E1810;
 }
 
 [data-theme="twilight"] {
-  --bg: #080510;
-  --bg-2: #0e0918;
-  --bg-3: #140e22;
-  --bg-4: #1c142e;
-  --gold: #b090d8;
-  --gold-dim: #7a5898;
-  --gold-bright: #d4b4ff;
-  --text: #e8d8fc;
-  --text-dim: #9878c0;
-  --text-muted: #584878;
-  --border: #221838;
-  --border-bright: #342450;
+  --bg: #0A0614;
+  --bg-2: #100A20;
+  --bg-3: #180E2E;
+  --bg-4: #20143C;
+  --gold: #C080FF;
+  --gold-dim: #8040C0;
+  --gold-bright: #E0AAFF;
+  --purple: #CC60FF;
+  --text: #ECD8FF;
+  --text-dim: #A878E0;
+  --text-muted: #604890;
+  --border: #241440;
+  --border-bright: #341E58;
 }
 
 *, *::before, *::after {
@@ -168,6 +188,9 @@ h1, h2, h3, .heading {
 .purple { color: var(--purple); }
 .ember { color: var(--ember); }
 .red { color: var(--red); }
+.pink { color: var(--pink); }
+.teal { color: var(--teal); }
+.amber { color: var(--amber); }
 .muted { color: var(--text-muted); }
 .dim { color: var(--text-dim); }
 
@@ -188,7 +211,7 @@ h1, h2, h3, .heading {
 /* Rarity colors */
 .rarity-common { color: var(--text-dim); }
 .rarity-uncommon { color: var(--green); }
-.rarity-rare { color: #5ba3d6; }
+.rarity-rare { color: var(--teal); }
 .rarity-epic { color: var(--purple); }
 
 /* Animations */

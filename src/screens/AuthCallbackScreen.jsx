@@ -58,7 +58,7 @@ export default function AuthCallbackScreen({ onDone }) {
       {status === 'success' && (
         <>
           <p className={styles.title}>You're in!</p>
-          <p className={styles.sub}>Welcome to PotionList.</p>
+          <p className={styles.sub}>Welcome to AlchemList.</p>
         </>
       )}
 
