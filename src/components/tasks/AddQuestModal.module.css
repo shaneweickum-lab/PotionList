@@ -1,9 +1,10 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
+/* Title */
 .titleInput {
   width: 100%;
   background: var(--bg-4);
@@ -19,37 +20,74 @@
 .titleInput::placeholder { color: var(--text-muted); font-family: 'Crimson Text', serif; font-size: 16px; }
 .titleInput:focus { border-color: var(--gold-dim); }
 
-.stepsHeader {
+/* Section */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sectionHeader {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
 }
-.stepsLabel {
+.sectionLabel {
   font-family: 'Cinzel Decorative', serif;
   font-size: 11px;
   color: var(--text-muted);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.stepsHint {
+.hint {
   font-size: 11px;
   color: var(--text-muted);
   font-style: italic;
 }
 
-.stepsList {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+/* Category grid */
+.catGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
 }
 
-.stepRow {
+.catPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  padding: 8px 6px;
+  background: var(--bg-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-dim);
+  font-family: 'Crimson Text', serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.catPill:hover { border-color: var(--gold-dim); color: var(--text); }
+.catPillActive {
+  border-color: var(--gold-dim);
+  background: rgba(201,162,39,0.1);
+  color: var(--gold);
+}
+.catIcon { font-size: 15px; }
+
+/* Item list */
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.itemRow {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.stepNum {
+.itemNum {
   font-family: 'Cinzel Decorative', serif;
   font-size: 11px;
   color: var(--text-muted);
@@ -58,7 +96,18 @@
   flex-shrink: 0;
 }
 
-.stepInput {
+.healthyDot {
+  font-size: 15px;
+  min-width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: opacity 0.15s;
+  line-height: 1;
+}
+.healthyDotOn { opacity: 1; }
+
+.itemInput {
   flex: 1;
   min-width: 0;
   background: var(--bg-4);
@@ -71,10 +120,10 @@
   outline: none;
   transition: border-color 0.15s;
 }
-.stepInput::placeholder { color: var(--text-muted); }
-.stepInput:focus { border-color: var(--gold-dim); }
+.itemInput::placeholder { color: var(--text-muted); }
+.itemInput:focus { border-color: var(--gold-dim); }
 
-.removeStep {
+.removeBtn {
   background: none;
   border: none;
   color: var(--text-muted);
@@ -84,9 +133,9 @@
   flex-shrink: 0;
   transition: color 0.15s;
 }
-.removeStep:hover { color: var(--red); }
+.removeBtn:hover { color: var(--red); }
 
-.addStepBtn {
+.addItemBtn {
   align-self: flex-start;
   background: none;
   border: 1px dashed var(--border-bright);
@@ -98,9 +147,10 @@
   cursor: pointer;
   transition: border-color 0.15s, color 0.15s;
 }
-.addStepBtn:hover { border-color: var(--gold-dim); color: var(--gold); }
+.addItemBtn:hover { border-color: var(--gold-dim); color: var(--gold); }
 
-.stickyFooter {
+/* Footer */
+.footer {
   position: sticky;
   bottom: -24px;
   background: var(--bg-3);

@@ -1,18 +1,25 @@
 import { rollChestLoot } from '../../lib/chestLoot.js'
 
+const SHOPPING_ITEM_XP = 3
+const HEALTHY_ITEM_XP  = 8
+
 let nextQuestId = Date.now()
 
 export function createQuestSlice(set, get) {
   return {
     quests: [],
 
-    addQuest: ({ title, steps }) => {
+    addQuest: ({ title, category, steps, shoppingItems }) => {
       const id = String(nextQuestId++)
       set(state => ({
         quests: [...state.quests, {
           id,
           title: title.trim(),
+          category: category ?? null,
           steps: steps.map((text, i) => ({ id: `${id}_s${i}`, text: text.trim(), done: false })),
+          shoppingItems: shoppingItems?.length
+            ? shoppingItems.map((item, i) => ({ id: `${id}_g${i}`, name: item.name, done: false, healthy: item.healthy }))
+            : [],
           createdAt: Date.now(),
           completedAt: null,
           chestOpened: false,
@@ -27,11 +34,33 @@ export function createQuestSlice(set, get) {
           if (q.id !== questId) return q
           const steps = q.steps.map(s => s.id === stepId ? { ...s, done: !s.done } : s)
           const allDone = steps.every(s => s.done)
-          // Set completedAt when all done; clear it if a step is un-checked
           const completedAt = allDone ? (q.completedAt ?? Date.now()) : null
           return { ...q, steps, completedAt }
         }),
       }))
+    },
+
+    toggleShoppingItem: (questId, itemId) => {
+      const quest = get().quests.find(q => q.id === questId)
+      const item = quest?.shoppingItems?.find(s => s.id === itemId)
+      if (!item) return null
+      const willDone = !item.done
+      set(state => ({
+        quests: state.quests.map(q =>
+          q.id !== questId ? q : {
+            ...q,
+            shoppingItems: q.shoppingItems.map(s =>
+              s.id === itemId ? { ...s, done: !s.done } : s
+            ),
+          }
+        ),
+      }))
+      if (willDone) {
+        const xp = item.healthy ? HEALTHY_ITEM_XP : SHOPPING_ITEM_XP
+        get().awardXP(xp)
+        return { xp, healthy: item.healthy }
+      }
+      return null
     },
 
     openQuestChest: (questId) => {
