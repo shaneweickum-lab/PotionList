@@ -91,7 +91,6 @@ export default function AddTaskModal({ onClose }) {
             value={text}
             onChange={e => setText(e.target.value)}
             maxLength={120}
-            autoFocus
           />
           <button
             type="submit"
