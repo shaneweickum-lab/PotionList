@@ -9,6 +9,7 @@ export default function AddQuestModal({ onClose }) {
   const addQuest = useStore(s => s.addQuest)
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState(null)
+  const [daily, setDaily] = useState(false)
   const [steps, setSteps] = useState(['', ''])
   const [groceries, setGroceries] = useState([''])
 
@@ -32,7 +33,7 @@ export default function AddQuestModal({ onClose }) {
   const submit = (e) => {
     e.preventDefault()
     if (!canSubmit) return
-    addQuest({ title, category, steps: validSteps, shoppingItems: validGroceries })
+    addQuest({ title, category, recurrence: daily ? 'daily' : 'none', steps: validSteps, shoppingItems: validGroceries })
     onClose()
   }
 
@@ -67,6 +68,17 @@ export default function AddQuestModal({ onClose }) {
             ))}
           </div>
         </div>
+
+        {/* Recurrence */}
+        <button
+          type="button"
+          className={`${styles.dailyToggle} ${daily ? styles.dailyToggleOn : ''}`}
+          onClick={() => setDaily(d => !d)}
+        >
+          <span className={styles.dailyIcon}>↺</span>
+          <span>Daily Quest</span>
+          {daily && <span className={styles.dailyNote}>resets at midnight after chest is claimed</span>}
+        </button>
 
         {/* Steps */}
         <div className={styles.section}>

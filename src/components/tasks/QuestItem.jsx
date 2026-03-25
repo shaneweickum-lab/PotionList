@@ -40,6 +40,9 @@ export default function QuestItem({ quest }) {
       <div className={styles.header}>
         <span className={styles.title}>{quest.title}</span>
         <div className={styles.headerRight}>
+          {quest.recurrence === 'daily' && (
+            <span className={styles.dailyBadge}>↺ Daily</span>
+          )}
           {cat && (
             <span className={styles.catBadge}>
               {cat.icon} {cat.label}

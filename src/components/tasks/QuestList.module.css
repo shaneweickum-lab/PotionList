@@ -37,6 +37,22 @@
   color: var(--text-dim);
 }
 
+.restingRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 16px 8px;
+  padding: 10px 14px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.restingIcon { font-size: 15px; color: var(--gold); }
+
 .sectionLabel {
   font-family: 'Cinzel Decorative', serif;
   font-size: 10px;
