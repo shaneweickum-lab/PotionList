@@ -4,6 +4,7 @@ import { HERBS } from '../../constants/herbs.js'
 import { MUSHROOMS } from '../../constants/mushrooms.js'
 import { BUGS } from '../../constants/bugs.js'
 import { LORE } from '../../constants/lore.js'
+import { HIDDEN_LORE, ALL_HIDDEN_LORE_IDS } from '../../constants/hiddenLore.js'
 import Badge from '../ui/Badge.jsx'
 import styles from './Codex.module.css'
 
@@ -41,24 +42,55 @@ function ItemSection({ title, items, discList }) {
   )
 }
 
-function LoreSection() {
+function LoreSection({ discoveredLore }) {
+  const discovered = discoveredLore ?? []
+  const foundCount = discovered.length
+  const total = ALL_HIDDEN_LORE_IDS.length
+
   return (
-    <div className={styles.section}>
-      <div className={styles.grid}>
-        {LORE.map(entry => (
-          <div key={entry.id} className={styles.loreEntry}>
-            <div className={styles.loreEntryTitle}>{entry.title}</div>
-            <p className={styles.lore}>{entry.text}</p>
-          </div>
-        ))}
+    <>
+      <div className={styles.section}>
+        <div className={styles.grid}>
+          {LORE.map(entry => (
+            <div key={entry.id} className={styles.loreEntry}>
+              <div className={styles.loreEntryTitle}>{entry.title}</div>
+              <p className={styles.lore}>{entry.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+
+      <div className={styles.section}>
+        <h4 className={styles.sectionTitle}>
+          Field Studies <span className={styles.count}>{foundCount}/{total}</span>
+        </h4>
+        <p className={styles.fieldStudiesHint}>Found by chance when completing tasks, harvesting, or collecting from Brom.</p>
+        <div className={styles.grid}>
+          {ALL_HIDDEN_LORE_IDS.map(id => {
+            const found = discovered.includes(id)
+            const entry = HIDDEN_LORE[id]
+            return (
+              <div key={id} className={`${styles.loreEntry} ${found ? '' : styles.locked}`}>
+                {found ? (
+                  <>
+                    <div className={styles.loreEntryTitle}>{entry.name}</div>
+                    <p className={styles.lore}>{entry.lore}</p>
+                  </>
+                ) : (
+                  <div className={styles.loreEntryTitle}>???</div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </>
   )
 }
 
 export default function Codex() {
   const [tab, setTab] = useState('botany')
-  const { discovered } = useStore()
+  const { discovered, discoveredLore } = useStore()
   const disc = discovered ?? { herbs: [], mushrooms: [], bugs: [] }
 
   return (
@@ -78,7 +110,7 @@ export default function Codex() {
       {tab === 'botany'    && <ItemSection title="Herbs"     items={HERBS}     discList={disc.herbs     ?? []} />}
       {tab === 'mycology'  && <ItemSection title="Mushrooms" items={MUSHROOMS} discList={disc.mushrooms ?? []} />}
       {tab === 'etymology' && <ItemSection title="Bugs"      items={BUGS}      discList={disc.bugs      ?? []} />}
-      {tab === 'lore'      && <LoreSection />}
+      {tab === 'lore'      && <LoreSection discoveredLore={discoveredLore} />}
     </div>
   )
 }

@@ -1,3 +1,5 @@
+import { ALL_HIDDEN_LORE_IDS } from '../../constants/hiddenLore.js'
+
 export function createInventorySlice(set, get) {
   return {
     inventory: {},     // herbId/mushroomId/bugId → count
@@ -7,7 +9,8 @@ export function createInventorySlice(set, get) {
       mushrooms: [],
       bugs: [],
     },
-    owned: [],         // shop item IDs
+    discoveredLore: [], // hidden lore IDs found via 1% rolls
+    owned: [],          // shop item IDs
 
     addToInventory: (itemId, qty = 1) => {
       set(state => ({
@@ -36,6 +39,20 @@ export function createInventorySlice(set, get) {
           [category]: [...(state.discovered[category] ?? []), itemId],
         },
       }))
+    },
+
+    discoverLore: (id) => {
+      if (get().discoveredLore.includes(id)) return
+      set(state => ({ discoveredLore: [...state.discoveredLore, id] }))
+    },
+
+    rollLoreFind: () => {
+      if (Math.random() >= 0.01) return null
+      const undiscovered = ALL_HIDDEN_LORE_IDS.filter(id => !get().discoveredLore.includes(id))
+      if (!undiscovered.length) return null
+      const id = undiscovered[Math.floor(Math.random() * undiscovered.length)]
+      get().discoverLore(id)
+      return id
     },
 
     purchaseShopItem: (itemId) => {

@@ -69,6 +69,9 @@ export function createGardenSlice(set, get) {
       get().discoverItem(seedDef.type === 'herb' ? 'herbs' : 'mushrooms', yieldId)
       if (bugFound) get().discoverItem('bugs', bugFound)
 
+      // 1% chance to discover a hidden lore entry
+      get().rollLoreFind()
+
       return { yieldId, bugFound }
     },
 
