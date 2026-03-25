@@ -1,4 +1,6 @@
-.list {}
+.list {
+  padding-top: 8px;
+}
 
 .empty {
   padding: 48px 24px;

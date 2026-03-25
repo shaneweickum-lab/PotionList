@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { DndContext, closestCenter, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
+import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers'
 import { useStore } from '../../store/index.js'
 import QuestItem from './QuestItem.jsx'
 import AddQuestModal from './AddQuestModal.jsx'
@@ -16,7 +19,7 @@ function timeUntil(ts) {
 }
 
 export default function QuestList() {
-  const quests = useStore(s => s.quests)
+  const { quests, reorderQuests } = useStore()
   const [showAdd, setShowAdd] = useState(false)
   const now = Date.now()
 
@@ -24,6 +27,20 @@ export default function QuestList() {
   const resting = quests.filter(q => q.nextDueAt && q.nextDueAt > now)
   const visible = active.filter(q => !q.chestOpened)
   const claimed = active.filter(q => q.chestOpened)
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 6 } }),
+  )
+
+  const handleDragEnd = ({ active: a, over }) => {
+    if (!over || a.id === over.id) return
+    const oldIndex = visible.findIndex(q => q.id === a.id)
+    const newIndex = visible.findIndex(q => q.id === over.id)
+    if (oldIndex !== -1 && newIndex !== -1) {
+      reorderQuests(arrayMove(visible, oldIndex, newIndex).map(q => q.id))
+    }
+  }
 
   return (
     <div className={styles.list}>
@@ -38,7 +55,16 @@ export default function QuestList() {
         </div>
       )}
 
-      {visible.map(q => <QuestItem key={q.id} quest={q} />)}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+        modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+      >
+        <SortableContext items={visible.map(q => q.id)} strategy={verticalListSortingStrategy}>
+          {visible.map(q => <QuestItem key={q.id} quest={q} />)}
+        </SortableContext>
+      </DndContext>
 
       {resting.length > 0 && (
         <>

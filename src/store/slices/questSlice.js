@@ -123,5 +123,14 @@ export function createQuestSlice(set, get) {
     deleteQuest: (questId) => {
       set(state => ({ quests: state.quests.filter(q => q.id !== questId) }))
     },
+
+    reorderQuests: (newOrderIds) => {
+      set(state => {
+        const idMap = Object.fromEntries(state.quests.map(q => [q.id, q]))
+        const newSet = new Set(newOrderIds)
+        const others = state.quests.filter(q => !newSet.has(q.id))
+        return { quests: [...newOrderIds.map(id => idMap[id]).filter(Boolean), ...others] }
+      })
+    },
   }
 }

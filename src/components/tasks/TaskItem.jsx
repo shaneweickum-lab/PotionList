@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import { useStore } from '../../store/index.js'
 import { showToast } from '../ui/ToastNotification.jsx'
 import { SEED_MAP } from '../../constants/seeds.js'
@@ -18,6 +20,7 @@ const EXIT_DURATION = { fade: 380, dissolve: 480, shatter: 510, burn: 540, float
 export default function TaskItem({ todo }) {
   const { completeTask, incrementTask, deleteTask } = useStore()
   const [exiting, setExiting] = useState(false)
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: todo.id })
 
   const target = todo.targetCount ?? 1
   const current = todo.currentCount ?? 0
@@ -64,8 +67,23 @@ export default function TaskItem({ todo }) {
   const catLabel = CATEGORY_LABELS[todo.category]
   const priorityClass = PRIORITY_CLASS[todo.priority] ?? ''
 
+  const dragStyle = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.45 : 1,
+    zIndex: isDragging ? 50 : undefined,
+  }
+
   return (
-    <div className={`${styles.item} ${exitClass} fade-in`}>
+    <div ref={setNodeRef} style={dragStyle} className={`${styles.item} ${exitClass} fade-in`}>
+      <button
+        className={styles.dragHandle}
+        {...attributes}
+        {...listeners}
+        aria-label="Drag to reorder"
+        tabIndex={-1}
+      >⠿</button>
+
       <button
         className={styles.check}
         onClick={handleComplete}
