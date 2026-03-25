@@ -9,3 +9,9 @@
 .form { display: flex; flex-direction: column; gap: 10px; }
 .input { width: 100%; padding: 12px 14px; background: var(--bg-4); border: 1px solid var(--border-bright); border-radius: var(--radius); color: var(--text); font-family: 'Crimson Text', serif; font-size: 16px; outline: none; }
 .input:focus { border-color: var(--gold-dim); }
+.handleRow { display: flex; align-items: center; gap: 0; }
+.atPrefix { font-family: 'Cinzel Decorative', serif; font-size: 14px; color: var(--gold); background: var(--bg-4); border: 1px solid var(--border-bright); border-right: none; border-radius: var(--radius) 0 0 var(--radius); padding: 12px 10px; line-height: 1; flex-shrink: 0; }
+.handleField { border-radius: 0 var(--radius) var(--radius) 0; flex: 1; }
+.inputError { border-color: #f08080 !important; }
+.fieldError { font-family: 'Crimson Text', serif; font-size: 13px; color: #f08080; margin: 0; }
+.fieldOk { font-family: 'Crimson Text', serif; font-size: 13px; color: var(--green); margin: 0; }

@@ -14,6 +14,7 @@ export function createPlayerSlice(set, get) {
     lastSaved: null,
     pendingSync: false,
     username: null,
+    handle: null,
     userId: null,
     authReady: false,
     titles: [],
@@ -43,6 +44,7 @@ export function createPlayerSlice(set, get) {
     },
 
     setUsername: (username) => set({ username }),
+    setHandle: (handle) => set({ handle }),
     setUserId: (userId) => set({ userId }),
     setAuthReady: () => set({ authReady: true }),
     setFounderUnlocked: () => set({ founderUnlocked: true }),

@@ -7,6 +7,7 @@ import { MUSHROOM_MAP } from '../../constants/mushrooms.js'
 import { ORE_MAP, INGOT_MAP } from '../../constants/ores.js'
 import { POTION_MAP } from '../../constants/potions.js'
 import MarketTab from './MarketTab.jsx'
+import GuildTab from './GuildTab.jsx'
 import Button from '../ui/Button.jsx'
 import Modal from '../ui/Modal.jsx'
 import ProgressBar from '../ui/ProgressBar.jsx'
@@ -18,6 +19,7 @@ const SUB_TABS = [
   { id: 'market',   label: 'Market' },
   { id: 'requests', label: 'Requests' },
   { id: 'orders',   label: 'Community Orders' },
+  { id: 'guild',    label: 'Guild' },
 ]
 
 function getItemName(type, id) {
@@ -354,6 +356,7 @@ export default function CommunityTab() {
       {sub === 'market'   && <MarketTab />}
       {sub === 'requests' && <RequestsSection />}
       {sub === 'orders'   && <CommunityOrdersSection />}
+      {sub === 'guild'    && <GuildTab />}
     </div>
   )
 }
