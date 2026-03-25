@@ -18,6 +18,7 @@ const FRESH_STATE = {
     slotId: i, seedId: null, plantedAt: null, growthXPAtPlant: 0,
   })),
   gardenSlotCount: INITIAL_SLOTS,
+  gardenPlotsBought: 0,
   // mine
   mineTrips: [], oreInventory: {}, mineLevel: 1,
   bromUnlocked: false, bromTrip2Unlocked: false,

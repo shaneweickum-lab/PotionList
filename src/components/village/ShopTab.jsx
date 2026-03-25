@@ -4,15 +4,15 @@ import { SHOP_ITEMS } from '../../constants/shop.js'
 import { HERB_MAP } from '../../constants/herbs.js'
 import { MUSHROOM_MAP } from '../../constants/mushrooms.js'
 import { SEED_MAP } from '../../constants/seeds.js'
-import { plotCost } from '../../lib/xpCalc.js'
 import Button from '../ui/Button.jsx'
 import { showToast } from '../ui/ToastNotification.jsx'
 import styles from './ShopTab.module.css'
 
 export default function ShopTab() {
   const [category, setCategory] = useState('seeds')
-  const { gold, spendGold, addSeed, purchaseShopItem, isOwned, level, expandGarden, owned } = useStore()
-  const hasHoe = isOwned('iron_hoe')
+  const { gold, spendGold, addSeed, purchaseShopItem, isOwned, expandGarden,
+          gardenSlotCount, incrementPlotsBought, getNextPlotCost } = useStore()
+  const MAX_PLOTS = 20
 
   const purchaseSeed = (item) => {
     if (gold < item.goldCost) return showToast('Not enough gold', 'error')
@@ -31,11 +31,13 @@ export default function ShopTab() {
   }
 
   const purchasePlot = () => {
-    const cost = hasHoe ? plotCost(level) : 200
+    if (gardenSlotCount >= MAX_PLOTS) return showToast('Garden is at maximum size', 'error')
+    const cost = getNextPlotCost()
     if (gold < cost) return showToast('Not enough gold', 'error')
     spendGold(cost)
-    expandGarden(2)
-    showToast('2 garden slots unlocked!', 'success')
+    expandGarden(1)
+    incrementPlotsBought()
+    showToast('Garden slot unlocked!', 'success')
   }
 
   const purchaseGarden = (item) => {
@@ -62,8 +64,9 @@ export default function ShopTab() {
       <div className={styles.items}>
         {items.map(item => {
           const alreadyOwned = item.oneTime && isOwned(item.id)
+          const atMaxPlots = item.id === 'garden_plot' && gardenSlotCount >= MAX_PLOTS
           let cost = item.goldCost
-          if (item.id === 'garden_plot') cost = hasHoe ? plotCost(level) : 200
+          if (item.id === 'garden_plot') cost = getNextPlotCost()
           const seedDef = SEED_MAP[item.id]
           const yieldItem = seedDef ? (HERB_MAP[seedDef.yields] ?? MUSHROOM_MAP[seedDef.yields]) : null
 
@@ -75,7 +78,9 @@ export default function ShopTab() {
                 {!yieldItem && <div className={styles.itemDesc}>{item.description}</div>}
               </div>
               <div className={styles.itemAction}>
-                {alreadyOwned ? (
+                {atMaxPlots ? (
+                  <span className={styles.ownedLabel}>Max</span>
+                ) : alreadyOwned ? (
                   <span className={styles.ownedLabel}>Owned</span>
                 ) : (
                   <Button
