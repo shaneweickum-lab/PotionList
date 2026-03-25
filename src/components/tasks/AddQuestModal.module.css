@@ -135,35 +135,30 @@
 }
 .removeBtn:hover { color: var(--red); }
 
-/* Daily toggle */
-.dailyToggle {
+/* Recurrence pills */
+.recurRow {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 10px 14px;
+  gap: 6px;
+}
+
+.recurPill {
+  flex: 1;
+  padding: 8px 4px;
   background: var(--bg-4);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   color: var(--text-dim);
   font-family: 'Crimson Text', serif;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
-  text-align: left;
+  white-space: nowrap;
   transition: border-color 0.15s, background 0.15s, color 0.15s;
 }
-.dailyToggle:hover { border-color: var(--gold-dim); color: var(--text); }
-.dailyToggleOn {
+.recurPill:hover { border-color: var(--gold-dim); color: var(--text); }
+.recurPillActive {
   border-color: var(--gold-dim);
-  background: rgba(201,162,39,0.08);
+  background: rgba(201,162,39,0.1);
   color: var(--gold);
-}
-.dailyIcon { font-size: 16px; flex-shrink: 0; }
-.dailyNote {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-style: italic;
-  margin-left: auto;
 }
 
 .addItemBtn {

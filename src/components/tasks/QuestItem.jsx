@@ -40,8 +40,8 @@ export default function QuestItem({ quest }) {
       <div className={styles.header}>
         <span className={styles.title}>{quest.title}</span>
         <div className={styles.headerRight}>
-          {quest.recurrence === 'daily' && (
-            <span className={styles.dailyBadge}>↺ Daily</span>
+          {quest.recurrence && quest.recurrence !== 'none' && (
+            <span className={styles.dailyBadge}>↺ {quest.recurrence.charAt(0).toUpperCase() + quest.recurrence.slice(1)}</span>
           )}
           {cat && (
             <span className={styles.catBadge}>

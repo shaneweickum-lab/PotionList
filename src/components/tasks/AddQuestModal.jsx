@@ -9,7 +9,7 @@ export default function AddQuestModal({ onClose }) {
   const addQuest = useStore(s => s.addQuest)
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState(null)
-  const [daily, setDaily] = useState(false)
+  const [recurrence, setRecurrence] = useState('none')
   const [steps, setSteps] = useState(['', ''])
   const [groceries, setGroceries] = useState([''])
 
@@ -33,7 +33,7 @@ export default function AddQuestModal({ onClose }) {
   const submit = (e) => {
     e.preventDefault()
     if (!canSubmit) return
-    addQuest({ title, category, recurrence: daily ? 'daily' : 'none', steps: validSteps, shoppingItems: validGroceries })
+    addQuest({ title, category, recurrence, steps: validSteps, shoppingItems: validGroceries })
     onClose()
   }
 
@@ -70,15 +70,31 @@ export default function AddQuestModal({ onClose }) {
         </div>
 
         {/* Recurrence */}
-        <button
-          type="button"
-          className={`${styles.dailyToggle} ${daily ? styles.dailyToggleOn : ''}`}
-          onClick={() => setDaily(d => !d)}
-        >
-          <span className={styles.dailyIcon}>↺</span>
-          <span>Daily Quest</span>
-          {daily && <span className={styles.dailyNote}>resets at midnight after chest is claimed</span>}
-        </button>
+        <div className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionLabel}>Recurrence</span>
+            {recurrence !== 'none' && (
+              <span className={styles.hint}>resets at midnight · chest required to unlock next cycle</span>
+            )}
+          </div>
+          <div className={styles.recurRow}>
+            {[
+              { id: 'none',    label: '—  Once' },
+              { id: 'daily',   label: '↺ Daily' },
+              { id: 'weekly',  label: '↺ Weekly' },
+              { id: 'monthly', label: '↺ Monthly' },
+            ].map(opt => (
+              <button
+                key={opt.id}
+                type="button"
+                className={`${styles.recurPill} ${recurrence === opt.id ? styles.recurPillActive : ''}`}
+                onClick={() => setRecurrence(opt.id)}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Steps */}
         <div className={styles.section}>

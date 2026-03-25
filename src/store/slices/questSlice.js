@@ -5,10 +5,25 @@ const HEALTHY_ITEM_XP  = 8
 
 let nextQuestId = Date.now()
 
-function nextMidnight() {
-  const d = new Date()
-  d.setHours(24, 0, 0, 0)
-  return d.getTime()
+function calcNextDueAt(recurrence) {
+  if (recurrence === 'daily') {
+    const d = new Date()
+    d.setHours(24, 0, 0, 0)
+    return d.getTime()
+  }
+  if (recurrence === 'weekly') {
+    const d = new Date()
+    d.setDate(d.getDate() + 7)
+    d.setHours(0, 0, 0, 0)
+    return d.getTime()
+  }
+  if (recurrence === 'monthly') {
+    const d = new Date()
+    d.setMonth(d.getMonth() + 1)
+    d.setHours(0, 0, 0, 0)
+    return d.getTime()
+  }
+  return null
 }
 
 export function createQuestSlice(set, get) {
@@ -78,9 +93,9 @@ export function createQuestSlice(set, get) {
       if (loot.gold) get().addGold(loot.gold)
       if (loot.seed) get().addSeed(loot.seed, 1)
 
-      const isDaily = quest.recurrence === 'daily'
+      const isRecurring = quest.recurrence && quest.recurrence !== 'none'
 
-      const resetQuest = (q) => isDaily
+      const resetQuest = (q) => isRecurring
         ? {
             ...q,
             steps: q.steps.map(s => ({ ...s, done: false })),
@@ -88,7 +103,7 @@ export function createQuestSlice(set, get) {
             completedAt: null,
             chestOpened: false,
             loot: null,
-            nextDueAt: nextMidnight(),
+            nextDueAt: calcNextDueAt(q.recurrence),
           }
         : { ...q, chestOpened: true, loot }
 
