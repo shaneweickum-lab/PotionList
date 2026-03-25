@@ -9,6 +9,7 @@ export function createPlayerSlice(set, get) {
     streak: 0,
     lastTaskDay: null,
     longestStreak: 0,
+    tasksCompleted: 0,
     milestonesClaimed: [],
     lastSaved: null,
     pendingSync: false,
@@ -51,6 +52,7 @@ export function createPlayerSlice(set, get) {
     claimMilestone: (day) => set(state => ({
       milestonesClaimed: [...new Set([...state.milestonesClaimed, day])],
     })),
+    incrementTasksCompleted: () => set(state => ({ tasksCompleted: (state.tasksCompleted ?? 0) + 1 })),
     setLastTaskDay: (day) => set({ lastTaskDay: day }),
     setStreak: (streak) => set(state => ({
       streak,

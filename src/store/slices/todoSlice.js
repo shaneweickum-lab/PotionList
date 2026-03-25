@@ -92,6 +92,9 @@ export function createTodoSlice(set, get) {
       // 1% chance to discover a hidden lore entry
       get().rollLoreFind()
 
+      // Persistent completion counter
+      get().incrementTasksCompleted()
+
       // Streak handling
       get().checkStreak()
 

@@ -83,15 +83,22 @@ export default function AddTaskModal({ onClose }) {
     <Modal title="New Task" onClose={onClose}>
       <form className={styles.form} onSubmit={submit}>
 
-        <input
-          className={styles.input}
-          type="text"
-          placeholder="What must be done..."
-          value={text}
-          onChange={e => setText(e.target.value)}
-          maxLength={120}
-          autoFocus
-        />
+        <div className={styles.inputRow}>
+          <input
+            className={styles.input}
+            type="text"
+            placeholder="What must be done..."
+            value={text}
+            onChange={e => setText(e.target.value)}
+            maxLength={120}
+            autoFocus
+          />
+          <button
+            type="submit"
+            className={styles.plusBtn}
+            disabled={!text.trim()}
+          >+</button>
+        </div>
 
         <OptionRow label="Priority">
           {PRIORITIES.map(p => (
@@ -191,14 +198,6 @@ export default function AddTaskModal({ onClose }) {
             ))}
           </div>
         </div>
-
-        <button
-          type="submit"
-          className={styles.submit}
-          disabled={!text.trim()}
-        >
-          Add Task
-        </button>
 
       </form>
     </Modal>
