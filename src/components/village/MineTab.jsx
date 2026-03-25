@@ -33,6 +33,10 @@ export default function MineTab() {
   const handleCollect = (trip) => {
     setShowBark({ trip, bark: BROM_BARKS[trip.tier - 1]?.[trip.barkIndex ?? 0] ?? '' })
     collectMineTrip(trip.id)
+    const lootParts = Object.entries(trip.loot ?? {})
+      .filter(([, qty]) => qty > 0)
+      .map(([oreId, qty]) => `${ORE_MAP[oreId]?.name ?? oreId} ×${qty}`)
+    if (lootParts.length > 0) showToast(`Collected: ${lootParts.join(', ')}`, 'success')
   }
 
   return (

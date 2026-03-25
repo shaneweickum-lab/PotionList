@@ -45,6 +45,7 @@ export default function TaskItem({ todo }) {
       if (reward) {
         let msg = `+${reward.xp} XP`
         if (reward.growthXP) msg += `  ·  🌱 +${reward.growthXP}`
+        if (reward.foundGold) msg += `  ·  +${reward.foundGold}g found!`
         if (reward.foundSeed) {
           const seed = SEED_MAP[reward.foundSeed]
           const rarity = seed?.rarity ?? 'common'
