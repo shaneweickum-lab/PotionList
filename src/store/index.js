@@ -15,6 +15,7 @@ import { createQuestSlice } from './slices/questSlice.js'
 import { createBugFarmSlice } from './slices/bugFarmSlice.js'
 import { createSkillSlice } from './slices/skillSlice.js'
 import { createGuildSlice } from './slices/guildSlice.js'
+import { createShopSlice } from './slices/shopSlice.js'
 
 export const useStore = create(
   subscribeWithSelector(
@@ -35,6 +36,7 @@ export const useStore = create(
         ...createBugFarmSlice(set, get),
         ...createSkillSlice(set, get),
         ...createGuildSlice(set, get),
+        ...createShopSlice(set, get),
 
         // Pending UI state (not persisted)
         streakGiftToShow: null,
@@ -78,12 +80,6 @@ export const useStore = create(
         name: 'potionlist-v1',
         storage: createJSONStorage(() => localStorage),
         partialize: (state) => {
-          const {
-            marketListings, marketLoading, marketError,
-            iapLoading, iapError, lastCompletionReward,
-            streakGiftToShow, streakMilestoneToShow, pendingStreakDay,
-          } = state
-          // Return everything except transient state
           return Object.fromEntries(
             Object.entries(state).filter(([key]) => ![
               'marketListings', 'marketLoading', 'marketError',
