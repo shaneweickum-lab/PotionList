@@ -3,12 +3,14 @@ import Tabs from '../components/ui/Tabs.jsx'
 import BrewQueue from '../components/cauldron/BrewQueue.jsx'
 import RecipeBook from '../components/cauldron/RecipeBook.jsx'
 import CauldronUpgrade from '../components/cauldron/CauldronUpgrade.jsx'
+import PotionShelf from '../components/cauldron/PotionShelf.jsx'
 import { useStore } from '../store/index.js'
 import styles from './CauldronScreen.module.css'
 
 const TABS = [
-  { id: 'queue', label: 'Active' },
+  { id: 'queue',   label: 'Active' },
   { id: 'recipes', label: 'Recipes' },
+  { id: 'shelf',   label: 'Shelf' },
   { id: 'upgrade', label: 'Cauldron' },
 ]
 
@@ -29,8 +31,9 @@ export default function CauldronScreen() {
         </span>
       </div>
       <Tabs tabs={TABS} active={tab} onChange={setTab} />
-      {tab === 'queue' && <BrewQueue />}
+      {tab === 'queue'   && <BrewQueue />}
       {tab === 'recipes' && <RecipeBook />}
+      {tab === 'shelf'   && <PotionShelf />}
       {tab === 'upgrade' && <CauldronUpgrade />}
     </div>
   )
