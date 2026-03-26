@@ -1,4 +1,5 @@
 .smithy { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.smithyWrap { width: 100%; overflow: hidden; line-height: 0; border-radius: var(--radius-lg); }
 .section { background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 12px; display: flex; flex-direction: column; gap: 10px; }
 .sectionTitle { font-family: 'Cinzel Decorative', serif; font-size: 11px; color: var(--text-muted); }
 .activeItem { display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-4); border-radius: var(--radius); }
