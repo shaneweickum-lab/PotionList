@@ -1,35 +1,73 @@
-// All 17 potions. brewTime in seconds. cauldronTier: 1-4.
+// All potions. brewTime in seconds. cauldronTier: 1-4.
+// Tier 1 = single ingredient type only (apprentice brews)
+// Tier 2+ = multi-ingredient recipes
 export const POTIONS = [
+  // ── TIER 1 — Single-ingredient brews ──
+  {
+    id: 'silverleaf_salve',
+    name: 'Silverleaf Salve',
+    ingredients: { silverleaf: 2 },
+    brewTime: 120,
+    cauldronTier: 1,
+    xpReward: 8,
+    sellValue: 10,
+    color: '#c0d0e0',
+    lore: 'The simplest remedy in any herbalist\'s kit. Every apprentice starts here.',
+  },
+  {
+    id: 'dewcap_draft',
+    name: 'Dewcap Draft',
+    ingredients: { dewcap: 3 },
+    brewTime: 150,
+    cauldronTier: 1,
+    xpReward: 10,
+    sellValue: 12,
+    color: '#7ab8a0',
+    lore: 'Three caps steeped until the liquid turns green. Refreshing, if you don\'t smell it first.',
+  },
+  {
+    id: 'ironwort_tonic',
+    name: 'Ironwort Tonic',
+    ingredients: { ironwort: 2 },
+    brewTime: 180,
+    cauldronTier: 1,
+    xpReward: 12,
+    sellValue: 14,
+    color: '#9a9878',
+    lore: 'Ground stems suspended in water. Laborers swear by it. Tastes like it.',
+  },
+  {
+    id: 'whisper_tea',
+    name: 'Whispergrass Tea',
+    ingredients: { whispergrass: 4 },
+    brewTime: 100,
+    cauldronTier: 1,
+    xpReward: 7,
+    sellValue: 9,
+    color: '#a8c888',
+    lore: 'Four stalks, no more. The meadow folk have been brewing this for three hundred years.',
+  },
+
+  // ── TIER 2 — Two to three ingredients ──
   {
     id: 'minor_healing',
     name: 'Minor Healing Potion',
     ingredients: { silverleaf: 2, dewcap: 1 },
     brewTime: 300,
-    cauldronTier: 1,
-    xpReward: 15,
-    sellValue: 18,
+    cauldronTier: 2,
+    xpReward: 20,
+    sellValue: 22,
     color: '#c84848',
     lore: 'Seals small wounds. Tastes of copper and regret.',
-  },
-  {
-    id: 'healing',
-    name: 'Healing Potion',
-    ingredients: { silverleaf: 3, dewcap: 2, moonbloom: 1 },
-    brewTime: 600,
-    cauldronTier: 1,
-    xpReward: 30,
-    sellValue: 45,
-    color: '#e05050',
-    lore: 'Mends broken ribs, fractured spirits. Standard issue for adventurers.',
   },
   {
     id: 'stamina',
     name: 'Stamina Brew',
     ingredients: { whispergrass: 3, ironwort: 2 },
     brewTime: 420,
-    cauldronTier: 1,
-    xpReward: 20,
-    sellValue: 28,
+    cauldronTier: 2,
+    xpReward: 25,
+    sellValue: 32,
     color: '#c9a227',
     lore: 'Mira Dunvale orders these by the crate. Her porters haven\'t complained in years.',
   },
@@ -38,11 +76,22 @@ export const POTIONS = [
     name: 'Potion of Clarity',
     ingredients: { spiritmint: 2, whispergrass: 2, dewcap: 1 },
     brewTime: 480,
-    cauldronTier: 1,
-    xpReward: 25,
-    sellValue: 35,
+    cauldronTier: 2,
+    xpReward: 30,
+    sellValue: 40,
     color: '#88ccff',
     lore: 'Voss the Scholar requires three per week. His correspondence is formidable.',
+  },
+  {
+    id: 'healing',
+    name: 'Healing Potion',
+    ingredients: { silverleaf: 3, dewcap: 2, moonbloom: 1 },
+    brewTime: 600,
+    cauldronTier: 2,
+    xpReward: 35,
+    sellValue: 50,
+    color: '#e05050',
+    lore: 'Mends broken ribs, fractured spirits. Standard issue for adventurers.',
   },
   {
     id: 'shadow_oil',
@@ -110,6 +159,8 @@ export const POTIONS = [
     color: '#c888a8',
     lore: 'The petals dissolve in the bottle within an hour. Must be drunk quickly.',
   },
+
+  // ── TIER 3 ──
   {
     id: 'goldvein_tonic',
     name: 'Goldvein Tonic',
@@ -154,6 +205,8 @@ export const POTIONS = [
     color: '#d8d8ff',
     lore: 'Serevane has the exclusive contract. She has not disclosed what it does.',
   },
+
+  // ── TIER 4 ──
   {
     id: 'grand_elixir',
     name: 'Grand Restoration Elixir',
