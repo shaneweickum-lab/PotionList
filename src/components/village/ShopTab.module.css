@@ -79,7 +79,8 @@
 }
 .owned { opacity: 0.5; }
 .itemInfo { flex: 1; }
-.itemName { font-family: 'Cinzel Decorative', serif; font-size: 12px; color: var(--text); margin-bottom: 3px; }
+.itemNameRow { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+.itemName { font-family: 'Cinzel Decorative', serif; font-size: 12px; color: var(--text); }
 .itemDesc { font-family: 'Crimson Text', serif; font-size: 13px; color: var(--text-dim); }
 .itemAction { flex-shrink: 0; }
 .ownedLabel { font-size: 11px; color: var(--text-muted); font-style: italic; }

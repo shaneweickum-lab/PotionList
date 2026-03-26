@@ -29,6 +29,7 @@ function calcNextDueAt(recurrence) {
 export function createQuestSlice(set, get) {
   return {
     quests: [],
+    totalQuestsCompleted: 0,
 
     addQuest: ({ title, category, recurrence, steps, shoppingItems }) => {
       const id = String(nextQuestId++)
@@ -124,11 +125,13 @@ export function createQuestSlice(set, get) {
 
       if (loot.ore) {
         set(state => ({
+          totalQuestsCompleted: (state.totalQuestsCompleted ?? 0) + 1,
           oreInventory: { ...state.oreInventory, [loot.ore]: (state.oreInventory[loot.ore] ?? 0) + 1 },
           quests: state.quests.map(q => q.id === questId ? resetQuest(q) : q),
         }))
       } else {
         set(state => ({
+          totalQuestsCompleted: (state.totalQuestsCompleted ?? 0) + 1,
           quests: state.quests.map(q => q.id === questId ? resetQuest(q) : q),
         }))
       }

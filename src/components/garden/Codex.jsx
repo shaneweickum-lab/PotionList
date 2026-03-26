@@ -8,6 +8,7 @@ import { HIDDEN_LORE, ALL_HIDDEN_LORE_IDS } from '../../constants/hiddenLore.js'
 import Badge from '../ui/Badge.jsx'
 import styles from './Codex.module.css'
 
+
 const CODEX_TABS = [
   { id: 'botany', label: 'Botany' },
   { id: 'mycology', label: 'Mycology' },
@@ -73,7 +74,10 @@ function LoreSection({ discoveredLore }) {
               <div key={id} className={`${styles.loreEntry} ${found ? '' : styles.locked}`}>
                 {found ? (
                   <>
-                    <div className={styles.loreEntryTitle}>{entry.name}</div>
+                    <div className={styles.loreEntryTitleRow}>
+                      <div className={styles.loreEntryTitle}>{entry.name}</div>
+                      <Badge rarity="collectible" label="Collectible" />
+                    </div>
                     <p className={styles.lore}>{entry.lore}</p>
                   </>
                 ) : (
