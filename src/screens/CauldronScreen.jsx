@@ -1,1 +1,40 @@
-aW1wb3J0IHsgdXNlU3RhdGUgfSBmcm9tICdyZWFjdCcKaW1wb3J0IFRhYnMgZnJvbSAnLi4vY29tcG9uZW50cy91aS9UYWJzLmpzeCcKaW1wb3J0IEJyZXdRdWV1ZSBmcm9tICcuLi9jb21wb25lbnRzL2NhdWxkcm9uL0JyZXdRdWV1ZS5qc3gnCmltcG9ydCBSZWNpcGVCb29rIGZyb20gJy4uL2NvbXBvbmVudHMvY2F1bGRyb24vUmVjaXBlQm9vay5qc3gnCmltcG9ydCBDYXVsZHJvblVwZ3JhZGUgZnJvbSAnLi4vY29tcG9uZW50cy9jYXVsZHJvbi9DYXVsZHJvblVwZ3JhZGUuanN4JwppbXBvcnQgUG90aW9uU2hlbGYgZnJvbSAnLi4vY29tcG9uZW50cy9jYXVsZHJvbi9Qb3Rpb25TaGVsZi5qc3gnCmltcG9ydCB7IHVzZVN0b3JlIH0gZnJvbSAnLi4vc3RvcmUvaW5kZXguanMnCmltcG9ydCBzdHlsZXMgZnJvbSAnLi9DYXVsZHJvblNjcmVlbi5tb2R1bGUuY3NzJwoKY29uc3QgVEFCUyA9IFsKICB7IGlkOiAncXVldWUnLCAgIGxhYmVsOiAnQWN0aXZlJyB9LAogIHsgaWQ6ICdyZWNpcGVzJywgbGFiZWw6ICdSZWNpcGVzJyB9LAogIHsgaWQ6ICdzaGVsZicsICAgbGFiZWw6ICdTaGVsZicgfSwKICB7IGlkOiAndXBncmFkZScsIGxhYmVsOiAnQ2F1bGRyb24nIH0sCl0KCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIENhdWxkcm9uU2NyZWVuKCkgewogIGNvbnN0IFt0YWIsIHNldFRhYl0gPSB1c2VTdGF0ZSgncmVjaXBlcycpCiAgY29uc3QgeyBicmV3aW5nLCBwb3Rpb25JbnZlbnRvcnkgfSA9IHVzZVN0b3JlKCkKICBjb25zdCBhY3RpdmVCcmV3aW5nID0gYnJld2luZz8uZmlsdGVyKGIgPT4gYi5maW5pc2hBdCA+IERhdGUubm93KCkpLmxlbmd0aCA/PyAwCiAgY29uc3QgdG90YWxQb3Rpb25zID0gT2JqZWN0LnZhbHVlcyhwb3Rpb25JbnZlbnRvcnkgPz8ge30pLnJlZHVjZSgocywgdikg
+import { useState } from 'react'
+import Tabs from '../components/ui/Tabs.jsx'
+import BrewQueue from '../components/cauldron/BrewQueue.jsx'
+import RecipeBook from '../components/cauldron/RecipeBook.jsx'
+import CauldronUpgrade from '../components/cauldron/CauldronUpgrade.jsx'
+import PotionShelf from '../components/cauldron/PotionShelf.jsx'
+import { useStore } from '../store/index.js'
+import styles from './CauldronScreen.module.css'
+
+const TABS = [
+  { id: 'queue',   label: 'Active' },
+  { id: 'recipes', label: 'Recipes' },
+  { id: 'shelf',   label: 'Shelf' },
+  { id: 'upgrade', label: 'Cauldron' },
+]
+
+export default function CauldronScreen() {
+  const [tab, setTab] = useState('recipes')
+  const { brewing, potionInventory } = useStore()
+  const activeBrewing = brewing?.filter(b => b.finishAt > Date.now()).length ?? 0
+  const totalPotions = Object.values(potionInventory ?? {}).reduce((s, v) => s + v, 0)
+
+  return (
+    <div className={styles.screen}>
+      <div className={styles.bar}>
+        <span className={styles.stat}>
+          <span className={styles.statNum}>{activeBrewing}</span> brewing
+        </span>
+        <span className={styles.stat}>
+          <span className={styles.statNum}>{totalPotions}</span> potions
+        </span>
+      </div>
+      <Tabs tabs={TABS} active={tab} onChange={setTab} />
+      {tab === 'queue'   && <BrewQueue />}
+      {tab === 'recipes' && <RecipeBook />}
+      {tab === 'shelf'   && <PotionShelf />}
+      {tab === 'upgrade' && <CauldronUpgrade />}
+    </div>
+  )
+}
