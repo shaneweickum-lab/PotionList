@@ -1,17 +1,88 @@
-.orders { display: flex; flex-direction: column; gap: 12px; padding: 14px; }
-.resets { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--text-muted); text-align: center; margin-bottom: 4px; }
+.wrap { display: flex; flex-direction: column; }
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+}
+.tab {
+  flex: 1;
+  padding: 9px 4px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.tabActive { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── Reset timer ── */
+.resets {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 8px 0 4px;
+}
+
+/* ── Order list ── */
+.orders { display: flex; flex-direction: column; gap: 12px; padding: 10px 14px 14px; }
+
+/* ── Order card ── */
 .order {
-  padding: 14px; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--radius-lg);
-  display: flex; flex-direction: column; gap: 8px;
+  padding: 14px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .fulfilled { opacity: 0.5; }
-.charRow { display: flex; align-items: center; gap: 10px; }
-.charDot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+/* Accent left border by tier */
+.weekly  { border-left: 3px solid #5880e0; }
+.monthly { border-left: 3px solid #9b55d0; }
+
+/* ── Character row ── */
+.charRow  { display: flex; align-items: center; gap: 10px; }
+.charDot  { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 .charName { font-family: 'Cinzel Decorative', serif; font-size: 13px; color: var(--text); }
 .charTitle { font-size: 12px; color: var(--text-muted); font-style: italic; }
-.orderReq { font-family: 'Crimson Text', serif; font-size: 15px; color: var(--text-dim); }
-.potionName { color: var(--text); font-weight: 600; }
-.orderReward { display: flex; align-items: center; gap: 10px; }
-.gold { font-family: 'Cinzel Decorative', serif; font-size: 13px; color: var(--gold); }
+
+/* ── Items list ── */
+.itemsLabel {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.itemsList { display: flex; flex-direction: column; gap: 4px; }
+.itemLine  { display: flex; align-items: center; gap: 6px; }
+.itemDot   { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.itemLineName { font-family: 'Crimson Text', serif; font-size: 14px; color: var(--text); flex: 1; }
+.itemLineShort { color: #c87878; }
+.itemTypeTag {
+  font-size: 10px;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 5px;
+  flex-shrink: 0;
+}
+.itemLineQty { font-family: 'Cinzel Decorative', serif; font-size: 11px; flex-shrink: 0; }
+.qtyOk      { color: var(--green); }
+.qtyMissing { color: #c87878; }
+
+/* ── Reward row ── */
+.orderReward { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.gold  { font-family: 'Cinzel Decorative', serif; font-size: 13px; color: var(--gold); }
+.xp    { font-size: 12px; color: #88b8d8; }
 .bonus { font-size: 12px; color: var(--green); }
+
 .fulfilledLabel { font-size: 13px; color: var(--green); font-style: italic; }
