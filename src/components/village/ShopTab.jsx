@@ -207,7 +207,10 @@ export default function ShopTab() {
             return (
               <div key={item.id} className={`${styles.item} ${alreadyOwned ? styles.owned : ''}`}>
                 <div className={styles.itemInfo}>
-                  <div className={styles.itemName}>{item.name}</div>
+                  <div className={styles.itemNameRow}>
+                    <div className={styles.itemName}>{item.name}</div>
+                    {item.oneTime && <span className={styles.collectibleBadge}>Collectible</span>}
+                  </div>
                   <div className={styles.itemDesc}>{item.description}</div>
                 </div>
                 <div className={styles.itemAction}>

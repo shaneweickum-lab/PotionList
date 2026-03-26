@@ -5,6 +5,7 @@ export function createBrewSlice(set, get) {
   return {
     brewing: [],  // { id, potionId, finishAt, totalTime, qty, startedAt }
     potionInventory: {},
+    totalPotionsBrewed: 0,
     cauldronTier: 1,
     cauldronSkipAvailable: false,
     cauldronSkipUsed: false,
@@ -60,6 +61,7 @@ export function createBrewSlice(set, get) {
           ...state.potionInventory,
           [brew.potionId]: (state.potionInventory[brew.potionId] ?? 0) + yield_,
         },
+        totalPotionsBrewed: (state.totalPotionsBrewed ?? 0) + yield_,
       }))
 
       if (potion) get().awardXP(potion.xpReward * brew.qty)
@@ -75,6 +77,7 @@ export function createBrewSlice(set, get) {
               ...state.potionInventory,
               [bonus.id]: (state.potionInventory[bonus.id] ?? 0) + 1,
             },
+            totalPotionsBrewed: (state.totalPotionsBrewed ?? 0) + 1,
           }))
         }
       }
