@@ -1,8 +1,12 @@
 .mapWrap {
   width: 100%;
-  overflow: hidden;
-  line-height: 0;
   background: #08101e;
+}
+
+.mapWrap > svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .building {
