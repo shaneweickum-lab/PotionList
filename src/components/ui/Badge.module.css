@@ -11,3 +11,4 @@
 .uncommon { background: rgba(90,158,111,0.2); color: var(--green); }
 .rare { background: rgba(91,163,214,0.2); color: #5ba3d6; }
 .epic { background: rgba(155,107,181,0.2); color: var(--purple); }
+.collectible { background: rgba(155,85,208,0.15); color: #b870e8; border: 1px solid rgba(155,85,208,0.3); }

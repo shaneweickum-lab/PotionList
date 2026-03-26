@@ -5,6 +5,7 @@ import { HERB_MAP } from '../../constants/herbs.js'
 import { MUSHROOM_MAP } from '../../constants/mushrooms.js'
 import { SEED_MAP } from '../../constants/seeds.js'
 import Button from '../ui/Button.jsx'
+import Badge from '../ui/Badge.jsx'
 import { showToast } from '../ui/ToastNotification.jsx'
 import SellTab from './SellTab.jsx'
 import styles from './ShopTab.module.css'
@@ -209,7 +210,7 @@ export default function ShopTab() {
                 <div className={styles.itemInfo}>
                   <div className={styles.itemNameRow}>
                     <div className={styles.itemName}>{item.name}</div>
-                    {item.oneTime && <span className={styles.collectibleBadge}>Collectible</span>}
+                    {item.oneTime && <Badge rarity="collectible" label="Collectible" />}
                   </div>
                   <div className={styles.itemDesc}>{item.description}</div>
                 </div>
