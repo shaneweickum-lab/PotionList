@@ -5,6 +5,7 @@ import { HERB_MAP } from '../../constants/herbs.js'
 import { MUSHROOM_MAP } from '../../constants/mushrooms.js'
 import { BUG_MAP } from '../../constants/bugs.js'
 import BrewModal from './BrewModal.jsx'
+import PotionShelf from './PotionShelf.jsx'
 import styles from './RecipeBook.module.css'
 
 function getItemName(id) {
@@ -25,6 +26,7 @@ export default function RecipeBook() {
 
   return (
     <>
+      <PotionShelf />
       <div className={styles.list}>
         {POTIONS.map(potion => {
           const locked = potion.cauldronTier > cauldronTier
