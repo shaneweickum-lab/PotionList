@@ -2,12 +2,13 @@ import { useState } from 'react'
 import ShopTab from '../components/village/ShopTab.jsx'
 import MineTab from '../components/village/MineTab.jsx'
 import SmithyTab from '../components/village/SmithyTab.jsx'
+import CommunityTab from '../components/village/CommunityTab.jsx'
 import styles from './VillageScreen.module.css'
 
 function VillageMap({ onEnter }) {
   return (
     <div className={styles.mapWrap}>
-      <svg viewBox="0 0 360 245" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 480 245" width="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="vSky" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#08101e" />
@@ -21,7 +22,7 @@ function VillageMap({ onEnter }) {
         </defs>
 
         {/* Sky */}
-        <rect width="360" height="148" fill="url(#vSky)" />
+        <rect width="480" height="148" fill="url(#vSky)" />
 
         {/* Stars */}
         {[
@@ -29,6 +30,8 @@ function VillageMap({ onEnter }) {
           [238,18],[265,11],[293,19],[318,7],[345,14],[28,35],[68,30],
           [115,38],[160,28],[205,34],[250,29],[295,36],[340,32],[12,50],
           [90,44],[185,48],[280,42],[350,46],[55,58],[145,52],[235,55],[325,50],
+          [370,10],[392,24],[415,8],[438,18],[460,12],[475,28],
+          [365,38],[388,44],[412,32],[435,48],[458,36],[472,52],
         ].map(([x, y], i) => (
           <circle key={i} cx={x} cy={y}
             r={i % 4 === 0 ? 1.2 : i % 3 === 0 ? 0.9 : 0.6}
@@ -51,27 +54,27 @@ function VillageMap({ onEnter }) {
         <circle cx="327" cy="26" r="18" fill="#162340" opacity="0.5" />
 
         {/* Distant tree/hill silhouette */}
-        <path d="M0,148 Q30,118 62,128 Q92,112 118,122 Q142,107 168,120 Q188,104 212,116 Q236,102 260,114 Q282,104 303,116 Q323,107 344,118 Q352,111 360,120 L360,148 Z"
+        <path d="M0,148 Q30,118 62,128 Q92,112 118,122 Q142,107 168,120 Q188,104 212,116 Q236,102 260,114 Q282,104 303,116 Q323,107 344,118 Q352,111 370,116 Q392,108 415,114 Q438,104 460,112 Q470,108 480,112 L480,148 Z"
           fill="#0d1a0e" />
 
         {/* Ground */}
-        <rect x="0" y="148" width="360" height="97" fill="#181f12" />
+        <rect x="0" y="148" width="480" height="97" fill="#181f12" />
         {[156, 165, 176, 188].map(y => (
-          <line key={y} x1="0" y1={y} x2="360" y2={y} stroke="#101508" strokeWidth={y > 172 ? 1.5 : 0.8} opacity="0.55" />
+          <line key={y} x1="0" y1={y} x2="480" y2={y} stroke="#101508" strokeWidth={y > 172 ? 1.5 : 0.8} opacity="0.55" />
         ))}
 
         {/* Dirt path */}
-        <path d="M0,230 C60,222 120,218 180,222 C240,226 300,220 360,215"
+        <path d="M0,230 C60,222 120,218 180,222 C240,226 300,220 360,215 C400,211 440,208 480,206"
           fill="none" stroke="#3a2c16" strokeWidth="22" strokeLinecap="round" />
-        <path d="M0,230 C60,222 120,218 180,222 C240,226 300,220 360,215"
+        <path d="M0,230 C60,222 120,218 180,222 C240,226 300,220 360,215 C400,211 440,208 480,206"
           fill="none" stroke="#473620" strokeWidth="14" strokeLinecap="round" />
-        <path d="M0,228 C60,220 120,216 180,220 C240,224 300,218 360,213"
+        <path d="M0,228 C60,220 120,216 180,220 C240,224 300,218 360,213 C400,209 440,206 480,204"
           fill="none" stroke="#2c2010" strokeWidth="1.5" />
-        <path d="M0,232 C60,224 120,220 180,224 C240,228 300,222 360,217"
+        <path d="M0,232 C60,224 120,220 180,224 C240,228 300,222 360,217 C400,213 440,210 480,208"
           fill="none" stroke="#2c2010" strokeWidth="1.5" />
 
         {/* Grass tufts */}
-        {[20, 55, 100, 148, 215, 258, 308, 348].map((x, i) => {
+        {[20, 55, 100, 148, 215, 258, 308, 348, 380, 420, 458].map((x, i) => {
           const y = 205 + (i % 3) * 6
           return (
             <g key={x}>
@@ -265,6 +268,99 @@ function VillageMap({ onEnter }) {
           <rect x="257" y="185" width="90" height="18" rx="4" fill="#0c1520" opacity="0.88" />
           <text x="302" y="197" textAnchor="middle" fill="#e8d8a0" fontSize="10" fontFamily="Georgia, serif" letterSpacing="1.5">Smithy</text>
         </g>
+        {/* ===================== COMMUNITY HALL (far right) ===================== */}
+        <g className={styles.building} onClick={() => onEnter('community')} style={{ cursor: 'pointer' }}>
+          {/* Walls */}
+          <rect x="362" y="112" width="102" height="66" fill="#504a3c" />
+          {/* Stone rows */}
+          {[120, 128, 136, 144, 152, 160, 168].map(y => (
+            <line key={y} x1="362" y1={y} x2="464" y2={y} stroke="#3a3428" strokeWidth="0.8" opacity="0.5" />
+          ))}
+          {/* Stone joints even rows */}
+          {[120, 136, 152, 168].map(y =>
+            [376, 402, 428, 454].map(x => (
+              <line key={`${y}${x}`} x1={x} y1={y} x2={x} y2={y + 8} stroke="#3a3428" strokeWidth="0.5" opacity="0.35" />
+            ))
+          )}
+          {/* Stone joints odd rows */}
+          {[128, 144, 160].map(y =>
+            [369, 395, 421, 447].map(x => (
+              <line key={`${y}${x}`} x1={x} y1={y} x2={x} y2={y + 8} stroke="#3a3428" strokeWidth="0.5" opacity="0.35" />
+            ))
+          )}
+          {/* Roof */}
+          <polygon points="356,115 413,80 470,115" fill="#3c3028" />
+          <polygon points="356,115 413,80 413,115" fill="#322818" />
+          {[87, 93, 99, 105].map(y => (
+            <line key={y} x1={356 + (y - 80) * 1.0} y1={y} x2={470 - (y - 80) * 1.0} y2={y}
+              stroke="#2a2018" strokeWidth="0.8" opacity="0.65" />
+          ))}
+          <line x1="356" y1="115" x2="470" y2="115" stroke="#201808" strokeWidth="2" />
+          {/* Bell tower (centered on roof peak) */}
+          <rect x="405" y="62" width="16" height="54" fill="#4e4844" stroke="#3a3430" strokeWidth="0.5" />
+          {[70, 78, 86, 94, 102].map(y => (
+            <line key={y} x1="405" y1={y} x2="421" y2={y} stroke="#3a3430" strokeWidth="0.5" opacity="0.4" />
+          ))}
+          <polygon points="401,64 413,48 425,64" fill="#3c3028" />
+          <line x1="401" y1="64" x2="425" y2="64" stroke="#201808" strokeWidth="1.5" />
+          {/* Bell */}
+          <ellipse cx="413" cy="76" rx="5" ry="4" fill="#9a8840" opacity="0.85" />
+          <rect x="412" y="72" width="2" height="4" fill="#7a6830" />
+          {/* Windows */}
+          <rect x="366" y="118" width="24" height="22" rx="1" fill="#1a3050" stroke="#5a4820" strokeWidth="1" />
+          <line x1="378" y1="118" x2="378" y2="140" stroke="#2a4060" strokeWidth="0.8" />
+          <line x1="366" y1="129" x2="390" y2="129" stroke="#2a4060" strokeWidth="0.8" />
+          <rect x="367" y="119" width="22" height="20" rx="1" fill="#d4a820" opacity="0.2">
+            <animate attributeName="opacity" values="0.2;0.35;0.15;0.28;0.2" dur="3.2s" repeatCount="indefinite" />
+          </rect>
+          <rect x="440" y="118" width="24" height="22" rx="1" fill="#1a3050" stroke="#5a4820" strokeWidth="1" />
+          <line x1="452" y1="118" x2="452" y2="140" stroke="#2a4060" strokeWidth="0.8" />
+          <line x1="440" y1="129" x2="464" y2="129" stroke="#2a4060" strokeWidth="0.8" />
+          <rect x="441" y="119" width="22" height="20" rx="1" fill="#d4a820" opacity="0.2">
+            <animate attributeName="opacity" values="0.2;0.28;0.16;0.32;0.2" dur="2.6s" repeatCount="indefinite" />
+          </rect>
+          {/* Hanging sign */}
+          <line x1="393" y1="112" x2="393" y2="116" stroke="#6a4828" strokeWidth="1" />
+          <line x1="433" y1="112" x2="433" y2="116" stroke="#6a4828" strokeWidth="1" />
+          <rect x="391" y="116" width="44" height="13" rx="1" fill="#4a3020" stroke="#7a5030" strokeWidth="0.8" />
+          <text x="413" y="125.5" textAnchor="middle" fill="#c8a060" fontSize="5" fontFamily="Georgia, serif">HALL</text>
+          {/* Grand double doors with arch */}
+          <rect x="397" y="148" width="32" height="30" rx="2" fill="#2a1e0e" stroke="#5a3820" strokeWidth="1" />
+          <rect x="398" y="149" width="14" height="20" rx="6" fill="#3a2a14" />
+          <rect x="414" y="149" width="14" height="20" rx="6" fill="#3a2a14" />
+          <circle cx="411" cy="166" r="2" fill="#8a6030" />
+          <circle cx="418" cy="166" r="2" fill="#8a6030" />
+          {/* Steps */}
+          <rect x="393" y="175" width="40" height="4" rx="1" fill="#3a3028" />
+          <rect x="396" y="172" width="34" height="4" rx="1" fill="#433828" />
+          {/* Wall torch left */}
+          <rect x="360" y="130" width="3" height="14" rx="1" fill="#5a3a18" />
+          <ellipse cx="361.5" cy="126" rx="3.5" ry="6" fill="#e07020">
+            <animate attributeName="ry" values="6;8;4.5;7;6" dur="0.72s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="1;0.85;1;0.9;1" dur="0.72s" repeatCount="indefinite" />
+          </ellipse>
+          <ellipse cx="361.5" cy="123" rx="2" ry="4" fill="#ffb040">
+            <animate attributeName="ry" values="4;5.5;3;5;4" dur="0.57s" repeatCount="indefinite" />
+          </ellipse>
+          <ellipse cx="361" cy="130" rx="14" ry="10" fill="#cc6010" opacity="0.09">
+            <animate attributeName="opacity" values="0.09;0.17;0.06;0.13;0.09" dur="0.72s" repeatCount="indefinite" />
+          </ellipse>
+          {/* Wall torch right */}
+          <rect x="466" y="130" width="3" height="14" rx="1" fill="#5a3a18" />
+          <ellipse cx="467.5" cy="126" rx="3.5" ry="6" fill="#e07020">
+            <animate attributeName="ry" values="6;8;4.5;7;6" dur="0.68s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="1;0.85;1;0.9;1" dur="0.68s" repeatCount="indefinite" />
+          </ellipse>
+          <ellipse cx="467.5" cy="123" rx="2" ry="4" fill="#ffb040">
+            <animate attributeName="ry" values="4;5.5;3;5;4" dur="0.53s" repeatCount="indefinite" />
+          </ellipse>
+          <ellipse cx="467" cy="130" rx="14" ry="10" fill="#cc6010" opacity="0.09">
+            <animate attributeName="opacity" values="0.09;0.17;0.06;0.13;0.09" dur="0.68s" repeatCount="indefinite" />
+          </ellipse>
+          {/* Label */}
+          <rect x="362" y="185" width="102" height="18" rx="4" fill="#0c1520" opacity="0.88" />
+          <text x="413" y="197" textAnchor="middle" fill="#e8d8a0" fontSize="9" fontFamily="Georgia, serif" letterSpacing="1.5">Community</text>
+        </g>
       </svg>
     </div>
   )
@@ -279,9 +375,10 @@ export default function VillageScreen() {
         <button className={styles.backBtn} onClick={() => setTab(null)}>
           &#8592; Back to Village
         </button>
-        {tab === 'shop'   && <ShopTab />}
-        {tab === 'mine'   && <MineTab />}
-        {tab === 'smithy' && <SmithyTab />}
+        {tab === 'shop'      && <ShopTab />}
+        {tab === 'mine'      && <MineTab />}
+        {tab === 'smithy'    && <SmithyTab />}
+        {tab === 'community' && <CommunityTab />}
       </div>
     )
   }
