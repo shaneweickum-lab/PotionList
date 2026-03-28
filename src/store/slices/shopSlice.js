@@ -1,6 +1,7 @@
 import { SEED_MAP } from '../../constants/seeds.js'
 import { HERB_MAP } from '../../constants/herbs.js'
 import { MUSHROOM_MAP } from '../../constants/mushrooms.js'
+import { CROP_MAP } from '../../constants/crops.js'
 
 function todayDate() {
   return new Date().toISOString().slice(0, 10)
@@ -95,6 +96,6 @@ export function createShopSlice(set, get) {
 export function getSeedDisplayInfo(seedId) {
   const seed = SEED_MAP[seedId]
   if (!seed) return null
-  const yieldItem = HERB_MAP[seed.yields] ?? MUSHROOM_MAP[seed.yields]
+  const yieldItem = HERB_MAP[seed.yields] ?? MUSHROOM_MAP[seed.yields] ?? CROP_MAP[seed.yields]
   return { seed, yieldItem }
 }

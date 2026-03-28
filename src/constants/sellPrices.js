@@ -1,5 +1,6 @@
 import { HERB_MAP } from './herbs.js'
 import { MUSHROOM_MAP } from './mushrooms.js'
+import { CROP_MAP } from './crops.js'
 import { SEED_MAP } from './seeds.js'
 import { POTION_MAP } from './potions.js'
 import { ORE_MAP, INGOT_MAP } from './ores.js'
@@ -20,9 +21,14 @@ export const MUSHROOM_SELL = Object.fromEntries(
 
 export const SEED_SELL = Object.fromEntries(
   Object.entries(SEED_MAP).map(([id, seed]) => {
-    const yieldDef = HERB_MAP[seed.yields] ?? MUSHROOM_MAP[seed.yields]
+    const yieldDef = HERB_MAP[seed.yields] ?? MUSHROOM_MAP[seed.yields] ?? CROP_MAP[seed.yields]
     return [id, SEED_BY_RARITY[yieldDef?.rarity ?? 'common']]
   })
+)
+
+// ── Crops ─────────────────────────────────────────────────────────────────────
+export const CROP_SELL = Object.fromEntries(
+  Object.entries(CROP_MAP).map(([id, c]) => [id, c.sellPrice])
 )
 
 // ── Usable bugs only (first 5 — potion ingredients) ───────────────────────────

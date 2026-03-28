@@ -34,9 +34,11 @@ export function createGardenSlice(set, get) {
           : s
         ),
       }))
-      // Discover
+      // Discover (crops have no codex entry)
       const seedDef = SEED_MAP[seedId]
-      if (seedDef) get().discoverItem(seedDef.type === 'herb' ? 'herbs' : 'mushrooms', seedDef.yields)
+      if (seedDef && seedDef.type !== 'crop') {
+        get().discoverItem(seedDef.type === 'herb' ? 'herbs' : 'mushrooms', seedDef.yields)
+      }
       return true
     },
 
@@ -81,8 +83,10 @@ export function createGardenSlice(set, get) {
         }
       })
 
-      // Discover items
-      get().discoverItem(seedDef.type === 'herb' ? 'herbs' : 'mushrooms', yieldId)
+      // Discover items (crops have no codex entry)
+      if (seedDef.type !== 'crop') {
+        get().discoverItem(seedDef.type === 'herb' ? 'herbs' : 'mushrooms', yieldId)
+      }
       if (bugFound) get().discoverItem('bugs', bugFound)
 
       // 1% chance to discover a hidden lore entry

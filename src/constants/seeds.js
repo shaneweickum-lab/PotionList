@@ -24,6 +24,27 @@ export const SEEDS = [
   // ── Uncommon mushrooms ──
   { id: 'dewshroom_spore',    yields: 'dewshroom',    type: 'mushroom', rarity: 'uncommon', growthThreshold: 70,  goldCost: 50, name: 'Dewshroom Spore' },
   { id: 'crimson_puff_spore', yields: 'crimson_puff', type: 'mushroom', rarity: 'uncommon', growthThreshold: 80,  goldCost: 53, name: 'Crimson Puff Spore' },
+
+  // ── Common crop seeds ──
+  { id: 'wheat_seed',     yields: 'wheat',     type: 'crop', rarity: 'common',   growthThreshold: 30, goldCost: 22, name: 'Wheat Seed' },
+  { id: 'corn_seed',      yields: 'corn',      type: 'crop', rarity: 'common',   growthThreshold: 35, goldCost: 25, name: 'Corn Seed' },
+  { id: 'potato_seed',    yields: 'potato',    type: 'crop', rarity: 'common',   growthThreshold: 32, goldCost: 22, name: 'Potato Seed' },
+  { id: 'garlic_seed',    yields: 'garlic',    type: 'crop', rarity: 'common',   growthThreshold: 38, goldCost: 26, name: 'Garlic Seed' },
+  { id: 'carrot_seed',    yields: 'carrot',    type: 'crop', rarity: 'common',   growthThreshold: 33, goldCost: 24, name: 'Carrot Seed' },
+  { id: 'onion_seed',     yields: 'onion',     type: 'crop', rarity: 'common',   growthThreshold: 30, goldCost: 22, name: 'Onion Seed' },
+  { id: 'cabbage_seed',   yields: 'cabbage',   type: 'crop', rarity: 'common',   growthThreshold: 28, goldCost: 20, name: 'Cabbage Seed' },
+  { id: 'turnip_seed',    yields: 'turnip',    type: 'crop', rarity: 'common',   growthThreshold: 28, goldCost: 20, name: 'Turnip Seed' },
+  { id: 'daisy_seed',     yields: 'daisy',     type: 'crop', rarity: 'common',   growthThreshold: 35, goldCost: 26, name: 'Daisy Seed' },
+  { id: 'petunia_seed',   yields: 'petunia',   type: 'crop', rarity: 'common',   growthThreshold: 35, goldCost: 26, name: 'Petunia Seed' },
+  { id: 'marigold_seed',  yields: 'marigold',  type: 'crop', rarity: 'common',   growthThreshold: 33, goldCost: 25, name: 'Marigold Seed' },
+  { id: 'bluebell_seed',  yields: 'bluebell',  type: 'crop', rarity: 'common',   growthThreshold: 33, goldCost: 25, name: 'Bluebell Seed' },
+  // ── Uncommon crop seeds ──
+  { id: 'pumpkin_seed',   yields: 'pumpkin',   type: 'crop', rarity: 'uncommon', growthThreshold: 65, goldCost: 42, name: 'Pumpkin Seed' },
+  { id: 'pepper_seed',    yields: 'pepper',    type: 'crop', rarity: 'uncommon', growthThreshold: 60, goldCost: 40, name: 'Red Pepper Seed' },
+  { id: 'rose_seed',      yields: 'rose',      type: 'crop', rarity: 'uncommon', growthThreshold: 70, goldCost: 44, name: 'Rose Seed' },
+  { id: 'sunflower_seed', yields: 'sunflower', type: 'crop', rarity: 'uncommon', growthThreshold: 65, goldCost: 42, name: 'Sunflower Seed' },
+  { id: 'lavender_seed',  yields: 'lavender',  type: 'crop', rarity: 'uncommon', growthThreshold: 68, goldCost: 43, name: 'Lavender Seed' },
+  { id: 'tulip_seed',     yields: 'tulip',     type: 'crop', rarity: 'uncommon', growthThreshold: 62, goldCost: 40, name: 'Tulip Seed' },
 ]
 
 // Rare/epic seeds — found via task rolls; rare ones can appear in the featured shop slot
