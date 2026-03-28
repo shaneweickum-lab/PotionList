@@ -30,7 +30,7 @@ export function createGuildSlice(set, get) {
         if (partnerIds.length > 0) {
           const { data: profiles } = await supabase
             .from('user_profiles')
-            .select('user_id, username, handle')
+            .select('user_id, username, handle, nickname, bio, avatar_url, level, streak, founder')
             .in('user_id', partnerIds)
           for (const p of profiles ?? []) profileMap[p.user_id] = p
         }
@@ -63,7 +63,7 @@ export function createGuildSlice(set, get) {
       const clean = handle.replace(/^@/, '').toLowerCase()
       const { data, error } = await supabase
         .from('user_profiles')
-        .select('user_id, username, handle')
+        .select('user_id, username, handle, nickname, bio, avatar_url, level, streak, founder')
         .eq('handle', clean)
         .maybeSingle()
       if (error) return { error: error.message }

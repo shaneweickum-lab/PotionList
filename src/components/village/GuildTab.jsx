@@ -6,6 +6,15 @@ import { showToast } from '../ui/ToastNotification.jsx'
 import { isSupabaseConfigured } from '../../lib/supabase.js'
 import styles from './GuildTab.module.css'
 
+// Renders either an emoji avatar or a small profile image
+function Avatar({ value, className }) {
+  if (!value) return <span className={className ?? styles.friendAvatar}>⚗️</span>
+  if (value.startsWith('data:') || value.startsWith('http')) {
+    return <img src={value} alt="avatar" className={className ?? styles.friendAvatar} style={{ borderRadius: '50%', objectFit: 'cover' }} />
+  }
+  return <span className={className ?? styles.friendAvatar}>{value}</span>
+}
+
 // ── Add Friend Modal ──────────────────────────────────────────────────────────
 
 function AddFriendModal({ onClose }) {
@@ -65,10 +74,16 @@ function AddFriendModal({ onClose }) {
 
         {searchResult?.profile && (
           <div className={styles.searchFound}>
-            <div className={styles.foundAvatar}>⚗️</div>
+            <Avatar value={searchResult.profile.avatar_url} className={styles.foundAvatar} />
             <div className={styles.foundInfo}>
               <span className={styles.foundUsername}>{searchResult.profile.username}</span>
               <span className={styles.foundHandle}>@{searchResult.profile.handle}</span>
+              {searchResult.profile.level > 0 && (
+                <span className={styles.foundLevel}>Lv {searchResult.profile.level}</span>
+              )}
+              {searchResult.profile.bio && (
+                <span className={styles.foundBio}>{searchResult.profile.bio}</span>
+              )}
             </div>
             <Button variant="gold" size="sm" disabled={sending} onClick={handleAdd}>
               {sending ? '…' : 'Add Friend'}
@@ -114,6 +129,7 @@ function ConversationView({ partner, onBack }) {
     <div className={styles.convoView}>
       <div className={styles.convoHeader}>
         <button className={styles.backBtn} onClick={onBack}>←</button>
+        <Avatar value={partner.profile.avatar_url} className={styles.convoAvatar} />
         <div className={styles.convoPartner}>
           <span className={styles.convoName}>{partner.profile.username}</span>
           <span className={styles.convoHandle}>@{partner.profile.handle}</span>
@@ -218,10 +234,11 @@ function FriendsSection({ onOpenConversation }) {
           <h3 className={styles.blockTitle}>Friend Requests</h3>
           {friendRequests.map(req => (
             <div key={req.id} className={styles.friendCard}>
-              <div className={styles.friendAvatar}>⚗️</div>
+              <Avatar value={req.profile.avatar_url} />
               <div className={styles.friendInfo}>
                 <span className={styles.friendName}>{req.profile.username}</span>
                 <span className={styles.friendHandle}>@{req.profile.handle}</span>
+                {req.profile.level > 0 && <span className={styles.friendLevel}>Lv {req.profile.level}</span>}
               </div>
               <div className={styles.friendActions}>
                 <Button variant="gold" size="sm" onClick={() => handleAccept(req)}>Accept</Button>
@@ -243,10 +260,11 @@ function FriendsSection({ onOpenConversation }) {
           const unread = unreadCounts[f.partner_id] ?? 0
           return (
             <div key={f.id} className={styles.friendCard}>
-              <div className={styles.friendAvatar}>⚗️</div>
+              <Avatar value={f.profile.avatar_url} />
               <div className={styles.friendInfo}>
                 <span className={styles.friendName}>{f.profile.username}</span>
                 <span className={styles.friendHandle}>@{f.profile.handle}</span>
+                {f.profile.level > 0 && <span className={styles.friendLevel}>Lv {f.profile.level}</span>}
               </div>
               <div className={styles.friendActions}>
                 <button

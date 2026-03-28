@@ -154,10 +154,16 @@ export async function completeProfile({ username, handle, nickname, bio, avatarU
       .maybeSingle()
     if (existingUsername) return { error: `Username "${username}" is already taken.` }
 
+    // Don't store base64 data URLs — only store emoji or remote URLs
+    const avatarToStore = avatarUrl && !avatarUrl.startsWith('data:') ? avatarUrl : null
+
     await supabase.from('user_profiles').upsert({
-      user_id: state.userId,
+      user_id:  state.userId,
       username: username.trim(),
-      handle: handle.toLowerCase(),
+      handle:   handle.toLowerCase(),
+      nickname: nickname?.trim() || null,
+      bio:      bio?.trim() || null,
+      avatar_url: avatarToStore,
     })
   }
 
