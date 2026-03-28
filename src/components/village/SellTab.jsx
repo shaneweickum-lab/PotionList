@@ -7,8 +7,9 @@ import { SEED_MAP } from '../../constants/seeds.js'
 import { POTION_MAP } from '../../constants/potions.js'
 import { BUG_MAP } from '../../constants/bugs.js'
 import { ORE_MAP, INGOT_MAP } from '../../constants/ores.js'
+import { CROP_MAP } from '../../constants/crops.js'
 import {
-  HERB_SELL, MUSHROOM_SELL, SEED_SELL, BUG_SELL, POTION_SELL,
+  HERB_SELL, MUSHROOM_SELL, CROP_SELL, SEED_SELL, BUG_SELL, POTION_SELL,
   ORE_SELL, INGOT_SELL, USABLE_BUG_IDS,
 } from '../../constants/sellPrices.js'
 import styles from './SellTab.module.css'
@@ -16,6 +17,7 @@ import styles from './SellTab.module.css'
 const FILTERS = [
   { id: 'all',       label: 'All' },
   { id: 'seeds',     label: 'Seeds' },
+  { id: 'crops',     label: 'Crops' },
   { id: 'herbs',     label: 'Herbs' },
   { id: 'mushrooms', label: 'Mushrooms' },
   { id: 'bugs',      label: 'Bugs' },
@@ -41,6 +43,20 @@ function buildItemList(seeds, inventory, potionInventory, oreInventory, ingotInv
       price: SEED_SELL[id] ?? 8,
       sortOrder: 0,
       rarityRank: RARITY_ORDER['common'],
+    })
+  }
+
+  // Crops
+  for (const [id, qty] of Object.entries(inventory ?? {})) {
+    if (!qty) continue
+    const def = CROP_MAP[id]
+    if (!def) continue
+    items.push({
+      key: `cr_${id}`, type: 'crop', id, qty,
+      name: def.name, color: def.color, rarity: def.rarity,
+      price: CROP_SELL[id] ?? 7,
+      sortOrder: 1,
+      rarityRank: RARITY_ORDER[def.rarity] ?? 0,
     })
   }
 
@@ -137,6 +153,7 @@ function sellAction(type, id, qty, store) {
     case 'seed':     removeSeed(id, qty); break
     case 'herb':
     case 'mushroom':
+    case 'crop':
     case 'bug':      removeFromInventory(id, qty); break
     case 'potion':   removePotion(id, qty); break
     case 'ore':      {
@@ -159,7 +176,7 @@ export default function SellTab() {
   )
 
   const TYPE_MAP = {
-    seeds: 'seed', herbs: 'herb', mushrooms: 'mushroom',
+    seeds: 'seed', crops: 'crop', herbs: 'herb', mushrooms: 'mushroom',
     bugs: 'bug', potions: 'potion', ores: 'ore',
   }
 
