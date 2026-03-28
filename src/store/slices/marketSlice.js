@@ -12,7 +12,7 @@ export function createMarketSlice(set, get) {
       try {
         const { data, error } = await supabase
           .from('market_listings')
-          .select('*, users(username)')
+          .select('*')
           .gt('expires_at', new Date().toISOString())
           .order('listed_at', { ascending: false })
           .limit(100)
@@ -32,7 +32,7 @@ export function createMarketSlice(set, get) {
 
       const { data, error } = await supabase
         .from('market_listings')
-        .insert({ user_id: userId, item_type: itemType, item_id: itemId, qty, price })
+        .insert({ user_id: userId, username: get().username ?? 'Alchemist', item_type: itemType, item_id: itemId, qty, price })
         .select()
         .single()
 

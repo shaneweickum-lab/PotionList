@@ -64,7 +64,7 @@ export default function MarketTab() {
             <div key={listing.id} className={styles.listing}>
               <div className={styles.listingInfo}>
                 <span className={styles.listingName}>{getItemName(listing.item_type, listing.item_id)}</span>
-                <span className={styles.listingSeller}>by {listing.users?.username ?? 'Unknown'}</span>
+                <span className={styles.listingSeller}>by {listing.username ?? 'Unknown'}</span>
                 <span className={styles.listingExpiry}>{timeLeft(listing.expires_at)}</span>
               </div>
               <div className={styles.listingAction}>

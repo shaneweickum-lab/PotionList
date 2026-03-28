@@ -3,12 +3,13 @@ import ShopTab from '../components/village/ShopTab.jsx'
 import MineTab from '../components/village/MineTab.jsx'
 import SmithyTab from '../components/village/SmithyTab.jsx'
 import CommunityTab from '../components/village/CommunityTab.jsx'
+import DailyOrders from '../components/profile/DailyOrders.jsx'
 import styles from './VillageScreen.module.css'
 
 function VillageMap({ onEnter }) {
   return (
     <div className={styles.mapWrap}>
-      <svg viewBox="0 0 480 245" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 480 272" width="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="vSky" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#08101e" />
@@ -58,7 +59,7 @@ function VillageMap({ onEnter }) {
           fill="#0d1a0e" />
 
         {/* Ground */}
-        <rect x="0" y="148" width="480" height="97" fill="#181f12" />
+        <rect x="0" y="148" width="480" height="124" fill="#181f12" />
         {[156, 165, 176, 188].map(y => (
           <line key={y} x1="0" y1={y} x2="480" y2={y} stroke="#101508" strokeWidth={y > 172 ? 1.5 : 0.8} opacity="0.55" />
         ))}
@@ -268,6 +269,67 @@ function VillageMap({ onEnter }) {
           <rect x="257" y="185" width="90" height="18" rx="4" fill="#0c1520" opacity="0.88" />
           <text x="302" y="197" textAnchor="middle" fill="#e8d8a0" fontSize="10" fontFamily="Georgia, serif" letterSpacing="1.5">Smithy</text>
         </g>
+        {/* ===================== ORDERS STALL (across the street) ===================== */}
+        <g className={styles.building} onClick={() => onEnter('orders')} style={{ cursor: 'pointer' }}>
+          {/* Support poles */}
+          <rect x="184" y="236" width="5" height="28" rx="1" fill="#5a3c18" />
+          <rect x="291" y="236" width="5" height="28" rx="1" fill="#5a3c18" />
+          <rect x="237" y="238" width="4" height="26" rx="1" fill="#5a3c18" />
+          {/* Canopy stripes (drawn first, clipped by main shape) */}
+          {[182, 202, 222, 242, 262, 282].map(x => (
+            <rect key={x} x={x} y="228" width="19" height="11" fill="#c89030" opacity="0.7" />
+          ))}
+          {/* Canopy main shape */}
+          <rect x="178" y="228" width="124" height="11" fill="none" stroke="#7a2010" strokeWidth="1" />
+          {/* Canopy overlay for the dark stripe effect */}
+          {[182, 222, 262].map(x => (
+            <rect key={x} x={x} y="228" width="19" height="11" fill="#8a2e18" opacity="0.85" />
+          ))}
+          {/* Canopy top cap */}
+          <rect x="178" y="226" width="124" height="4" rx="1" fill="#6a2010" />
+          {/* Scalloped front edge */}
+          <path d="M178,239 Q187,235 196,239 Q205,235 214,239 Q223,235 232,239 Q241,235 250,239 Q259,235 268,239 Q277,235 286,239 Q295,235 302,239"
+            fill="#8a2e18" stroke="#6a2010" strokeWidth="0.8" />
+          {/* Back canvas wall */}
+          <rect x="185" y="239" width="110" height="10" fill="#3a2c1c" />
+          {/* Counter surface */}
+          <rect x="183" y="249" width="114" height="7" rx="1" fill="#8a6030" />
+          <rect x="183" y="255" width="114" height="3" rx="1" fill="#6a4820" />
+          {/* Counter front face */}
+          <rect x="183" y="258" width="114" height="6" rx="1" fill="#5a3a18" />
+          {/* Counter legs */}
+          <rect x="185" y="261" width="4" height="7" fill="#4a3010" />
+          <rect x="291" y="261" width="4" height="7" fill="#4a3010" />
+          {/* Items on counter — potion bottles */}
+          <ellipse cx="210" cy="249" rx="4" ry="5" fill="#7030a0" opacity="0.85" />
+          <rect x="208" y="243" width="4" height="3" rx="1" fill="#9050b0" />
+          <ellipse cx="223" cy="250" rx="3" ry="4" fill="#3060b0" opacity="0.85" />
+          <rect x="221" y="245" width="3" height="3" rx="1" fill="#5080c0" />
+          <ellipse cx="256" cy="249" rx="4" ry="5" fill="#b03030" opacity="0.85" />
+          <rect x="254" y="243" width="4" height="3" rx="1" fill="#c04848" />
+          <ellipse cx="269" cy="250" rx="3" ry="4" fill="#208040" opacity="0.85" />
+          <rect x="267" y="245" width="3" height="3" rx="1" fill="#30a050" />
+          {/* Small scroll/parchment in center */}
+          <rect x="232" y="244" width="16" height="10" rx="1" fill="#d8c898" />
+          <line x1="234" y1="247" x2="246" y2="247" stroke="#9a8860" strokeWidth="0.8" />
+          <line x1="234" y1="250" x2="246" y2="250" stroke="#9a8860" strokeWidth="0.8" />
+          <line x1="234" y1="253" x2="246" y2="253" stroke="#9a8860" strokeWidth="0.8" />
+          {/* Hanging sign from canopy center */}
+          <line x1="235" y1="228" x2="233" y2="223" stroke="#6a4828" strokeWidth="1" />
+          <line x1="245" y1="228" x2="247" y2="223" stroke="#6a4828" strokeWidth="1" />
+          <rect x="224" y="217" width="32" height="12" rx="1" fill="#4a3020" stroke="#7a5030" strokeWidth="0.8" />
+          <text x="240" y="226" textAnchor="middle" fill="#c8a060" fontSize="5.5" fontFamily="Georgia, serif">ORDERS</text>
+          {/* Lantern on left pole */}
+          <line x1="184" y1="242" x2="179" y2="249" stroke="#4a3828" strokeWidth="1" />
+          <rect x="174" y="249" width="8" height="10" rx="2" fill="#4a3820" stroke="#6a5030" strokeWidth="0.8" />
+          <rect x="175" y="250" width="6" height="8" rx="1" fill="#c87020" opacity="0.65">
+            <animate attributeName="opacity" values="0.65;0.9;0.5;0.8;0.65" dur="2.1s" repeatCount="indefinite" />
+          </rect>
+          {/* Label */}
+          <rect x="194" y="266" width="92" height="14" rx="4" fill="#0c1520" opacity="0.88" />
+          <text x="240" y="276" textAnchor="middle" fill="#e8d8a0" fontSize="8" fontFamily="Georgia, serif" letterSpacing="1.5">Orders</text>
+        </g>
+
         {/* ===================== COMMUNITY HALL (far right) ===================== */}
         <g className={styles.building} onClick={() => onEnter('community')} style={{ cursor: 'pointer' }}>
           {/* Walls */}
@@ -379,6 +441,7 @@ export default function VillageScreen() {
         {tab === 'mine'      && <MineTab />}
         {tab === 'smithy'    && <SmithyTab />}
         {tab === 'community' && <CommunityTab />}
+        {tab === 'orders'    && <DailyOrders />}
       </div>
     )
   }
