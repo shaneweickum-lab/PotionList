@@ -82,6 +82,12 @@
   font-size: 13px;
   color: var(--text-muted);
 }
+.friendLevel {
+  font-family: 'Crimson Text', serif;
+  font-size: 12px;
+  color: var(--gold-dim);
+  font-style: italic;
+}
 .friendActions {
   display: flex;
   align-items: center;
@@ -183,9 +189,10 @@
   border-radius: var(--radius);
   padding: 10px 12px;
 }
-.foundAvatar { font-size: 22px; flex-shrink: 0; }
+.foundAvatar { font-size: 22px; width: 36px; height: 36px; flex-shrink: 0; }
 .foundInfo {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -199,6 +206,21 @@
   font-family: 'Crimson Text', serif;
   font-size: 13px;
   color: var(--text-muted);
+}
+.foundLevel {
+  font-family: 'Crimson Text', serif;
+  font-size: 12px;
+  color: var(--gold-dim);
+  font-style: italic;
+}
+.foundBio {
+  font-family: 'Crimson Text', serif;
+  font-size: 13px;
+  color: var(--text-dim);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ── Conversation view ── */
@@ -217,6 +239,7 @@
   background: var(--bg-2);
   flex-shrink: 0;
 }
+.convoAvatar { font-size: 20px; width: 30px; height: 30px; flex-shrink: 0; }
 .backBtn {
   background: none;
   border: none;
