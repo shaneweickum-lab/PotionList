@@ -6,16 +6,16 @@
   align-items: flex-end;
   justify-content: center;
   z-index: 100;
-  padding-bottom: var(--safe-bottom);
+  padding-bottom: calc(var(--nav-h) + var(--safe-bottom) + 8px);
 }
 
 .modal {
   background: var(--bg-3);
   border: 1px solid var(--border-bright);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border-radius: var(--radius-lg);
   width: 100%;
   max-width: var(--max-w);
-  max-height: 85dvh;
+  max-height: 80dvh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
