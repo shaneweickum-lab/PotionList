@@ -36,7 +36,19 @@ export function createPlayerSlice(set, get) {
     },
 
     addGold: (amount) => {
-      set(state => ({ gold: Math.max(0, state.gold + amount) }))
+      if (amount <= 0) {
+        set(state => ({ gold: Math.max(0, state.gold + amount) }))
+        return
+      }
+      const rate = get().savingsRate ?? 0
+      if (rate > 0) {
+        const contribution = Math.floor(amount * rate / 100)
+        const net = amount - contribution
+        set(state => ({ gold: Math.max(0, state.gold + net) }))
+        if (contribution > 0) get().depositSavings(contribution)
+      } else {
+        set(state => ({ gold: Math.max(0, state.gold + amount) }))
+      }
     },
 
     spendGold: (amount) => {
