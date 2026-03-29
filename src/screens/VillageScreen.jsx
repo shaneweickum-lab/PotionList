@@ -4,6 +4,7 @@ import MineTab from '../components/village/MineTab.jsx'
 import SmithyTab from '../components/village/SmithyTab.jsx'
 import CommunityTab from '../components/village/CommunityTab.jsx'
 import DailyOrders from '../components/profile/DailyOrders.jsx'
+import ExchangeTab from '../components/village/ExchangeTab.jsx'
 import styles from './VillageScreen.module.css'
 
 function VillageMap({ onEnter }) {
@@ -330,6 +331,74 @@ function VillageMap({ onEnter }) {
           <text x="240" y="276" textAnchor="middle" fill="#e8d8a0" fontSize="8" fontFamily="Georgia, serif" letterSpacing="1.5">Orders</text>
         </g>
 
+        {/* ===================== EXCHANGE / BOURSE (right of Orders) ===================== */}
+        <g className={styles.building} onClick={() => onEnter('exchange')} style={{ cursor: 'pointer' }}>
+          {/* Support poles */}
+          <rect x="321" y="236" width="5" height="28" rx="1" fill="#2a3010" />
+          <rect x="446" y="236" width="5" height="28" rx="1" fill="#2a3010" />
+          <rect x="383" y="238" width="4" height="26" rx="1" fill="#2a3010" />
+          {/* Canopy — dark green base */}
+          {[317, 335, 353, 371, 389, 407, 425, 443].map(x => (
+            <rect key={x} x={x} y="228" width="17" height="11" fill="#1a4a18" opacity="0.88" />
+          ))}
+          {/* Canopy — gold accent stripes */}
+          {[326, 344, 362, 380, 398, 416, 434].map(x => (
+            <rect key={x} x={x} y="228" width="8" height="11" fill="#b89010" opacity="0.65" />
+          ))}
+          {/* Canopy border */}
+          <rect x="317" y="228" width="134" height="11" fill="none" stroke="#0a2808" strokeWidth="1" />
+          {/* Canopy top cap */}
+          <rect x="317" y="226" width="134" height="4" rx="1" fill="#0e3010" />
+          {/* Scalloped front edge */}
+          <path d="M317,239 Q327,235 337,239 Q347,235 357,239 Q367,235 377,239 Q387,235 397,239 Q407,235 417,239 Q427,235 437,239 Q447,235 451,239"
+            fill="#1a4a18" stroke="#0a2808" strokeWidth="0.8" />
+          {/* Back wall */}
+          <rect x="323" y="239" width="126" height="10" fill="#0e1e0e" />
+          {/* Chalkboard on back wall */}
+          <rect x="336" y="240" width="58" height="8" rx="1" fill="#0a1808" stroke="#2a4018" strokeWidth="0.5" />
+          <text x="365" y="246.5" textAnchor="middle" fill="#70b840" fontSize="4" fontFamily="monospace">▲GRN  ▼ORE  ▲EXO</text>
+          {/* Counter surface */}
+          <rect x="321" y="249" width="130" height="7" rx="1" fill="#2a4818" />
+          <rect x="321" y="255" width="130" height="3" rx="1" fill="#1e3810" />
+          {/* Counter front face */}
+          <rect x="321" y="258" width="130" height="6" rx="1" fill="#182810" />
+          {/* Counter legs */}
+          <rect x="323" y="261" width="4" height="7" fill="#101e0a" />
+          <rect x="443" y="261" width="4" height="7" fill="#101e0a" />
+          {/* Coin stacks */}
+          <ellipse cx="340" cy="250" rx="6" ry="2" fill="#c8a018" opacity="0.9" />
+          <ellipse cx="340" cy="248" rx="6" ry="2" fill="#d4b028" opacity="0.9" />
+          <ellipse cx="340" cy="246" rx="6" ry="2" fill="#c8a018" opacity="0.85" />
+          <ellipse cx="352" cy="251" rx="4" ry="1.5" fill="#c8a018" opacity="0.8" />
+          <ellipse cx="352" cy="249.5" rx="4" ry="1.5" fill="#d4b028" opacity="0.8" />
+          {/* Balance scales at center */}
+          <line x1="383" y1="243" x2="383" y2="249" stroke="#8a7828" strokeWidth="1" />
+          <rect x="376" y="249" width="14" height="2" rx="0.5" fill="#8a7828" />
+          <line x1="377" y1="249" x2="373" y2="253" stroke="#8a7828" strokeWidth="0.7" />
+          <line x1="389" y1="249" x2="393" y2="253" stroke="#8a7828" strokeWidth="0.7" />
+          <ellipse cx="373" cy="253" rx="4" ry="2" fill="#4a4818" opacity="0.8" />
+          <ellipse cx="393" cy="253" rx="4" ry="2" fill="#4a4818" opacity="0.8" />
+          {/* Ledger book */}
+          <rect x="418" y="244" width="18" height="12" rx="1" fill="#3a2810" stroke="#5a4020" strokeWidth="0.5" />
+          <line x1="420" y1="247" x2="434" y2="247" stroke="#6a5030" strokeWidth="0.7" />
+          <line x1="420" y1="250" x2="434" y2="250" stroke="#6a5030" strokeWidth="0.7" />
+          <line x1="420" y1="253" x2="434" y2="253" stroke="#6a5030" strokeWidth="0.7" />
+          {/* Hanging sign */}
+          <line x1="374" y1="228" x2="372" y2="223" stroke="#2a4018" strokeWidth="1" />
+          <line x1="394" y1="228" x2="396" y2="223" stroke="#2a4018" strokeWidth="1" />
+          <rect x="358" y="213" width="52" height="12" rx="1" fill="#0e2010" stroke="#365818" strokeWidth="0.8" />
+          <text x="384" y="222" textAnchor="middle" fill="#88c048" fontSize="5.5" fontFamily="Georgia, serif">BOURSE</text>
+          {/* Lantern on right pole */}
+          <line x1="451" y1="242" x2="456" y2="249" stroke="#2a3818" strokeWidth="1" />
+          <rect x="453" y="249" width="8" height="10" rx="2" fill="#1e2e18" stroke="#384828" strokeWidth="0.8" />
+          <rect x="454" y="250" width="6" height="8" rx="1" fill="#70c030" opacity="0.5">
+            <animate attributeName="opacity" values="0.5;0.8;0.38;0.68;0.5" dur="2.5s" repeatCount="indefinite" />
+          </rect>
+          {/* Label */}
+          <rect x="326" y="266" width="116" height="14" rx="4" fill="#0c1520" opacity="0.88" />
+          <text x="384" y="276" textAnchor="middle" fill="#e8d8a0" fontSize="8" fontFamily="Georgia, serif" letterSpacing="1.5">Exchange</text>
+        </g>
+
         {/* ===================== COMMUNITY HALL (far right) ===================== */}
         <g className={styles.building} onClick={() => onEnter('community')} style={{ cursor: 'pointer' }}>
           {/* Walls */}
@@ -442,6 +511,7 @@ export default function VillageScreen() {
         {tab === 'smithy'    && <SmithyTab />}
         {tab === 'community' && <CommunityTab />}
         {tab === 'orders'    && <DailyOrders />}
+        {tab === 'exchange'  && <ExchangeTab />}
       </div>
     )
   }
