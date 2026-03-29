@@ -5,12 +5,13 @@ import SmithyTab from '../components/village/SmithyTab.jsx'
 import CommunityTab from '../components/village/CommunityTab.jsx'
 import DailyOrders from '../components/profile/DailyOrders.jsx'
 import ExchangeTab from '../components/village/ExchangeTab.jsx'
+import BankTab from '../components/village/BankTab.jsx'
 import styles from './VillageScreen.module.css'
 
 function VillageMap({ onEnter }) {
   return (
     <div className={styles.mapWrap}>
-      <svg viewBox="0 0 480 272" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 480 292" width="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="vSky" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#08101e" />
@@ -60,7 +61,7 @@ function VillageMap({ onEnter }) {
           fill="#0d1a0e" />
 
         {/* Ground */}
-        <rect x="0" y="148" width="480" height="124" fill="#181f12" />
+        <rect x="0" y="148" width="480" height="144" fill="#181f12" />
         {[156, 165, 176, 188].map(y => (
           <line key={y} x1="0" y1={y} x2="480" y2={y} stroke="#101508" strokeWidth={y > 172 ? 1.5 : 0.8} opacity="0.55" />
         ))}
@@ -270,6 +271,79 @@ function VillageMap({ onEnter }) {
           <rect x="257" y="185" width="90" height="18" rx="4" fill="#0c1520" opacity="0.88" />
           <text x="302" y="197" textAnchor="middle" fill="#e8d8a0" fontSize="10" fontFamily="Georgia, serif" letterSpacing="1.5">Smithy</text>
         </g>
+        {/* ===================== BANK (left of Orders, across the street) ===================== */}
+        <g className={styles.building} onClick={() => onEnter('bank')} style={{ cursor: 'pointer' }}>
+          {/* Building body behind columns */}
+          <rect x="18" y="228" width="128" height="36" fill="#6a6454" />
+          {/* Stone rows */}
+          {[234, 240, 246, 252, 258].map(y => (
+            <line key={y} x1="18" y1={y} x2="146" y2={y} stroke="#5a5444" strokeWidth="0.6" opacity="0.35" />
+          ))}
+          {/* Pediment (triangular gable) */}
+          <polygon points="12,228 152,228 82,210" fill="#807468" />
+          <polygon points="12,228 82,210 82,228" fill="#706460" />
+          <line x1="12" y1="228" x2="152" y2="228" stroke="#4a3e38" strokeWidth="1.5" />
+          {/* Entablature band */}
+          <rect x="12" y="224" width="140" height="5" fill="#5e5448" />
+          {/* "SAVINGS BANK" carved into pediment */}
+          <text x="82" y="221" textAnchor="middle" fill="#c8b880" fontSize="4.5" fontFamily="Georgia, serif" letterSpacing="0.3">SAVINGS BANK</text>
+          {/* Gold coin crest at pediment peak */}
+          <circle cx="82" cy="211" r="5" fill="#c8a018" stroke="#8a6810" strokeWidth="0.8" opacity="0.9" />
+          <circle cx="82" cy="211" r="3" fill="#e4c030" opacity="0.6" />
+          {/* Classical columns (4 — two per side of door) */}
+          {[18, 42, 110, 134].map(x => (
+            <g key={x}>
+              <rect x={x} y="228" width="8" height="36" fill="#988c7e" />
+              <rect x={x - 1} y="224" width="10" height="5" rx="0.5" fill="#766a5c" />
+              <rect x={x - 1} y="262" width="10" height="3" rx="0.5" fill="#766a5c" />
+            </g>
+          ))}
+          {/* Grand double door with arch */}
+          <rect x="60" y="238" width="44" height="26" rx="1" fill="#1e150a" stroke="#4a3820" strokeWidth="0.8" />
+          <rect x="61" y="239" width="19" height="22" rx="10" fill="#2c1e0e" />
+          <rect x="82" y="239" width="19" height="22" rx="10" fill="#2c1e0e" />
+          <circle cx="80" cy="258" r="2" fill="#8a6020" />
+          <circle cx="84" cy="258" r="2" fill="#8a6020" />
+          {/* Windows left */}
+          <rect x="24" y="233" width="22" height="17" rx="1" fill="#1a2838" stroke="#504840" strokeWidth="0.8" />
+          <line x1="35" y1="233" x2="35" y2="250" stroke="#2a3848" strokeWidth="0.7" />
+          <line x1="24" y1="241" x2="46" y2="241" stroke="#2a3848" strokeWidth="0.7" />
+          <rect x="25" y="234" width="20" height="15" rx="0.5" fill="#d4a820" opacity="0.18">
+            <animate attributeName="opacity" values="0.18;0.35;0.14;0.28;0.18" dur="3.6s" repeatCount="indefinite" />
+          </rect>
+          {/* Windows right */}
+          <rect x="118" y="233" width="22" height="17" rx="1" fill="#1a2838" stroke="#504840" strokeWidth="0.8" />
+          <line x1="129" y1="233" x2="129" y2="250" stroke="#2a3848" strokeWidth="0.7" />
+          <line x1="118" y1="241" x2="140" y2="241" stroke="#2a3848" strokeWidth="0.7" />
+          <rect x="119" y="234" width="20" height="15" rx="0.5" fill="#d4a820" opacity="0.16">
+            <animate attributeName="opacity" values="0.16;0.3;0.12;0.24;0.16" dur="2.9s" repeatCount="indefinite" />
+          </rect>
+          {/* Steps */}
+          <rect x="55" y="264" width="54" height="3" rx="0.5" fill="#504038" />
+          <rect x="12" y="267" width="140" height="4" rx="0.5" fill="#504038" />
+          <rect x="6" y="271" width="152" height="5" rx="0.5" fill="#403028" />
+          {/* Wall torches on outer columns */}
+          <rect x="6" y="234" width="3" height="12" rx="1" fill="#5a3a18" />
+          <ellipse cx="7.5" cy="230" rx="3" ry="5" fill="#e07020">
+            <animate attributeName="ry" values="5;7;4;6;5" dur="0.78s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="1;0.85;1;0.9;1" dur="0.78s" repeatCount="indefinite" />
+          </ellipse>
+          <ellipse cx="7.5" cy="227" rx="1.8" ry="3.5" fill="#ffb040">
+            <animate attributeName="ry" values="3.5;5;2.5;4;3.5" dur="0.6s" repeatCount="indefinite" />
+          </ellipse>
+          <rect x="155" y="234" width="3" height="12" rx="1" fill="#5a3a18" />
+          <ellipse cx="156.5" cy="230" rx="3" ry="5" fill="#e07020">
+            <animate attributeName="ry" values="5;7;4;6;5" dur="0.72s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="1;0.85;1;0.9;1" dur="0.72s" repeatCount="indefinite" />
+          </ellipse>
+          <ellipse cx="156.5" cy="227" rx="1.8" ry="3.5" fill="#ffb040">
+            <animate attributeName="ry" values="3.5;5;2.5;4;3.5" dur="0.55s" repeatCount="indefinite" />
+          </ellipse>
+          {/* Label */}
+          <rect x="12" y="278" width="140" height="14" rx="4" fill="#0c1520" opacity="0.88" />
+          <text x="82" y="288" textAnchor="middle" fill="#e8d8a0" fontSize="8" fontFamily="Georgia, serif" letterSpacing="1.5">Bank</text>
+        </g>
+
         {/* ===================== ORDERS STALL (across the street) ===================== */}
         <g className={styles.building} onClick={() => onEnter('orders')} style={{ cursor: 'pointer' }}>
           {/* Support poles */}
@@ -327,8 +401,8 @@ function VillageMap({ onEnter }) {
             <animate attributeName="opacity" values="0.65;0.9;0.5;0.8;0.65" dur="2.1s" repeatCount="indefinite" />
           </rect>
           {/* Label */}
-          <rect x="194" y="266" width="92" height="14" rx="4" fill="#0c1520" opacity="0.88" />
-          <text x="240" y="276" textAnchor="middle" fill="#e8d8a0" fontSize="8" fontFamily="Georgia, serif" letterSpacing="1.5">Orders</text>
+          <rect x="194" y="278" width="92" height="14" rx="4" fill="#0c1520" opacity="0.88" />
+          <text x="240" y="288" textAnchor="middle" fill="#e8d8a0" fontSize="8" fontFamily="Georgia, serif" letterSpacing="1.5">Orders</text>
         </g>
 
         {/* ===================== EXCHANGE / BOURSE (right of Orders) ===================== */}
@@ -395,8 +469,8 @@ function VillageMap({ onEnter }) {
             <animate attributeName="opacity" values="0.5;0.8;0.38;0.68;0.5" dur="2.5s" repeatCount="indefinite" />
           </rect>
           {/* Label */}
-          <rect x="326" y="266" width="116" height="14" rx="4" fill="#0c1520" opacity="0.88" />
-          <text x="384" y="276" textAnchor="middle" fill="#e8d8a0" fontSize="8" fontFamily="Georgia, serif" letterSpacing="1.5">Exchange</text>
+          <rect x="326" y="278" width="116" height="14" rx="4" fill="#0c1520" opacity="0.88" />
+          <text x="384" y="288" textAnchor="middle" fill="#e8d8a0" fontSize="8" fontFamily="Georgia, serif" letterSpacing="1.5">Exchange</text>
         </g>
 
         {/* ===================== COMMUNITY HALL (far right) ===================== */}
@@ -512,6 +586,7 @@ export default function VillageScreen() {
         {tab === 'community' && <CommunityTab />}
         {tab === 'orders'    && <DailyOrders />}
         {tab === 'exchange'  && <ExchangeTab />}
+        {tab === 'bank'      && <BankTab />}
       </div>
     )
   }
