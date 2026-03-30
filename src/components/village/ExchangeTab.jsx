@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { useStore } from '../../store/index.js'
 import { showToast } from '../ui/ToastNotification.jsx'
 import {
-  COMMODITIES, getCommodityPrice, getPriceHistory, TICK_MS, currentTick,
+  COMMODITIES, getCommodityPrice, getPriceHistory, getPriceRange, currentTick,
 } from '../../constants/exchange.js'
 import styles from './ExchangeTab.module.css'
 
@@ -57,6 +57,11 @@ export default function ExchangeTab() {
   )
   const histories = useMemo(
     () => Object.fromEntries(COMMODITIES.map(c => [c.id, getPriceHistory(c.id)])),
+    [tick]
+  )
+  // 7-day high/low — recomputed once per tick (pure math, no storage)
+  const ranges = useMemo(
+    () => Object.fromEntries(COMMODITIES.map(c => [c.id, getPriceRange(c.id)])),
     [tick]
   )
 
@@ -121,6 +126,15 @@ export default function ExchangeTab() {
           const held = pos?.units ?? 0
           const isSelected = selected?.id === c.id
 
+          const { high, low } = ranges[c.id]
+          const rangeSpan = high - low || 1
+          const position = Math.max(0, Math.min(1, (price - low) / rangeSpan))
+          const positionPct = Math.round(position * 100)
+          // Zone: near low = buy signal, near high = sell signal
+          const zoneClass = position <= 0.25 ? styles.zoneLow
+            : position >= 0.75 ? styles.zoneHigh
+            : styles.zoneMid
+
           return (
             <div
               key={c.id}
@@ -143,6 +157,22 @@ export default function ExchangeTab() {
                     {isUp ? '▲' : '▼'} {Math.abs(changePct)}%
                   </span>
                 </div>
+              </div>
+
+              {/* 7-day range bar */}
+              <div className={styles.rangeRow}>
+                <span className={styles.rangeLow}>L {low}g</span>
+                <div className={styles.rangeTrack}>
+                  <div
+                    className={`${styles.rangeMarker} ${zoneClass}`}
+                    style={{ left: `${positionPct}%` }}
+                    title={`${positionPct}% of 7-day range`}
+                  />
+                </div>
+                <span className={styles.rangeHigh}>H {high}g</span>
+                <span className={`${styles.rangeHint} ${zoneClass}`}>
+                  {position <= 0.25 ? 'Near low' : position >= 0.75 ? 'Near high' : `${positionPct}%`}
+                </span>
               </div>
 
               {isSelected && (

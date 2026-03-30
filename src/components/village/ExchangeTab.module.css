@@ -72,6 +72,67 @@
   gap: 10px;
 }
 
+/* 7-day high/low range bar */
+.rangeRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 7px;
+  padding-top: 6px;
+  border-top: 1px solid #1a2a14;
+}
+
+.rangeLow {
+  font-size: 10px;
+  color: #60c060;
+  font-weight: 600;
+  white-space: nowrap;
+  min-width: 38px;
+  text-align: right;
+}
+
+.rangeHigh {
+  font-size: 10px;
+  color: #c05050;
+  font-weight: 600;
+  white-space: nowrap;
+  min-width: 38px;
+}
+
+.rangeTrack {
+  flex: 1;
+  height: 4px;
+  background: #1a2a14;
+  border-radius: 2px;
+  position: relative;
+}
+
+.rangeMarker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid #0c1a0c;
+}
+
+.zoneLow  { background: #50b840; }
+.zoneHigh { background: #c07030; }
+.zoneMid  { background: #a0a060; }
+
+.rangeHint {
+  font-size: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 42px;
+  text-align: right;
+}
+
+.rangeHint.zoneLow  { color: #50b840; }
+.rangeHint.zoneHigh { color: #c07030; }
+.rangeHint.zoneMid  { color: #808060; }
+
 .nameBlock {
   flex: 1;
   display: flex;

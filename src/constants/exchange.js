@@ -47,3 +47,17 @@ export function getPriceHistory(commodityId, ticks = 16) {
     deterministicPrice(commodityId, tick - ticks + 1 + i)
   )
 }
+
+// Scan the last `ticks` periods (default = 2016 = ~7 days) for all-time high/low.
+// Pure math — no storage needed since prices are deterministic.
+export function getPriceRange(commodityId, ticks = 2016) {
+  const tick = currentTick()
+  let high = -Infinity
+  let low = Infinity
+  for (let i = 0; i < ticks; i++) {
+    const p = deterministicPrice(commodityId, tick - ticks + 1 + i)
+    if (p > high) high = p
+    if (p < low)  low  = p
+  }
+  return { high, low }
+}
